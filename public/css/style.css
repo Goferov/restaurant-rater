@@ -127,9 +127,14 @@ a:hover {
     align-items: center;
 }
 
-.d-flex, .row  {
+.row, .d-flex   {
     display: flex;
 }
+
+/*.row > * {*/
+/*    padding-left: 0.5rem;*/
+/*    padding-right: 0.5rem;*/
+/*}*/
 
 .flex-column {
     flex-direction: column;
@@ -202,7 +207,7 @@ nav > div > a {
 
 /*FOOTER*/
 footer .top {
-    padding: 20px 0 30px 0;
+    padding: 30px 0 30px 0;
 }
 
 footer .bottom {
@@ -239,4 +244,35 @@ footer ul:before {
 footer .logo-white p {
     max-width: 239px;
     text-align: justify;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .flex-mobile-column {
+        flex-direction: column;
+    }
+    .justify-content-mobile-center {
+        justify-content: center;
+    }
+    .align-items-mobile-center {
+        align-items: center;
+    }
+    .mb-mobile-4 {
+        margin-bottom: 4rem;
+    }
+
+    footer .logo-white p {
+        text-align: center;
+    }
+
+    .logo-white {
+        text-align: center;
+    }
+    footer .logo-white p {
+        max-width: unset;
+    }
+
+    .align-self-mobile-start {
+        align-self: start;
+    }
 }
