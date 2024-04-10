@@ -4,6 +4,7 @@
     --white: #fff;
     --black: #000;
     --red: #9A0000;
+    --yellow: #FCE409;
     --lgray: #D1D1D1;
     --main-font: "Poppins", sans-serif;
     --default-radius: 15px;
@@ -53,6 +54,10 @@ main {
 
 .f-black {
     color: var(--black);
+}
+
+.f-yellow {
+    color: var(--yellow);
 }
 
 .f-20 {
@@ -188,6 +193,14 @@ main {
     padding-bottom: 1em;
 }
 
+.mt-2 {
+    margin-top: 2rem;
+}
+
+.mt-3 {
+    margin-top: 3rem;
+}
+
 .border-radius-15 {
     border-radius: var(--default-radius);
 }
@@ -203,6 +216,8 @@ main {
 .text-upperacse {
     text-transform: uppercase;
 }
+
+
 /************* HEADER *************/
 
 .contact-item {
@@ -382,13 +397,77 @@ nav > div > a {
 
 
 
-/*FOOTER*/
+.section-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+
+/*RESTAURANT BOX*/
+.restaurant-box {
+    border: 1px solid #D1D1D1;
+    border-radius: var(--default-radius);
+    overflow: hidden;
+    -webkit-box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.restaurant-details {
+    padding: 1rem 1.8rem;
+}
+.restaurant-details > * {
+    margin-bottom: 10px ;
+}
+.restaurant-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .2s;
+}
+.restaurant-box h3 {
+    font-size: 2rem;
+    font-weight: 600;
+}
+.restaurant-box .tag-list {
+    display: flex;
+}
+.restaurant-box .tag-list > div {
+    width: fit-content;
+    border-radius: var(--default-radius);
+    font-size: 1rem;
+    background-color: #D9D9D9;
+    padding: 0.3rem 0.75rem ;
+}
+.restaurant-box .tag-list > div:first-of-type {
+    margin-right: 8px;
+}
+.restaurant-box .tag-list > div i {
+    margin-right: 3px;
+}
+
+.restaurant-box .rate .stars {
+    margin-right: 0.5rem;
+}
+.restaurant-box .image {
+    overflow: hidden;
+    height: 200px;
+}
+.restaurant-box:hover {
+    color: black;
+}
+.restaurant-box:hover img {
+    transform: scale(1.1);
+}
+    /*FOOTER*/
 footer .top {
     padding: 30px 0 30px 0;
 }
 
 footer .bottom {
     padding: 7px 0;
+    font-size: 1.7rem;
 }
 
 footer h6 {
