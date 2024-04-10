@@ -105,9 +105,6 @@ main {
 }
 
 
-.m-0 {
-    margin: 0!important;
-}
 
 
 .flex-row-center-center {
@@ -253,6 +250,7 @@ nav > div:last-of-type {
 nav > div > a {
     font-size: 1.6rem;
 }
+
 
 /*HAMBURGER*/
 
@@ -468,6 +466,11 @@ footer .logo-white p {
         margin-left: auto;
         margin-right: auto;
     }
+
+    .m-mobile-0 {
+        margin: 0!important;
+    }
+
 
     .burger-menu {
         display: block;
