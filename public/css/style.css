@@ -6,6 +6,7 @@
     --red: #9A0000;
     --lgray: #D1D1D1;
     --main-font: "Poppins", sans-serif;
+    --default-radius: 15px;
 }
 
 * {
@@ -42,12 +43,20 @@ a:hover {
     padding: 0 15px;
 }
 
+main {
+    margin: 30px 0
+}
+
 .f-white {
     color: var(--white);
 }
 
 .f-black {
     color: var(--black);
+}
+
+.f-20 {
+    font-size: 2rem;
 }
 
 .f-14 {
@@ -144,6 +153,10 @@ a:hover {
     display: none!important;
 }
 
+.d-block {
+    display: block!important;
+}
+
 /*.row > * {*/
 /*    padding-left: 0.5rem;*/
 /*    padding-right: 0.5rem;*/
@@ -172,6 +185,22 @@ a:hover {
 .py-1 {
     padding-top: 1em;
     padding-bottom: 1em;
+}
+
+.border-radius-15 {
+    border-radius: var(--default-radius);
+}
+
+.position-relative {
+    position: relative;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.text-upperacse {
+    text-transform: uppercase;
 }
 /************* HEADER *************/
 
@@ -298,6 +327,58 @@ nav > div > a {
     width: 29px;
     height: 9px;
 }
+
+
+
+
+
+/*BANNER*/
+
+
+
+.banner-img {
+    position: relative;
+    background-position: center;
+    background-image: url("/public/img/banner.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 460px;
+    overflow: hidden;
+    border-radius: var(--default-radius);
+}
+.banner-overlayer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    padding: 2.5rem 10rem;
+}
+
+.banner-overlayer h1 {
+    font-size: 4.7rem;
+    line-height: 60px;
+    margin-bottom: 20px;
+}
+
+
+.button {
+    display: inline-block;
+    border-radius: var(--default-radius);
+    padding: 0.7rem 2.5rem;
+}
+
+.banner-button {
+    border: 2px solid var(--white);
+}
+
+.banner-button:hover {
+    background: var(--white);
+}
+
+
+
 /*FOOTER*/
 footer .top {
     padding: 30px 0 30px 0;
