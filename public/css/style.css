@@ -157,6 +157,10 @@ main {
     display: block!important;
 }
 
+.w-fit-content {
+    width: fit-content;
+}
+
 /*.row > * {*/
 /*    padding-left: 0.5rem;*/
 /*    padding-right: 0.5rem;*/
@@ -364,7 +368,8 @@ nav > div > a {
 
 
 .button {
-    display: inline-block;
+    display: block;
+    text-align: center;
     border-radius: var(--default-radius);
     padding: 0.7rem 2.5rem;
 }
@@ -459,6 +464,11 @@ footer .logo-white p {
         display: none!important;
     }
 
+    .mx-mobile-auto {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     .burger-menu {
         display: block;
     }
@@ -497,6 +507,14 @@ footer .logo-white p {
 
     header .top > div > div .contact-item:last-of-type {
         margin-left: 2.4rem;
+    }
+
+
+/*    BANNER*/
+    .banner-overlayer h1 {
+        text-align: center;
+        font-size: 2.8rem;
+        line-height: 39px;
     }
 
 }
