@@ -4,6 +4,7 @@
     --white: #fff;
     --black: #000;
     --red: #9A0000;
+    --lgray: #D1D1D1;
     --main-font: "Poppins", sans-serif;
 }
 
@@ -15,6 +16,7 @@
 html {
     scroll-behavior: smooth;
     font-size: 62.5%;
+    overflow-x: hidden;
 }
 
 body {
@@ -22,6 +24,7 @@ body {
     margin: 0;
     font-family: var(--main-font);
     font-size: 1.6rem;
+    overflow-x: hidden;
 }
 
 a {
@@ -93,7 +96,9 @@ a:hover {
 }
 
 
-
+.m-0 {
+    margin: 0!important;
+}
 
 
 .flex-row-center-center {
@@ -131,6 +136,14 @@ a:hover {
     display: flex;
 }
 
+.burger-menu {
+    display: none;
+}
+
+.d-none {
+    display: none!important;
+}
+
 /*.row > * {*/
 /*    padding-left: 0.5rem;*/
 /*    padding-right: 0.5rem;*/
@@ -166,13 +179,16 @@ a:hover {
     display: flex;
     align-items: center;
     font-size: 1.4rem;
+    font-weight: 400;
 }
 
 .contact-item i {
     font-size: 1.1rem;
     margin-right: 5px;
 }
-
+header {
+    position: relative;
+}
 header .top {
     padding: 10px 0;
 }
@@ -183,7 +199,7 @@ header .top > div > div .contact-item:last-of-type {
 
 header .bottom {
     padding: 15px 0;
-    border-bottom: #D1D1D1;
+    border-bottom: var(--lgray);
     -webkit-box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     -moz-box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -205,6 +221,83 @@ nav > div > a {
     font-size: 1.6rem;
 }
 
+/*HAMBURGER*/
+
+
+.hamburger--squeeze .hamburger-inner {
+    transition-duration: 0.075s;
+    transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+.hamburger--squeeze .hamburger-inner::before {
+    transition: top 0.075s 0.12s ease, opacity 0.075s ease;
+}
+.hamburger--squeeze .hamburger-inner::after {
+    transition: bottom 0.075s 0.12s ease, transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+    width: 29px;
+    height: 4px;
+    background-color: #000;
+    border-radius: 4px;
+    position: absolute;
+    transition-property: transform;
+    transition-duration: 0.15s;
+    transition-timing-function: ease;
+}
+.hamburger-inner {
+    background-color: #000;
+}
+.hamburger.active .hamburger-inner {
+    background-color: #000;
+}
+.hamburger-inner::before, .hamburger-inner::after {
+    content: "";
+    display: block;
+}
+.hamburger-inner::before {
+    top: -9px;
+}
+.hamburger-inner::after {
+    bottom: -9px;
+}
+.hamburger--squeeze.active .hamburger-inner {
+    transform: rotate(45deg);
+    transition-delay: 0.12s;
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.hamburger--squeeze.active .hamburger-inner::before {
+    top: 0;
+    opacity: 0;
+    transition: top 0.075s ease, opacity 0.075s 0.12s ease;
+}
+.hamburger--squeeze.active .hamburger-inner::after {
+    bottom: 0;
+    transform: rotate(-90deg);
+    transition: bottom 0.075s ease, transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+
+.hamburger {
+    font: inherit;
+    display: inline-block;
+    overflow: visible;
+    margin: 0;
+    cursor: pointer;
+    transition-timing-function: linear;
+    transition-duration: .15s;
+    transition-property: opacity,filter;
+    text-transform: none;
+    color: inherit;
+    border: 0;
+    background-color: transparent;
+    padding: 7px 0;
+}
+.hamburger-box {
+    position: relative;
+    display: inline-block;
+    width: 29px;
+    height: 9px;
+}
 /*FOOTER*/
 footer .top {
     padding: 30px 0 30px 0;
@@ -225,6 +318,7 @@ footer ul {
     position: relative;
     list-style-type: none;
     padding-left: 9px;
+    font-weight: 500;
 }
 
 footer ul:before {
@@ -275,4 +369,53 @@ footer .logo-white p {
     .align-self-mobile-start {
         align-self: start;
     }
+
+    .d-mobile-block {
+        display: block!important;
+    }
+
+    .d-mobile-none {
+        display: none!important;
+    }
+
+    .burger-menu {
+        display: block;
+    }
+
+    nav {
+        position: absolute;
+        background-color: white;
+        flex-direction: column;
+        /* justify-content: center; */
+        height: 80vh;
+        width: 100%;
+        top: 132px;
+        left: 0;
+        /* right: 0; */
+        bottom: 0;
+        z-index: 100;
+        align-items: end;
+        padding: 30px;
+        transform: translateX(100%);
+        transition: .3s ease-in-out;
+        border-top: 1px solid var(--lgray);
+    }
+    nav.active {
+        transform: translateX(0);
+    }
+    nav > div {
+        margin: 0 0 10px 0;
+    }
+    nav > div > a {
+        font-size: 2.5rem;
+    }
+
+    header .top .contact-item i {
+        font-size: 27px;
+    }
+
+    header .top > div > div .contact-item:last-of-type {
+        margin-left: 2.4rem;
+    }
+
 }
