@@ -23,7 +23,7 @@
                     </a>
                 </div>
                 <div>
-                    <a href="#" class="contact-item">
+                    <a id="login-btn" href="#" class="contact-item">
                         <i class="fa-solid fa-user m-mobile-0"></i> <span class="d-mobile-none">Zaloguj się</span>
                     </a>
                 </div>
@@ -188,6 +188,7 @@
     </footer>
 
     <div id="login-modal" class="modal">
+        <div class="modal-overlay"></div>
         <div class="modal-content">
             <h3 class="text-upperacse text-center f-semibold">Logowanie</h3>
             <form method="post">
@@ -212,6 +213,14 @@
     document.querySelector('#menu-opener').addEventListener('click', function () {
         this.classList.toggle('active');
         document.querySelector('#main-menu').classList.toggle('active');
+    });
+
+    document.querySelector('#login-btn').addEventListener('click', function () {
+        document.querySelector("#login-modal").classList.add('active');
+    });
+
+    document.querySelector('#login-modal .modal-overlay').addEventListener('click', function () {
+        document.querySelector("#login-modal").classList.remove('active');
     })
 </script>
 </html>
