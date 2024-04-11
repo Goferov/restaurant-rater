@@ -60,8 +60,20 @@ main {
     color: var(--yellow);
 }
 
+.f-24 {
+    font-size: 2.4rem;
+}
+
 .f-20 {
     font-size: 2rem;
+}
+
+.f-18 {
+    font-size: 1.8rem;
+}
+
+.f-16 {
+    font-size: 1.6rem;
 }
 
 .f-14 {
@@ -163,6 +175,10 @@ main {
     width: fit-content;
 }
 
+.w-100 {
+    width: 100%;
+}
+
 /*.row > * {*/
 /*    padding-left: 0.5rem;*/
 /*    padding-right: 0.5rem;*/
@@ -201,6 +217,10 @@ main {
     margin-top: 3rem;
 }
 
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
 .border-radius-15 {
     border-radius: var(--default-radius);
 }
@@ -215,6 +235,10 @@ main {
 
 .text-upperacse {
     text-transform: uppercase;
+}
+
+.text-center {
+    text-align: center;
 }
 
 
@@ -384,7 +408,8 @@ nav > div > a {
     display: block;
     text-align: center;
     border-radius: var(--default-radius);
-    padding: 0.7rem 2.5rem;
+    padding: 0.8rem 2.5rem;
+    border: 0;
 }
 
 .banner-button {
@@ -395,8 +420,13 @@ nav > div > a {
     background: var(--white);
 }
 
-
-
+.button-primary {
+    background-color: var(--main-color);
+    color: var(--white)
+}
+.button-primary:hover {
+    background-color: var(--black);
+}
 .section-title {
     font-size: 2rem;
     margin-bottom: 20px;
@@ -509,6 +539,50 @@ footer .logo-white p {
     max-width: 239px;
     text-align: justify;
 }
+
+/*MODAL*/
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(33, 37, 41, 0.67);
+
+}
+
+.modal .modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 4rem 6rem;
+    background-color: var(--white);
+    border-radius: var(--default-radius);
+    max-width: 650px;
+    width: 85%;
+}
+
+.modal .modal-content h3 {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.modal .modal-content p a {
+    color: var(--main-color)
+}
+
+.input {
+    border-radius: var(--default-radius);
+    border: 1px solid var(--black);
+    padding: 1.4rem 2rem;
+    width: 100%;
+    background-color: var(--white);
+    font-size: 1.7rem;
+}
+
+
+/*INPUT*/
 
 
 @media only screen and (max-width: 1199px) {

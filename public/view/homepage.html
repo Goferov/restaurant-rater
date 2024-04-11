@@ -186,6 +186,27 @@
             </div>
         </div>
     </footer>
+
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <h3 class="text-upperacse text-center f-semibold">Logowanie</h3>
+            <form method="post">
+                <div class="mb-1">
+                    <input class="input" type="text" name="login" placeholder="Login"/>
+                </div>
+                <div class="mb-1">
+                    <input class="input" type="password" name="password" placeholder="Hasło"/>
+                </div>
+                <div class="mb-1">
+                    <button class="button button-primary f-24 w-100 text-upperacse">Zaloguj się</button>
+                </div>
+                <div>
+                    <p>Nie masz konta? <a href="#">Załóż konto</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
 </body>
 <script>
     document.querySelector('#menu-opener').addEventListener('click', function () {
