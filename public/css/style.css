@@ -99,6 +99,10 @@ main {
     background-color: var(--white);
 }
 
+.bg-lgray {
+    background-color: var(--lgray);
+}
+
 
 /*FONT WEIGHTS*/
 .f-light {
@@ -208,6 +212,7 @@ main {
     padding-top: 1em;
     padding-bottom: 1em;
 }
+
 
 .mt-2 {
     margin-top: 2rem;
@@ -472,7 +477,7 @@ nav > div > a {
     width: fit-content;
     border-radius: var(--default-radius);
     font-size: 1.3rem;
-    background-color: #D9D9D9;
+    background-color: var(--lgray);
     padding: 0.3rem 0.75rem ;
 }
 .restaurant-box .tag-list > div:first-of-type {
@@ -580,6 +585,10 @@ footer .logo-white p {
     color: var(--main-color)
 }
 
+
+/*INPUT*/
+
+
 .input {
     border-radius: var(--default-radius);
     border: 1px solid var(--black);
@@ -590,7 +599,6 @@ footer .logo-white p {
 }
 
 
-/*INPUT*/
 
 
 @media only screen and (max-width: 1199px) {
