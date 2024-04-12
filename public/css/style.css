@@ -183,6 +183,10 @@ main {
     align-items: end;
 }
 
+.align-items-center {
+    align-items: center;
+}
+
 
 .row.col-3 > div {
     flex-basis: calc(33.33% - 5px);
@@ -502,6 +506,92 @@ footer .logo-white p {
     max-width: 239px;
     text-align: justify;
 }
+
+/*MODAL*/
+.modal {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+}
+.modal .modal-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(33, 37, 41, 0.67);
+}
+.modal.active {
+    display: block;
+}
+.modal .modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 4rem 6rem;
+    background-color: var(--white);
+    border-radius: var(--default-radius);
+    max-width: 650px;
+    width: 85%;
+}
+
+.modal .modal-content h3 {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.modal .modal-content p a {
+    color: var(--main-color)
+}
+
+
+/*INPUT*/
+
+
+.input {
+    border-radius: var(--default-radius);
+    border: 1px solid var(--black);
+    padding: 1.4rem 2rem;
+    width: 100%;
+    background-color: var(--white);
+    font-size: 1.7rem;
+}
+
+/*FILTERS*/
+
+.filters-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 4rem 5.4rem;
+    border-radius: var(--default-radius);
+}
+
+.filters-wrapper .input {
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
+
+.filters-wrapper select {
+    max-width: 200px;
+}
+
+.search-field i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 18px;
+}
+
+@media only screen and (max-width: 1199px) {
+    .restaurant-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
 
 
 @media only screen and (max-width: 768px) {
