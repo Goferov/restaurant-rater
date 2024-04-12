@@ -87,6 +87,10 @@ main {
     background-color: var(--white);
 }
 
+.bg-lgray {
+    background-color: var(--lgray);
+}
+
 
 /*FONT WEIGHTS*/
 .f-light {
@@ -203,6 +207,14 @@ main {
 
 .mt-3 {
     margin-top: 3rem;
+}
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.me-1 {
+    margin-right: 1rem;
 }
 
 .border-radius-15 {
@@ -407,10 +419,15 @@ nav > div > a {
     font-weight: 600;
 }
 
+.restaurant-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 60px;
+}
 
 /*RESTAURANT BOX*/
 .restaurant-box {
-    border: 1px solid #D1D1D1;
+    border: 1px solid var(--lgray);
     border-radius: var(--default-radius);
     overflow: hidden;
     -webkit-box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -440,8 +457,8 @@ nav > div > a {
 .restaurant-box .tag-list > div {
     width: fit-content;
     border-radius: var(--default-radius);
-    font-size: 1rem;
-    background-color: #D9D9D9;
+    font-size: 1.3rem;
+    background-color: var(--lgray);
     padding: 0.3rem 0.75rem ;
 }
 .restaurant-box .tag-list > div:first-of-type {
@@ -559,6 +576,9 @@ footer .logo-white p {
     background-color: var(--white);
     font-size: 1.7rem;
 }
+.input:focus {
+    outline: var(--black) solid 1px;
+}
 
 /*FILTERS*/
 
@@ -569,12 +589,20 @@ footer .logo-white p {
     border-radius: var(--default-radius);
 }
 
+.filters-wrapper > div {
+    margin: 0 5px;
+}
+
 .filters-wrapper .input {
     padding-bottom: 1rem;
     padding-top: 1rem;
 }
 
-.filters-wrapper select {
+.filters-wrapper select.input {
+    padding: 1rem 0.8rem;
+}
+
+.filters-wrapper select, .filters-wrapper .input[name="city"]  {
     max-width: 200px;
 }
 
@@ -592,6 +620,27 @@ footer .logo-white p {
     }
 }
 
+@media only screen and (max-width: 991px) {
+    .filters-wrapper {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .flex-tablet-column {
+        flex-direction: column;
+    }
+    .justify-content-tablet-start {
+        justify-content: start;
+    }
+    .align-items-tablet-start {
+        align-items: start;
+    }
+    .filters-wrapper select, .filters-wrapper .input[name="city"] {
+        max-width: unset;
+    }
+    .filters-wrapper {
+        padding: 3rem 2.4rem;
+    }
+}
 
 
 @media only screen and (max-width: 768px) {
@@ -687,6 +736,10 @@ footer .logo-white p {
         text-align: center;
         font-size: 2.8rem;
         line-height: 39px;
+    }
+
+    .restaurant-list {
+        grid-template-columns: 1fr;
     }
 
 }
