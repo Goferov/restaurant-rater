@@ -64,12 +64,20 @@ main {
     color: var(--yellow);
 }
 
+.f-red {
+    color: var(--red)
+}
+
 .f-24 {
     font-size: 2.4rem;
 }
 
 .f-20 {
     font-size: 2rem;
+}
+
+.f-18 {
+    font-size: 1.8rem;
 }
 
 .f-14 {
@@ -726,6 +734,43 @@ textarea.input {
     line-height: 18px;
 }
 
+.user-panel {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2.6rem;
+}
+
+.user-menu {
+    list-style-type: none;
+    padding: 0;
+}
+
+.user-menu li a {
+    display: block;
+    width: 100%;
+    padding: 5px 10px;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 0;
+}
+
+.user-menu li:last-of-type a {
+    border-bottom: 1px solid black;
+}
+
+.user-menu li a:hover, .user-menu li a.active {
+    background-color: var(--main-color);
+    color: white!important;
+}
+
+.user-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 13px;
+    column-gap: 35px;
+}
+
 @media only screen and (max-width: 1199px) {
     .restaurant-list, .opinions-wrap, .restaurant {
         grid-template-columns: repeat(2, 1fr);
@@ -752,6 +797,10 @@ textarea.input {
     }
     .filters-wrapper {
         padding: 3rem 2.4rem;
+    }
+
+    .user-form {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -857,6 +906,10 @@ textarea.input {
 
     .opinions-wrap .opinion-form {
         order: -1;
+    }
+
+    .user-panel {
+        grid-template-columns: 1fr;
     }
 
 }
