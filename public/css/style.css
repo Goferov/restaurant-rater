@@ -34,6 +34,10 @@ a {
     text-decoration: none;
 }
 
+img {
+    max-width: 100%;
+}
+
 a:hover {
     color: var(--red);
 }
@@ -58,6 +62,10 @@ main {
 
 .f-yellow {
     color: var(--yellow);
+}
+
+.f-24 {
+    font-size: 2.4rem;
 }
 
 .f-20 {
@@ -167,6 +175,10 @@ main {
     width: fit-content;
 }
 
+.w-100 {
+    width: 100%;
+}
+
 /*.row > * {*/
 /*    padding-left: 0.5rem;*/
 /*    padding-right: 0.5rem;*/
@@ -197,8 +209,8 @@ main {
 }
 
 .py-1 {
-    padding-top: 1em;
-    padding-bottom: 1em;
+    padding-top: 1rem!important;
+    padding-bottom: 1rem!important;
 }
 
 .mt-2 {
@@ -211,6 +223,10 @@ main {
 
 .mb-1 {
     margin-bottom: 1rem;
+}
+
+.mb-2 {
+    margin-bottom: 2rem;
 }
 
 .me-1 {
@@ -229,10 +245,12 @@ main {
     overflow: hidden;
 }
 
-.text-upperacse {
+.text-uppercase {
     text-transform: uppercase;
 }
-
+.text-center {
+    text-align: center;
+}
 
 /************* HEADER *************/
 
@@ -401,6 +419,8 @@ nav > div > a {
     text-align: center;
     border-radius: var(--default-radius);
     padding: 0.7rem 2.5rem;
+    border: 0;
+    cursor: pointer;
 }
 
 .banner-button {
@@ -411,7 +431,14 @@ nav > div > a {
     background: var(--white);
 }
 
+.button-primary {
+    background-color: var(--main-color);
+    color: white;
+}
 
+.button-primary:hover {
+    background-color: var(--black);
+}
 
 .section-title {
     font-size: 2rem;
@@ -457,7 +484,7 @@ nav > div > a {
 .restaurant-box .tag-list > div {
     width: fit-content;
     border-radius: var(--default-radius);
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     background-color: var(--lgray);
     padding: 0.3rem 0.75rem ;
 }
@@ -468,9 +495,6 @@ nav > div > a {
     margin-right: 3px;
 }
 
-.restaurant-box .rate .stars {
-    margin-right: 0.5rem;
-}
 .restaurant-box .image {
     overflow: hidden;
     height: 200px;
@@ -481,6 +505,9 @@ nav > div > a {
 .restaurant-box:hover img {
     transform: scale(1.1);
 }
+.rate .stars {
+    margin-right: 0.5rem;
+}
     /*FOOTER*/
 footer .top {
     padding: 30px 0 30px 0;
@@ -488,7 +515,6 @@ footer .top {
 
 footer .bottom {
     padding: 7px 0;
-    font-size: 1.7rem;
 }
 
 footer h6 {
@@ -580,6 +606,12 @@ footer .logo-white p {
     outline: var(--black) solid 1px;
 }
 
+textarea.input {
+    max-width: 100%;
+    max-height: 130px;
+    resize: vertical;
+}
+
 /*FILTERS*/
 
 .filters-wrapper {
@@ -613,8 +645,89 @@ footer .logo-white p {
     right: 18px;
 }
 
+
+/*RESTAURANT DETAILS*/
+.restaurant {
+    display: grid;
+    grid-template-columns: 1.2fr 2fr;
+    gap: 3rem;
+}
+
+.restaurant .main-image img {
+    border-radius: var(--default-radius);
+    height: 100%;
+    object-fit: cover;
+    max-height: 600px;
+}
+
+.restaurant .details h1 {
+    font-size: 4rem;
+    line-height: 40px;
+}
+
+.restaurant .details .hr {
+    height: 1px;
+    width: 100%;
+    background-color: var(--lgray);
+}
+
+.restaurant .details .info p {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.restaurant .details .info p i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 17px;
+    margin-right: 8px;
+}
+
+.restaurant .details .description {
+    line-height: 3rem;
+    text-align: justify;
+}
+
+/*OPINIONS*/
+
+.opinions-wrap {
+    display: grid;
+    grid-template-columns: 2fr 1.4fr;
+    gap: 3.5rem;
+}
+
+.opinion-form {
+    padding: 1.7rem 2.7rem ;
+    border: 1px solid var(--lgray);
+    border-radius: var(--default-radius);
+}
+
+.opinion-form .button-primary {
+    padding: 0.9rem 2.1rem;
+}
+
+.opinion-box {
+    border-radius: var(--default-radius);
+    border: 1px solid var(--lgray);
+    padding: 1.2rem 1.9rem ;
+}
+
+.opinion-box .user-name span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin: 0 15px;
+    background-color: var(--main-color);
+}
+
+.opinion-box .review {
+    line-height: 18px;
+}
+
 @media only screen and (max-width: 1199px) {
-    .restaurant-list {
+    .restaurant-list, .opinions-wrap, .restaurant {
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
@@ -738,8 +851,12 @@ footer .logo-white p {
         line-height: 39px;
     }
 
-    .restaurant-list {
+    .restaurant-list, .restaurant, .opinions-wrap {
         grid-template-columns: 1fr;
+    }
+
+    .opinions-wrap .opinion-form {
+        order: -1;
     }
 
 }
