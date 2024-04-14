@@ -1,6 +1,17 @@
 <?php
 
+namespace App\Controller;
+
+use App\Request;
+
 class AppController {
+
+    protected Request $request;
+
+    function __construct()
+    {
+        $this->request = new Request($_GET, $_POST, $_SERVER);
+    }
     public function render(string $template = null, array $variables = [])
     {
         $templatePath = 'public/view/'. $template.'.html';

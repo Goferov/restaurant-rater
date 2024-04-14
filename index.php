@@ -1,6 +1,13 @@
 <?php
 
-require_once 'src/controller/AppController.php';
+spl_autoload_register(function(string  $classNamespace) {
+    $classNamespace = str_replace(['\\','App/'],['/',''],$classNamespace);
+    $path = 'src/' . $classNamespace . '.php';
+    require_once $path;
+});
+
+
+use App\Controller\AppController;
 
 $path = trim($_SERVER['REQUEST_URI'], '/');
 $path = parse_url( $path, PHP_URL_PATH);
