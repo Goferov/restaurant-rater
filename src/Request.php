@@ -25,4 +25,8 @@ class Request {
     public function post(string $name, $default = null) {
         return $this->post[$name] ?? $default;
     }
+
+    public function server(string $name) {
+        return $this->server[$name] ?? null;
+    }
 }
