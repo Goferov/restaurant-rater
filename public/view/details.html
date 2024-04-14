@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="/public/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
+  <title>Dashboard</title>
+</head>
+<body>
+<header>
+  <div class="top bg-main f-white">
+    <div class="container flex-row-between-center">
+      <div class="flex-row-center">
+        <a href="#" class="contact-item me-1">
+          <i class="fa-solid fa-phone-flip m-mobile-0"></i> <span class="d-mobile-none">+48 514 343 443</span>
+        </a>
+        <a href="#" class="contact-item">
+          <i class="fa-solid fa-envelope m-mobile-0"></i> <span class="d-mobile-none">redakcja@topkebab.pl</span>
+        </a>
+      </div>
+      <div>
+        <a id="login-btn" href="#" class="contact-item">
+          <i class="fa-solid fa-user m-mobile-0"></i> <span class="d-mobile-none">Zaloguj się</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="bottom bg-white">
+    <div class="container flex-row-between-center">
+      <a href="/" title="Home" class="logo">
+        <img src="/public/img/logo.svg" alt="TopKebab logo"/>
+      </a>
+      <nav id="main-menu">
+        <div><a href="#" title="Home" class="f-semibold ">Home</a></div>
+        <div><a href="#" title="Restauracje" class="f-semibold ">Restauracje</a></div>
+        <div><a href="#" title="Kontakt" class="f-semibold ">Kontakt</a></div>
+      </nav>
+      <div id="menu-opener" class="hamburger hamburger--squeeze d-none d-mobile-block">
+        <div class="hamburger-box">
+          <div class="hamburger-inner"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <section class="restaurant mb-2">
+      <div class="main-image d-mobile-none">
+        <img src="/public/img/box.jpg" alt=""/>
+      </div>
+      <div class="details">
+        <h1 class="f-bold mb-1">Efes kebab</h1>
+        <div class="rate d-flex mb-2">
+          <div class="stars">
+            <i class="fa-solid fa-star f-yellow"></i>
+            <i class="fa-solid fa-star f-yellow"></i>
+            <i class="fa-solid fa-star f-yellow"></i>
+            <i class="fa-solid fa-star f-yellow"></i>
+            <i class="fa-solid fa-star f-yellow"></i>
+          </div>
+          <div class="f-semibold">4.9/5</div>
+        </div>
+        <div class="hr mb-2"></div>
+        <div class="main-image mb-2 d-none d-mobile-block">
+          <img src="/public/img/box.jpg" alt=""/>
+        </div>
+        <div class="info mb-2">
+          <p>
+            <i class="fa-solid fa-phone-flip"></i> <a href="#">511543756</a>
+          </p>
+          <p>
+            <i class="fa-solid fa-envelope"></i> <a href="#">efeskebab@test.pl</a>
+          </p>
+          <p>
+            <i class="fa-solid fa-location-dot"></i> Warszawska 4/54, 31-155 Kraków
+          </p>
+          <p>
+            <i class="fa-solid fa-globe"></i> <a href="#">efeskebab@test.pl</a>
+          </p>
+        </div>
+        <p class="description f-medium">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at venenatis massa. Praesent pretium quis risus id vestibulum. Nam pharetra sodales eros, non rhoncus felis. Nunc rhoncus rhoncus sollicitudin. Etiam malesuada consectetur lorem, id finibus magna rutrum id. Quisque ac mi vel enim eleifend tincidunt. Maecenas fringilla lorem quis risus pellentesque, sit amet venenatis lectus consectetur. Nullam vulputate dictum pretium. Vestibulum maximus et est vitae cursus. Vivamus sollicitudin quis ipsum a volutpat. Pellentesque suscipit massa non tortor pellentesque efficitur. Etiam quis molestie lectus, eget tempor odio. Pellentesque efficitur erat sed fringilla faucibus. Maecenas ac magna dolor. Morbi nec finibus diam.
+        </p>
+      </div>
+    </section>
+    <section>
+      <h2 class="section-title d-mobile-none">Opinie użytkowników</h2>
+      <div class="opinions-wrap">
+        <h2 class="section-title m-mobile-0 d-none d-mobile-block">Opinie użytkowników</h2>
+        <div class="opinion-list">
+          <div class="opinion-box">
+            <div class="user-name d-flex align-items-center mb-1 f-medium">
+              User2115
+              <span></span>
+              <div class="user-rate f-bold">4.9/5</div>
+            </div>
+            <div class="review ">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at venenatis massa. Praesent pretium quis risus id vestibulum. Nam pharetra sodales eros, non rhoncus felis. Nunc rhoncus rhoncus sollicitudin. Etiam malesuada consectetur lorem
+            </div>
+          </div>
+        </div>
+        <form class="opinion-form">
+          <h3 class="section-title">Dodaj opinię</h3>
+          <input class="input mb-2 py-1" placeholder="Ocena*" name="rate" type="number" required/>
+          <textarea class="input mb-2 py-1" name="review" rows="5" placeholder="Treść*" required></textarea>
+          <button class="button button-primary">Dodaj opinie</button>
+        </form>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="f-white">
+  <div class="top bg-main ">
+    <div class="container flex-row-between-start row col-3 flex-mobile-column align-items-mobile-center">
+      <div class="logo-white mb-mobile-4">
+        <img src="/public/img/logo-white.svg" alt="TopKebab logo"/>
+        <p class="f-14">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus fermentum vitae dolor ut cursus. Phasellus tempor congue nunc. Nullam eget vestibulum nibh.</p>
+      </div>
+      <div class="d-flex justify-content-center mb-mobile-4 align-self-mobile-start">
+        <div>
+          <h6>Kontakt</h6>
+          <ul>
+            <li>
+              <a href="#" class="contact-item me-1">
+                <i class="fa-solid fa-phone-flip"></i> +48 514 343 443
+              </a>
+            </li>
+            <li>
+              <a href="#" class="contact-item">
+                <i class="fa-solid fa-envelope"></i> redakcja@topkebab.pl
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end mb-mobile-4 align-self-mobile-start">
+        <div>
+          <h6>Menu</h6>
+          <ul>
+            <li><a href="#" title="Home">Home</a></li>
+            <li><a href="#" title="Restauracje">Restauracje</a></li>
+            <li><a href="#" title="Kontakt">Kontakt</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom bg-second f-11 py-1">
+    <div class="container flex-row-between-center flex-mobile-column">
+      <div>TOPKEBAB © 2024 Wszelkie prawa zastrzeżone </div>
+      <div>Realizacja: Marcin Godfryd</div>
+    </div>
+  </div>
+</footer>
+
+<div id="login-modal" class="modal">
+  <div class="modal-overlay"></div>
+  <div class="modal-content">
+    <h3 class="text-uppercase text-center f-semibold">Logowanie</h3>
+    <form method="post">
+      <div class="mb-1">
+        <input class="input" type="text" name="login" placeholder="Login"/>
+      </div>
+      <div class="mb-1">
+        <input class="input" type="password" name="password" placeholder="Hasło"/>
+      </div>
+      <div class="mb-1">
+        <button class="button button-primary f-24 w-100 f-medium text-uppercase">Zaloguj się</button>
+      </div>
+      <div>
+        <p>Nie masz konta? <a href="#">Załóż konto</a></p>
+      </div>
+    </form>
+  </div>
+</div>
+
+</body>
+<script>
+  document.querySelector('#menu-opener').addEventListener('click', function () {
+    this.classList.toggle('active');
+    document.querySelector('#main-menu').classList.toggle('active');
+  });
+
+  document.querySelector('#login-btn').addEventListener('click', function () {
+    document.querySelector("#login-modal").classList.add('active');
+  });
+
+  document.querySelector('#login-modal .modal-overlay').addEventListener('click', function () {
+    document.querySelector("#login-modal").classList.remove('active');
+  })
+</script>
+</html>

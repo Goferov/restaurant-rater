@@ -34,6 +34,10 @@ a {
     text-decoration: none;
 }
 
+img {
+    max-width: 100%;
+}
+
 a:hover {
     color: var(--red);
 }
@@ -60,8 +64,24 @@ main {
     color: var(--yellow);
 }
 
+.f-red {
+    color: var(--red)
+}
+
+.f-24 {
+    font-size: 2.4rem;
+}
+
 .f-20 {
     font-size: 2rem;
+}
+
+.f-18 {
+    font-size: 1.8rem;
+}
+
+.f-16 {
+    font-size: 1.6rem;
 }
 
 .f-14 {
@@ -85,6 +105,10 @@ main {
 
 .bg-white {
     background-color: var(--white);
+}
+
+.bg-lgray {
+    background-color: var(--lgray);
 }
 
 
@@ -163,6 +187,10 @@ main {
     width: fit-content;
 }
 
+.w-100 {
+    width: 100%;
+}
+
 /*.row > * {*/
 /*    padding-left: 0.5rem;*/
 /*    padding-right: 0.5rem;*/
@@ -183,14 +211,18 @@ main {
     align-items: end;
 }
 
+.align-items-center {
+    align-items: center;
+}
+
 
 .row.col-3 > div {
     flex-basis: calc(33.33% - 5px);
 }
 
 .py-1 {
-    padding-top: 1em;
-    padding-bottom: 1em;
+    padding-top: 1rem!important;
+    padding-bottom: 1rem!important;
 }
 
 .mt-2 {
@@ -199,6 +231,18 @@ main {
 
 .mt-3 {
     margin-top: 3rem;
+}
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.mb-2 {
+    margin-bottom: 2rem;
+}
+
+.me-1 {
+    margin-right: 1rem;
 }
 
 .border-radius-15 {
@@ -213,10 +257,12 @@ main {
     overflow: hidden;
 }
 
-.text-upperacse {
+.text-uppercase {
     text-transform: uppercase;
 }
-
+.text-center {
+    text-align: center;
+}
 
 /************* HEADER *************/
 
@@ -385,6 +431,8 @@ nav > div > a {
     text-align: center;
     border-radius: var(--default-radius);
     padding: 0.7rem 2.5rem;
+    border: 0;
+    cursor: pointer;
 }
 
 .banner-button {
@@ -395,18 +443,28 @@ nav > div > a {
     background: var(--white);
 }
 
-
-
+.button-primary {
+    background-color: var(--main-color);
+    color: var(--white)
+}
+.button-primary:hover {
+    background-color: var(--black);
+}
 .section-title {
     font-size: 2rem;
     margin-bottom: 20px;
     font-weight: 600;
 }
 
+.restaurant-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 60px;
+}
 
 /*RESTAURANT BOX*/
 .restaurant-box {
-    border: 1px solid #D1D1D1;
+    border: 1px solid var(--lgray);
     border-radius: var(--default-radius);
     overflow: hidden;
     -webkit-box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -436,8 +494,8 @@ nav > div > a {
 .restaurant-box .tag-list > div {
     width: fit-content;
     border-radius: var(--default-radius);
-    font-size: 1rem;
-    background-color: #D9D9D9;
+    font-size: 1.2rem;
+    background-color: var(--lgray);
     padding: 0.3rem 0.75rem ;
 }
 .restaurant-box .tag-list > div:first-of-type {
@@ -460,6 +518,12 @@ nav > div > a {
 .restaurant-box:hover img {
     transform: scale(1.1);
 }
+.rate .stars {
+    margin-right: 0.5rem;
+}
+.restaurant-box:hover h3 {
+    color: var(--main-color);
+}
     /*FOOTER*/
 footer .top {
     padding: 30px 0 30px 0;
@@ -467,7 +531,6 @@ footer .top {
 
 footer .bottom {
     padding: 7px 0;
-    font-size: 1.7rem;
 }
 
 footer h6 {
@@ -501,6 +564,252 @@ footer ul:before {
 footer .logo-white p {
     max-width: 239px;
     text-align: justify;
+}
+
+/*MODAL*/
+.modal {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+}
+.modal .modal-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(33, 37, 41, 0.67);
+}
+.modal.active {
+    display: block;
+}
+.modal .modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 4rem 6rem;
+    background-color: var(--white);
+    border-radius: var(--default-radius);
+    max-width: 650px;
+    width: 85%;
+}
+
+.modal .modal-content h3 {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.modal .modal-content p a {
+    color: var(--main-color)
+}
+
+
+/*INPUT*/
+
+
+.input {
+    border-radius: var(--default-radius);
+    border: 1px solid var(--black);
+    padding: 1.4rem 2rem;
+    width: 100%;
+    background-color: var(--white);
+    font-size: 1.7rem;
+}
+.input:focus {
+    outline: var(--black) solid 1px;
+}
+
+textarea.input {
+    max-width: 100%;
+    max-height: 130px;
+    resize: vertical;
+}
+
+/*FILTERS*/
+
+.filters-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 4rem 5.4rem;
+    border-radius: var(--default-radius);
+}
+
+.filters-wrapper > div {
+    margin: 0 5px;
+}
+
+.filters-wrapper .input {
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
+
+.filters-wrapper select.input {
+    padding: 1rem 0.8rem;
+}
+
+.filters-wrapper select, .filters-wrapper .input[name="city"]  {
+    max-width: 200px;
+}
+
+.search-field i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 18px;
+}
+
+
+/*RESTAURANT DETAILS*/
+.restaurant {
+    display: grid;
+    grid-template-columns: 1.2fr 2fr;
+    gap: 3rem;
+}
+
+.restaurant .main-image img {
+    border-radius: var(--default-radius);
+    height: 100%;
+    object-fit: cover;
+    max-height: 600px;
+}
+
+.restaurant .details h1 {
+    font-size: 4rem;
+    line-height: 40px;
+}
+
+.restaurant .details .hr {
+    height: 1px;
+    width: 100%;
+    background-color: var(--lgray);
+}
+
+.restaurant .details .info p {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.restaurant .details .info p i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 17px;
+    margin-right: 8px;
+}
+
+.restaurant .details .description {
+    line-height: 3rem;
+    text-align: justify;
+}
+
+/*OPINIONS*/
+
+.opinions-wrap {
+    display: grid;
+    grid-template-columns: 2fr 1.4fr;
+    gap: 3.5rem;
+}
+
+.opinion-form {
+    padding: 1.7rem 2.7rem ;
+    border: 1px solid var(--lgray);
+    border-radius: var(--default-radius);
+}
+
+.opinion-form .button-primary {
+    padding: 0.9rem 2.1rem;
+}
+
+.opinion-box {
+    border-radius: var(--default-radius);
+    border: 1px solid var(--lgray);
+    padding: 1.2rem 1.9rem ;
+}
+
+.opinion-box .user-name span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin: 0 15px;
+    background-color: var(--main-color);
+}
+
+.opinion-box .review {
+    line-height: 18px;
+}
+
+.user-panel {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2.6rem;
+}
+
+.user-menu {
+    list-style-type: none;
+    padding: 0;
+}
+
+.user-menu li a {
+    display: block;
+    width: 100%;
+    padding: 5px 10px;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 0;
+}
+
+.user-menu li:last-of-type a {
+    border-bottom: 1px solid black;
+}
+
+.user-menu li a:hover, .user-menu li a.active {
+    background-color: var(--main-color);
+    color: white!important;
+}
+
+.user-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 13px;
+    column-gap: 35px;
+}
+
+@media only screen and (max-width: 1199px) {
+    .restaurant-list, .opinions-wrap, .restaurant {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .filters-wrapper {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .flex-tablet-column {
+        flex-direction: column;
+    }
+    .justify-content-tablet-start {
+        justify-content: start;
+    }
+    .align-items-tablet-start {
+        align-items: start;
+    }
+    .filters-wrapper select, .filters-wrapper .input[name="city"] {
+        max-width: unset;
+    }
+    .filters-wrapper {
+        padding: 3rem 2.4rem;
+    }
+
+    .user-form {
+        grid-template-columns: 1fr;
+    }
 }
 
 
@@ -597,6 +906,18 @@ footer .logo-white p {
         text-align: center;
         font-size: 2.8rem;
         line-height: 39px;
+    }
+
+    .restaurant-list, .restaurant, .opinions-wrap {
+        grid-template-columns: 1fr;
+    }
+
+    .opinions-wrap .opinion-form {
+        order: -1;
+    }
+
+    .user-panel {
+        grid-template-columns: 1fr;
     }
 
 }
