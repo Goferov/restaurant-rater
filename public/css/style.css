@@ -80,6 +80,10 @@ main {
     font-size: 1.8rem;
 }
 
+.f-16 {
+    font-size: 1.6rem;
+}
+
 .f-14 {
     font-size: 1.4rem;
 }
@@ -441,13 +445,11 @@ nav > div > a {
 
 .button-primary {
     background-color: var(--main-color);
-    color: white;
+    color: var(--white)
 }
-
 .button-primary:hover {
     background-color: var(--black);
 }
-
 .section-title {
     font-size: 2rem;
     margin-bottom: 20px;
@@ -503,6 +505,9 @@ nav > div > a {
     margin-right: 3px;
 }
 
+.restaurant-box .rate .stars {
+    margin-right: 0.5rem;
+}
 .restaurant-box .image {
     overflow: hidden;
     height: 200px;
@@ -515,6 +520,9 @@ nav > div > a {
 }
 .rate .stars {
     margin-right: 0.5rem;
+}
+.restaurant-box:hover h3 {
+    color: var(--main-color);
 }
     /*FOOTER*/
 footer .top {
