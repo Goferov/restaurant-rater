@@ -11,7 +11,7 @@ class AppController {
     protected Session $session;
     private static string $main_template_path = 'public/views/template.php';
 
-    function __construct()
+    public function __construct()
     {
         $this->request = new Request($_GET, $_POST, $_SERVER);
         $this->session = new Session();
@@ -28,5 +28,11 @@ class AppController {
             $output = ob_get_clean();
         }
         print $output;
+    }
+
+    protected function redirect(string $to):void {
+        $location = $to;
+        header('Location: '.$location);
+        exit();
     }
 }
