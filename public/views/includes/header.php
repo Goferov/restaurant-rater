@@ -22,10 +22,20 @@
                     <i class="fa-solid fa-envelope m-mobile-0"></i> <span class="d-mobile-none">redakcja@topkebab.pl</span>
                 </a>
             </div>
-            <div>
-                <a id="login-btn" href="#" class="contact-item">
-                    <i class="fa-solid fa-user m-mobile-0"></i> <span class="d-mobile-none">Zaloguj się</span>
-                </a>
+            <div class="d-flex">
+
+                <?php if($is_login): ?>
+                    <a href="/panel" class="contact-item">
+                        <i class="fa-solid fa-user me-1"></i> <span class="d-mobile-none">Twoje konto</span>
+                    </a>
+                    <a href="/logout" class="contact-item">
+                        <i class="fa-solid fa-right-from-bracket m-mobile-0"></i> <span class="d-mobile-none">Wyloguj się</span>
+                    </a>
+                <?php else: ?>
+                    <a id="login-btn" href="#" class="contact-item">
+                        <i class="fa-solid fa-user m-mobile-0"></i> <span class="d-mobile-none">Zaloguj się</span>
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
     </div>

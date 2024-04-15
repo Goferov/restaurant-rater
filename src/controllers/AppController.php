@@ -20,6 +20,7 @@ class AppController {
     {
         $templatePath = 'public/views/pages/'. $page.'.php';
         $output = 'File not found';
+        $is_login = $this->session->get('user_session');
 
         if(file_exists($templatePath)) {
             extract($variables);
