@@ -12,5 +12,6 @@ use App\Router;
 $path = trim($_SERVER['REQUEST_URI'], '/');
 
 Router::get('', 'HomepageController');
+Router::get('panel', 'PanelController');
 
 Router::run($path);
