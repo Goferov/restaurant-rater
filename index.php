@@ -7,11 +7,10 @@ spl_autoload_register(function(string  $classNamespace) {
 });
 
 
-use App\Controllers\AppController;
+use App\Router;
 
 $path = trim($_SERVER['REQUEST_URI'], '/');
-$path = parse_url( $path, PHP_URL_PATH);
-$action = explode("/", $path)[0];
-$action = $action == null ? 'login': $action;
 
-(new AppController())->render($action);
+Router::get('', 'HomepageController');
+
+Router::run($path);
