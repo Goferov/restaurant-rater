@@ -1,7 +1,6 @@
 <?php
 
 namespace App;
-
 class Router
 {
     public static array $routes;
@@ -24,7 +23,7 @@ class Router
         if (!array_key_exists($action, self::$routes))
             die("Wrong url!");
 
-        $controller = self::$routes[$action];
+        $controller = 'App\Controllers\\' . self::$routes[$action];
         $object = new $controller;
         $action = $action ?: 'index';
         $id = $urlParts[1] ?? '';
