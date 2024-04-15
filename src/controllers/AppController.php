@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controllers;
 
 use App\Request;
 
@@ -14,7 +14,7 @@ class AppController {
     }
     public function render(string $template = null, array $variables = [])
     {
-        $templatePath = 'public/view/'. $template.'.html';
+        $templatePath = 'public/views/'. $template.'.html';
         $output = 'File not found';
 
         if(file_exists($templatePath)) {

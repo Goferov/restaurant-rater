@@ -7,7 +7,7 @@ spl_autoload_register(function(string  $classNamespace) {
 });
 
 
-use App\Controller\AppController;
+use App\Controllers\AppController;
 
 $path = trim($_SERVER['REQUEST_URI'], '/');
 $path = parse_url( $path, PHP_URL_PATH);
