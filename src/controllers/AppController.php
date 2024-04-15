@@ -3,15 +3,18 @@
 namespace App\Controllers;
 
 use App\Request;
+use App\Session;
 
 class AppController {
 
     protected Request $request;
+    protected Session $session;
     private static string $main_template_path = 'public/views/template.php';
 
     function __construct()
     {
         $this->request = new Request($_GET, $_POST, $_SERVER);
+        $this->session = new Session();
     }
     public function render(string $page = null, array $variables = []): void
     {
