@@ -69,7 +69,7 @@ main {
 }
 
 .f-24 {
-    font-size: 2.4rem;
+    font-size: 2.4rem!important;
 }
 
 .f-20 {
@@ -262,6 +262,10 @@ main {
 }
 .text-center {
     text-align: center;
+}
+
+.text-justify {
+    text-align: justify;
 }
 
 /************* HEADER *************/
@@ -779,6 +783,13 @@ textarea.input {
     column-gap: 35px;
 }
 
+/*CONTACT*/
+
+.contact {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
 @media only screen and (max-width: 1199px) {
     .restaurant-list, .opinions-wrap, .restaurant {
         grid-template-columns: repeat(2, 1fr);
@@ -908,7 +919,7 @@ textarea.input {
         line-height: 39px;
     }
 
-    .restaurant-list, .restaurant, .opinions-wrap {
+    .restaurant-list, .restaurant, .opinions-wrap, .contact {
         grid-template-columns: 1fr;
     }
 
