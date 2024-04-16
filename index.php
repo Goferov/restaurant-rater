@@ -13,5 +13,7 @@ $path = trim($_SERVER['REQUEST_URI'], '/');
 
 Router::get('', 'HomepageController');
 Router::get('panel', 'PanelController');
+Router::post('login', 'UserController');
+Router::post('register', 'UserController');
 
 Router::run($path);
