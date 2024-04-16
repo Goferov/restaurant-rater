@@ -46,12 +46,12 @@
     <div class="modal-overlay"></div>
     <div class="modal-content">
         <h3 class="text-uppercase text-center f-semibold">Logowanie</h3>
-        <form method="post">
+        <form method="post" action="/login">
             <div class="mb-1">
-                <input class="input" type="text" name="login" placeholder="Login"/>
+                <input class="input" type="text" name="login" placeholder="Login" required/>
             </div>
             <div class="mb-1">
-                <input class="input" type="password" name="password" placeholder="Hasło"/>
+                <input class="input" type="password" name="password" placeholder="Hasło" required/>
             </div>
             <div class="mb-1">
                 <button class="button button-primary f-24 w-100 f-medium text-uppercase">Zaloguj się</button>
