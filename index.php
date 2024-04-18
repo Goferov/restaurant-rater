@@ -15,7 +15,7 @@ Router::get('', 'HomepageController');
 Router::get('panel', 'PanelController');
 Router::get('restaurant', 'RestaurantController');
 Router::get('contact', 'ContactController');
-Router::post('addRestaurant', 'AddRestaurantController');
+Router::post('addRestaurant', 'RestaurantController');
 
 Router::post('login', 'UserController');
 Router::post('register', 'UserController');

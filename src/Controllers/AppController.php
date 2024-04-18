@@ -32,7 +32,7 @@ class AppController {
     }
 
     protected function redirect(string $to):void {
-        $location = $to;
+        $location = 'http://' . $_SERVER['HTTP_HOST'] . $to;
         header('Location: '.$location);
         exit();
     }

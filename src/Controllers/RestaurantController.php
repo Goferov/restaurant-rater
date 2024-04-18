@@ -10,5 +10,7 @@ class RestaurantController extends AppController {
         $this->render('list');
     }
 
-
+    public function addRestaurant() {
+        $this->render('addRestaurant');
+    }
 }
