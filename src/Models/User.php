@@ -4,15 +4,15 @@ namespace App\Models;
 
 class User {
     private int $id;
-    private string $login;
+    private string $name;
     private string $password;
     private string $email;
     private int $roleId;
 
-    public function __construct(int $id, string $login, string $password, string $email, int $roleId)
+    public function __construct(int $id, string $name, string $password, string $email, int $roleId)
     {
         $this->id = $id;
-        $this->login = $login;
+        $this->name = $name;
         $this->password = $password;
         $this->email = $email;
         $this->roleId = $roleId;
@@ -28,14 +28,14 @@ class User {
         $this->id = $id;
     }
 
-    public function getLogin(): string
+    public function getName(): string
     {
-        return $this->login;
+        return $this->name;
     }
 
-    public function setLogin(string $login): void
+    public function setNme(string $name): void
     {
-        $this->login = $login;
+        $this->name = $name;
     }
 
     public function getPassword(): string
