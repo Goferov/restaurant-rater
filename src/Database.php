@@ -6,16 +6,20 @@ use PDOException;
 
 
 class Database {
-    private $username;
-    private $password;
-    private $host;
-    private $database;
+    private string $username;
+    private string $password;
+    private string $host;
+    private string $database;
+    private int $port;
 
     public function __construct() {
-        $this->username = Config::get('username');
-        $this->password = Config::get('password');
-        $this->host = Config::get('host');
-        $this->database = Config::get('database');
+        $dbConfig = Config::get('db');
+
+        $this->username = $dbConfig['username'];
+        $this->password = $dbConfig['password'];
+        $this->host = $dbConfig['host'];
+        $this->database = $dbConfig['database'];
+        $this->port = $dbConfig['port'];
     }
 
     public function connect() {
@@ -23,7 +27,7 @@ class Database {
         {
             $conn = new PDO
             (
-                "pgsql:host=$this->host;port=5432;dbname=$this->database",
+                "pgsql:host=$this->host;port=$this->port;dbname=$this->database",
                 $this->username,
                 $this->password,
                 ["sslmode"  => "prefer"]
