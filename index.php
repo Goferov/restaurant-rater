@@ -9,7 +9,8 @@ spl_autoload_register(function(string  $classNamespace) {
 
 use App\Router;
 
-$path = trim($_SERVER['REQUEST_URI'], '/');
+$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$path = trim($path, '/');
 
 Router::get('', 'HomepageController');
 Router::get('panel', 'PanelController');
