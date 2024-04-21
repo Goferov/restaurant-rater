@@ -6,10 +6,13 @@ class Request {
     private array $get;
     private array $post;
     private array $server;
-    public function __construct(array $get, array $post, array $server) {
+    private array $file;
+
+    public function __construct(array $get, array $post, array $server, array $file) {
         $this->get = $get;
         $this->post = $post;
         $this->server = $server;
+        $this->file = $file;
     }
 
     public function isPost(): bool {
@@ -30,5 +33,9 @@ class Request {
 
     public function server(string $name) {
         return $this->server[$name] ?? null;
+    }
+
+    public function file(string $name) {
+        return $this->file[$name] ?? null;
     }
 }

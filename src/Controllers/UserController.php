@@ -35,7 +35,8 @@ class UserController extends AppController {
         $this->session->set('userSession', [
             'id' => $user->getName(),
             'email' => $user->getEmail(),
-            'name' => $user->getName()
+            'name' => $user->getName(),
+            'roleId' => $user->getRoleId(),
             ]
         );
         $this->redirect('/panel');

@@ -14,7 +14,7 @@ class AppController {
 
     public function __construct()
     {
-        $this->request = new Request($_GET, $_POST, $_SERVER);
+        $this->request = new Request($_GET, $_POST, $_SERVER, $_FILES);
         $this->session = new Session();
     }
     public function render(string $page = null, array $variables = []): void
