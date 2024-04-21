@@ -25,11 +25,11 @@ class UserController extends AppController {
 
         if($user) {
             if (!password_verify($password, $user->getPassword())) {
-                $this->redirect($redirect, ['message' => 'wrongPassword']);
+                $this->redirect($redirect, ['loginMessage' => 'wrongPassword']);
             }
         }
         else {
-            $this->redirect($redirect, ['message' => 'userNotExist']);
+            $this->redirect($redirect, ['loginMessage' => 'userNotExist']);
         }
 
         $this->session->set('userSession', [

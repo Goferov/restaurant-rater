@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Config;
 use App\Request;
 use App\Session;
 
@@ -20,7 +21,7 @@ class AppController {
     {
         $templatePath = 'public/views/pages/'. $page.'.php';
         $output = 'File not found';
-        $is_login = $this->session->get('user_session');
+        $variables = array_merge($variables, $this->getGlobalVariables());
 
         if(file_exists($templatePath)) {
             extract($variables);
@@ -31,9 +32,33 @@ class AppController {
         print $output;
     }
 
-    protected function redirect(string $to):void {
-        $location = 'http://' . $_SERVER['HTTP_HOST'] . $to;
+    protected function redirect(string $to, array $params = []):void {
+        $location = 'http://' . $this->request->server('HTTP_HOST') . $to . $this->buildUrlParams($params);
         header('Location: '.$location);
         exit();
     }
+
+    private function buildUrlParams($params) {
+        if($params) {
+            $queryParams = [];
+            foreach ($params as $key=>$param) {
+                $queryParams[] = urlencode($key) . '=' . urlencode($param);
+            }
+            $queryParams = implode('&',$queryParams);
+            return '?' . $queryParams;
+        }
+    }
+
+    private function getGlobalVariables(): array {
+        $messageList = Config::get('messages');
+        $loginMessageKey = $this->request->get('loginMessage');
+        $registerMessageKey = $this->request->get('loginMessage');
+
+        return [
+            'isLogin' => $this->session->get('userSession'),
+            'loginMessage' => $messageList[$loginMessageKey] ?? null,
+            'registerMessage' =>$messageList[$registerMessageKey] ?? null,
+        ];
+    }
+
 }

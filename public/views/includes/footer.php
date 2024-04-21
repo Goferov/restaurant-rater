@@ -42,11 +42,12 @@
     </div>
 </footer>
 <?php if(!$isLogin): ?>
-<div id="login-modal" class="modal">
+<div id="login-modal" class="modal <?= $loginMessage ? 'active' : '' ?>">
     <div class="modal-overlay"></div>
     <div class="modal-content">
         <h3 class="text-uppercase text-center f-semibold">Logowanie</h3>
         <form method="post" action="/login">
+            <?= $loginMessage ? '<p class="f-18 mb-2 f-semibold text-center">'.$loginMessage.'</p>' : '' ?>
             <div class="mb-1">
                 <input class="input" type="text" name="email" placeholder="Email" required/>
             </div>
@@ -66,8 +67,9 @@
 <div id="register-modal" class="modal">
     <div class="modal-overlay"></div>
     <div class="modal-content">
-        <h3 class="text-uppercase text-center f-semibold">Rejestracja</h3>
+        <h3 class="text-uppercase text-center f-semibold <?= $registerMessage ? 'active' : '' ?>">Rejestracja</h3>
         <form method="post" action="/register">
+            <?= $registerMessage ? '<p class="f-18 mb-2 f-semibold text-center">'.$registerMessage.'</p>' : '' ?>
             <div class="mb-1">
                 <input class="input" type="text" name="name" placeholder="Nazwa" required/>
             </div>
