@@ -11,10 +11,15 @@ document.querySelectorAll('.open-modal').forEach(elem => {
         const modal = document.getElementById(modalId);
         if (modal) {
             modal.classList.add('active');
-            const overlay = modal.querySelector('.modal-overlay');
-            if (overlay) {
-                overlay.addEventListener('click', () => modal.classList.remove('active'));
-            }
+        }
+    });
+});
+
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', () => {
+        const modal = overlay.closest('.modal');
+        if (modal) {
+            modal.classList.remove('active');
         }
     });
 });
