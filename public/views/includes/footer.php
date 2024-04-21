@@ -41,14 +41,14 @@
         </div>
     </div>
 </footer>
-
+<?php if(!$isLogin): ?>
 <div id="login-modal" class="modal">
     <div class="modal-overlay"></div>
     <div class="modal-content">
         <h3 class="text-uppercase text-center f-semibold">Logowanie</h3>
         <form method="post" action="/login">
             <div class="mb-1">
-                <input class="input" type="text" name="login" placeholder="Login" required/>
+                <input class="input" type="text" name="email" placeholder="Email" required/>
             </div>
             <div class="mb-1">
                 <input class="input" type="password" name="password" placeholder="Hasło" required/>
@@ -69,13 +69,16 @@
         <h3 class="text-uppercase text-center f-semibold">Rejestracja</h3>
         <form method="post" action="/register">
             <div class="mb-1">
-                <input class="input" type="text" name="login" placeholder="Login" required/>
+                <input class="input" type="text" name="name" placeholder="Nazwa" required/>
             </div>
             <div class="mb-1">
                 <input class="input" type="email" name="email" placeholder="Email" required/>
             </div>
             <div class="mb-1">
                 <input class="input" type="password" name="password" placeholder="Hasło" required/>
+            </div>
+            <div class="mb-1">
+                <input class="input" type="password" name="confirmedPassword" placeholder="Powtórz hasło" required/>
             </div>
             <div class="mb-1">
                 <button class="button button-primary f-24 w-100 f-medium text-uppercase">Zarejestruj się</button>
@@ -86,7 +89,7 @@
         </form>
     </div>
 </div>
-
+<?php endif; ?>
 </body>
 <script src="/public/js/scripts.js"></script>
 </html>

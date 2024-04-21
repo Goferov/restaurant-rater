@@ -20,5 +20,6 @@ Router::post('addRestaurant', 'RestaurantController');
 
 Router::post('login', 'UserController');
 Router::post('register', 'UserController');
+Router::get('logout', 'UserController');
 
 Router::run($path);

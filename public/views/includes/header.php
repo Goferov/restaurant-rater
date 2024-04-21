@@ -25,7 +25,7 @@
             </div>
             <div class="d-flex">
 
-                <?php if($is_login): ?>
+                <?php if($isLogin): ?>
                     <a href="/panel" class="contact-item">
                         <i class="fa-solid fa-user me-1"></i> <span class="d-mobile-none">Twoje konto</span>
                     </a>
