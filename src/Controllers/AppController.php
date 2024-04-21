@@ -38,6 +38,15 @@ class AppController {
         exit();
     }
 
+    protected function getPreviousPage() {
+        $referer = $this->request->server('HTTP_REFERER');
+        if (!isset($referer)) {
+            return null;
+        }
+        $parsedUrl = parse_url($referer);
+        return $parsedUrl['path'] ?? null;
+    }
+
     private function buildUrlParams($params) {
         if($params) {
             $queryParams = [];
@@ -52,12 +61,12 @@ class AppController {
     private function getGlobalVariables(): array {
         $messageList = Config::get('messages');
         $loginMessageKey = $this->request->get('loginMessage');
-        $registerMessageKey = $this->request->get('loginMessage');
+        $registerMessageKey = $this->request->get('registerMessage');
 
         return [
             'isLogin' => $this->session->get('userSession'),
             'loginMessage' => $messageList[$loginMessageKey] ?? null,
-            'registerMessage' =>$messageList[$registerMessageKey] ?? null,
+            'registerMessage' => $messageList[$registerMessageKey] ?? null,
         ];
     }
 

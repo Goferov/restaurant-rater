@@ -20,7 +20,7 @@ class UserController extends AppController {
 
         $email = $this->request->post('email');
         $password = $this->request->post('password');
-        $redirect = $this->request->post('redirect') ?? '/';
+        $redirect = $this->getPreviousPage();
         $user = $this->userRepository->getUser($email);
 
         if($user) {
@@ -38,7 +38,7 @@ class UserController extends AppController {
             'name' => $user->getName()
             ]
         );
-        $this->redirect($redirect);
+        $this->redirect('/panel');
     }
 
     public function register(): void {
@@ -50,24 +50,24 @@ class UserController extends AppController {
         $name = $this->request->post('name');
         $password = $this->request->post('password');
         $confirmedPassword = $this->request->post('confirmedPassword');
-        $redirect = $this->request->post('redirect') ?? '';
+        $redirect = $this->getPreviousPage();
         $role = 2; // TODO: IMPLEMENT ROLE MANAGEMENT
 
         if(!$this->isValidPassword($password)) {
-            $this->redirect($redirect, ['message' => 'invalidPassword']);
+            $this->redirect($redirect, ['registerMessage' => 'invalidPassword']);
         }
 
         if ($password !== $confirmedPassword)  {
-            $this->redirect($redirect, ['message' => 'passwordsNotMatch']);
+            $this->redirect($redirect, ['registerMessage' => 'passwordsNotMatch']);
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->redirect($redirect, ['message' => 'wrongEmail']);
+            $this->redirect($redirect, ['registerMessage' => 'wrongEmail']);
         }
 
         $user = new User(null, $name, password_hash($password, PASSWORD_BCRYPT), $email, $role);
         $this->userRepository->addUser($user);
-        $this->redirect($redirect, ['message' => 'registerComplete']);
+        $this->redirect($redirect, ['registerMessage' => 'registerComplete']);
     }
 
     public function changePassword() {
