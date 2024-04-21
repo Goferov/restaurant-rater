@@ -3,13 +3,13 @@
 namespace App\Models;
 
 class User {
-    private int $id;
+    private ?int $id;
     private string $name;
     private string $password;
     private string $email;
     private int $roleId;
 
-    public function __construct(int $id, string $name, string $password, string $email, int $roleId)
+    public function __construct(?int $id, string $name, string $password, string $email, int $roleId)
     {
         $this->id = $id;
         $this->name = $name;

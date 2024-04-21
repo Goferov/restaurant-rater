@@ -6,8 +6,7 @@ use App\Models\User;
 
 class UserRepository extends Repository
 {
-    public function getUser(string $email): ?User
-    {
+    public function getUser(string $email): ?User {
         $stmt = $this->database->connect()->prepare
         ('
     SELECT * FROM public.is_user WHERE email = :email
@@ -29,5 +28,29 @@ class UserRepository extends Repository
             $user['email'],
             $user['role_id']
         );
+    }
+
+    public function addUser(User $user): void {
+        $stmt = $this->database->connect()->prepare
+        ('
+            INSERT INTO public.is_user (name, password, email, role_id) VALUES (?, ?, ?, ?)
+        ');
+
+        $stmt->execute([
+            $user->getName(),
+            $user->getPassword(),
+            $user->getEmail(),
+            $user->getRoleId()
+        ]);
+    }
+
+    public function updateUserPassword(int $id, string $newPassword): void {
+        $stmt = $this->database->connect()->prepare(
+            'UPDATE public.is_user SET password = :password WHERE user_id = :id'
+        );
+
+        $stmt->bindParam(':password', $newPassword, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
     }
 }
