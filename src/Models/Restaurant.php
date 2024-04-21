@@ -3,7 +3,7 @@
 namespace App\Models;
 
 class Restaurant {
-    private int $id;
+    private ?int $id;
     private string $name;
     private string $description;
     private string $image;
@@ -11,7 +11,7 @@ class Restaurant {
     private string $email;
     private Address $address;
 
-    public function __construct(int $id, string $name, string $description, string $image, string $website, string $email, Address $address)
+    public function __construct(?int $id, string $name, string $description, string $image, string $website, string $email, Address $address)
     {
         $this->id = $id;
         $this->name = $name;

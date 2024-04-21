@@ -3,14 +3,14 @@
 namespace App\Models;
 
 class Address {
-    private int $id;
+    private ?int $id;
     private string $street;
     private string $city;
     private string $postalCode;
     private string $houseNo;
     private string $apartmentNo;
 
-    public function __construct(int $id, string $street, string $city, string $postalCode, string $houseNo, string $apartmentNo)
+    public function __construct(?int $id, string $street, string $city, string $postalCode, string $houseNo, string $apartmentNo)
     {
         $this->id = $id;
         $this->street = $street;
