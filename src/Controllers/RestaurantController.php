@@ -21,10 +21,11 @@ class RestaurantController extends AppController {
 
     public function restaurant($restaurantId = null) {
         if($restaurantId) {
-            $this->render('details');
+            $restaurant = $this->restaurantRepository->getRestaurant($restaurantId);
+            $this->render('details', ['restaurant' => $restaurant]);
         }
         else {
-            $this->render('list');
+            $this->render('list', ['restaurants' => $this->restaurantRepository->getRestaurants()]);
         }
     }
 

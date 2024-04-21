@@ -21,77 +21,31 @@
     </div>
     <h2 class="section-title">Restauracje</h2>
     <div class="restaurant-list">
-      <div>
-        <a href="#" class="restaurant-box d-block">
-          <div class="image">
-            <img src="/public/img/box.jpg" alt=""/>
-          </div>
-          <div class="restaurant-details">
-            <h3>Efes kebab</h3>
-            <div class="tag-list">
-              <div><i class="fa-solid fa-location-dot"></i> Kraków</div>
-              <div><i class="fa-solid fa-globe"></i> www.efes.pl</div>
+        <?php foreach ($restaurants as $resturant): ?>
+            <div>
+                <a href="/restaurant/<?= $resturant->getId() ?>" class="restaurant-box d-block">
+                    <div class="image">
+                        <img src="/public/uploads/<?= $resturant->getImage() ?>" alt=""/>
+                    </div>
+                    <div class="restaurant-details">
+                        <h3><?= $resturant->getName() ?></h3>
+                        <div class="tag-list">
+                            <div><i class="fa-solid fa-location-dot"></i> <?= $resturant->getAddress()->getCity() ?></div>
+                            <div><i class="fa-solid fa-globe"></i> <?= $resturant->getWebsite() ?></div>
+                        </div>
+                        <div class="rate d-flex ">
+                            <div class="stars">
+                                <i class="fa-solid fa-star f-yellow"></i>
+                                <i class="fa-solid fa-star f-yellow"></i>
+                                <i class="fa-solid fa-star f-yellow"></i>
+                                <i class="fa-solid fa-star f-yellow"></i>
+                                <i class="fa-solid fa-star f-yellow"></i>
+                            </div>
+                            <div class="f-semibold">4.9/5</div>
+                        </div>
+                    </div>
+                </a>
             </div>
-            <div class="rate d-flex ">
-              <div class="stars">
-                <i class="fa-solid fa-star f-yellow"></i>
-                <i class="fa-solid fa-star f-yellow"></i>
-                <i class="fa-solid fa-star f-yellow"></i>
-                <i class="fa-solid fa-star f-yellow"></i>
-                <i class="fa-solid fa-star f-yellow"></i>
-              </div>
-              <div class="f-semibold">4.9/5</div>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div>
-        <a href="#" class="restaurant-box d-block">
-          <div class="image">
-            <img src="/public/img/box.jpg" alt=""/>
-          </div>
-          <div class="restaurant-details">
-            <h3>Efes kebab</h3>
-            <div class="tag-list">
-              <div><i class="fa-solid fa-location-dot"></i> Kraków</div>
-              <div><i class="fa-solid fa-globe"></i> www.efes.pl</div>
-            </div>
-            <div class="rate d-flex ">
-              <div class="stars">
-                <i class="fa-solid fa-star f-yellow"></i>
-                <i class="fa-solid fa-star f-yellow"></i>
-                <i class="fa-solid fa-star f-yellow"></i>
-                <i class="fa-solid fa-star f-yellow"></i>
-                <i class="fa-solid fa-star f-yellow"></i>
-              </div>
-              <div class="f-semibold">4.9/5</div>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div>
-        <a href="#" class="restaurant-box d-block">
-          <div class="image">
-            <img src="/public/img/box.jpg" alt=""/>
-          </div>
-          <div class="restaurant-details">
-            <h3>Efes kebab</h3>
-            <div class="tag-list">
-              <div><i class="fa-solid fa-location-dot"></i> Kraków</div>
-              <div><i class="fa-solid fa-globe"></i> www.efes.pl</div>
-            </div>
-            <div class="rate d-flex ">
-              <div class="stars">
-                <i class="fa-solid fa-star f-yellow"></i>
-                <i class="fa-solid fa-star f-yellow"></i>
-                <i class="fa-solid fa-star f-yellow"></i>
-                <i class="fa-solid fa-star f-yellow"></i>
-                <i class="fa-solid fa-star f-yellow"></i>
-              </div>
-              <div class="f-semibold">4.9/5</div>
-            </div>
-          </div>
-        </a>
-      </div>
+        <?php endforeach; ?>
     </div>
   </div>

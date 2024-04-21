@@ -20,6 +20,11 @@ class Address {
         $this->apartmentNo = $apartmentNo;
     }
 
+    public function __toString() {
+        $apartmentPart = $this->apartmentNo !== '' ? "/{$this->apartmentNo}" : '';
+        return "{$this->street} {$this->houseNo}{$apartmentPart}, {$this->postalCode} {$this->city}";
+    }
+
     public function getId(): int
     {
         return $this->id;
