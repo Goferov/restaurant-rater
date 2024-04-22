@@ -11,7 +11,7 @@ class RestaurantRepository extends Repository {
         $result = array();
         $sql = '
         SELECT 
-            restaurant_id, name, description, image, email, website, a.address_id, street, city, postal_code, house_no, apartment_no 
+            restaurant_id, name, description, image, email, phone, website, a.address_id, street, city, postal_code, house_no, apartment_no 
         FROM public.is_restaurant r 
         INNER JOIN public.is_address a ON r.address_id = a.address_id 
         ORDER BY restaurant_id
@@ -47,6 +47,7 @@ class RestaurantRepository extends Repository {
                 $restaurant['image'],
                 $restaurant['website'],
                 $restaurant['email'],
+                $restaurant['phone'],
                 $address
             );
         }
@@ -56,7 +57,7 @@ class RestaurantRepository extends Repository {
     public function getRestaurant($id) {
         $sql = '
         SELECT 
-            restaurant_id, name, description, image, email, website, a.address_id, street, city, postal_code, house_no, apartment_no 
+            restaurant_id, name, description, image, email, phone, website, a.address_id, street, city, postal_code, house_no, apartment_no 
         FROM public.is_restaurant r 
         INNER JOIN public.is_address a ON r.address_id = a.address_id 
         WHERE restaurant_id = :id
@@ -87,6 +88,7 @@ class RestaurantRepository extends Repository {
             $restaurantData['image'],
             $restaurantData['website'],
             $restaurantData['email'],
+            $restaurantData['phone'],
             $address
         );
 
@@ -115,7 +117,7 @@ class RestaurantRepository extends Repository {
         $addressId = $dbh->lastInsertId();
         $stmt = $this->database->connect()->prepare
         ('
-            INSERT INTO public.is_restaurant (address_id, name, description, image, email, website) VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO public.is_restaurant (address_id, name, description, image, email, phone, website) VALUES (?, ?, ?, ?, ?, ?, ?)
         ');
 
         $stmt->execute([
@@ -124,6 +126,7 @@ class RestaurantRepository extends Repository {
             $restaurant->getDescription(),
             $restaurant->getImage(),
             $restaurant->getEmail(),
+            $restaurant->getPhone(),
             $restaurant->getWebsite(),
         ]);
     }

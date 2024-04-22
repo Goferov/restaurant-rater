@@ -9,9 +9,10 @@ class Restaurant {
     private string $image;
     private string $website;
     private string $email;
+    private string $phone;
     private Address $address;
 
-    public function __construct(?int $id, string $name, string $description, string $image, string $website, string $email, Address $address)
+    public function __construct(?int $id, string $name, string $description, string $image, string $website, string $email, string $phone, Address $address)
     {
         $this->id = $id;
         $this->name = $name;
@@ -19,6 +20,7 @@ class Restaurant {
         $this->image = $image;
         $this->website = $website;
         $this->email = $email;
+        $this->phone = $phone;
         $this->address = $address;
     }
 
@@ -80,6 +82,16 @@ class Restaurant {
     public function setEmail(string $email): void
     {
         $this->email = $email;
+    }
+
+    public function getPhone(): string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): void
+    {
+        $this->phone = $phone;
     }
 
     public function getAddress(): Address

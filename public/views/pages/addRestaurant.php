@@ -3,6 +3,7 @@
     <form action="/saveRestaurant" method="post" enctype="multipart/form-data">
         <input class="input py-1 mb-1" placeholder="Nazwa*" type="text" name="name" required>
         <input class="input py-1 mb-1" placeholder="Email" type="email" name="email">
+        <input class="input py-1 mb-1" placeholder="Telefon" type="text" name="phone">
         <input class="input py-1 mb-1" placeholder="Strona internetowa" type="url" name="website">
         <textarea class="input py-1" name="description" rows="5" placeholder="Opis"></textarea>
         <input type="file" class=" py-1 mb-1 f-18"  name="file">

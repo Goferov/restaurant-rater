@@ -67,6 +67,7 @@ class RestaurantController extends AppController {
                 $newFileName,
                 $this->request->post('website', ''),
                 $this->request->post('email', ''),
+                $this->request->post('phone', ''),
                 $address
             );
 
