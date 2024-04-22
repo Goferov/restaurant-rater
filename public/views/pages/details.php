@@ -20,10 +20,10 @@
           <img src="/public/uploads/<?= $restaurant->getImage() ?>" alt=""/>
         </div>
         <div class="info mb-2">
-          <p><i class="fa-solid fa-phone-flip"></i> <a href="#">511543756</a></p>
+          <?= $restaurant->getPhone() ? '<p><i class="fa-solid fa-phone-flip"></i> <a href="tel:'.$restaurant->getPhone().'">'.$restaurant->getPhone().'</a></p>' : '' ?>
           <?= $restaurant->getEmail() ? '<p><i class="fa-solid fa-envelope"></i> <a href="mailto:'.$restaurant->getEmail().'">'.$restaurant->getEmail().'</a></p>' : "" ?>
           <?= $restaurant->getAddress() ? '<p><i class="fa-solid fa-location-dot"></i> '.$restaurant->getAddress().'</p>' : "" ?>
-          <?= $restaurant->getWebsite() ? '<p><i class="fa-solid fa-globe"></i> <a href="'.$restaurant->getWebsite().'">'.$restaurant->getWebsite().'</a></p>' : "" ?>
+          <?= $restaurant->getWebsite() ? '<p><i class="fa-solid fa-globe"></i> <a href="'.$restaurant->getWebsite().'" target="_blank">'.$restaurant->getWebsite().'</a></p>' : "" ?>
         </div>
           <?= $restaurant->getDescription() ? ' <p class="description f-medium">'.$restaurant->getDescription() .'</p>'  : '' ?>
       </div>
