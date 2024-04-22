@@ -9,8 +9,9 @@ class Review {
     private string $review;
     private string $addDate;
     private string $userName;
+    private int $userId;
 
-    public function __construct(int $id, int $restaurantId, int $rate, string $review, string $addDate, string $userName)
+    public function __construct(int $id, int $restaurantId, int $rate, string $review, string $addDate, string $userName, int $userId)
     {
         $this->id = $id;
         $this->restaurantId = $restaurantId;
@@ -18,6 +19,7 @@ class Review {
         $this->review = $review;
         $this->addDate = $addDate;
         $this->userName = $userName;
+        $this->userId = $userId;
     }
 
     public function getId(): int
@@ -78,6 +80,16 @@ class Review {
     public function setUserName(string $userName): void
     {
         $this->userName = $userName;
+    }
+
+    public function getUserId(): string
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(string $userId): void
+    {
+        $this->userId = $userId;
     }
 
 
