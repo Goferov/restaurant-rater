@@ -25,7 +25,8 @@ class RestaurantController extends AppController {
             $this->render('details', ['restaurant' => $restaurant]);
         }
         else {
-            $this->render('list', ['restaurants' => $this->restaurantRepository->getRestaurants()]);
+            $loggedUser = $this->session->get('userSession');
+            $this->render('list', ['restaurants' => $this->restaurantRepository->getRestaurants(), 'roleId' => $loggedUser['roleId'] ?? null]);
         }
     }
 

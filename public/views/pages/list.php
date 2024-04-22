@@ -1,6 +1,9 @@
 
   <div class="container">
-    <h2 class="section-title">Filtry</h2>
+    <div class="d-flex align-items-center justify-content-between mb-2">
+        <h2 class="section-title mb-0">Filtry</h2>
+        <?= $roleId == 1 ? '<a href="/addRestaurant" title="Dodaj restaurację" class="button button-primary">Dodaj restaurację</a>' : '' ?>
+    </div>
     <div class="filters-wrapper bg-lgray mb-1">
       <div class="search-field position-relative">
         <input type="search" class="input" placeholder="Szukaj..." name="search"/>
