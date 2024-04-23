@@ -34,7 +34,7 @@
         <h2 class="section-title m-mobile-0 d-none d-mobile-block">Opinie użytkowników</h2>
         <div class="opinion-list">
             <?php foreach ($reviewList as $review): ?>
-                <div class="opinion-box">
+                <div class="opinion-box mb-2">
                     <div class="user-name d-flex align-items-center mb-1 f-medium">
                         <?= $review->getUserName() ?>
                         <span></span>
