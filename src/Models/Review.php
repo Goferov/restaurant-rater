@@ -3,15 +3,15 @@
 namespace App\Models;
 
 class Review {
-    private int $id;
+    private ?int $id;
     private int $restaurantId;
     private int $rate;
     private string $review;
-    private string $addDate;
-    private string $userName;
-    private int $userId;
+    private ?string $addDate;
+    private ?string $userName;
+    private ?int $userId;
 
-    public function __construct(int $id, int $restaurantId, int $rate, string $review, string $addDate, string $userName, int $userId)
+    public function __construct(?int $id, int $restaurantId, int $rate, string $review, int $userId, string $addDate = null, string $userName = null)
     {
         $this->id = $id;
         $this->restaurantId = $restaurantId;
@@ -72,7 +72,7 @@ class Review {
         $this->addDate = $addDate;
     }
 
-    public function getUserName(): string
+    public function getUserName(): ?string
     {
         return $this->userName;
     }

@@ -18,6 +18,7 @@ Router::get('restaurant', 'RestaurantController');
 Router::get('contact', 'ContactController');
 Router::post('addRestaurant', 'RestaurantController');
 Router::post('saveRestaurant', 'RestaurantController');
+Router::post('saveReview', 'RestaurantController');
 
 Router::post('login', 'UserController');
 Router::post('register', 'UserController');

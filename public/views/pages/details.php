@@ -33,22 +33,26 @@
       <div class="opinions-wrap">
         <h2 class="section-title m-mobile-0 d-none d-mobile-block">Opinie użytkowników</h2>
         <div class="opinion-list">
-          <div class="opinion-box">
-            <div class="user-name d-flex align-items-center mb-1 f-medium">
-              User2115
-              <span></span>
-              <div class="user-rate f-bold">4.9/5</div>
-            </div>
-            <div class="review ">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at venenatis massa. Praesent pretium quis risus id vestibulum. Nam pharetra sodales eros, non rhoncus felis. Nunc rhoncus rhoncus sollicitudin. Etiam malesuada consectetur lorem
-            </div>
-          </div>
+            <?php foreach ($reviewList as $review): ?>
+                <div class="opinion-box">
+                    <div class="user-name d-flex align-items-center mb-1 f-medium">
+                        <?= $review->getUserName() ?>
+                        <span></span>
+                        <div class="user-rate f-bold"><?= $review->getRate() ?>/5</div>
+                    </div>
+                    <div class="review ">
+                        <?= $review->getReview() ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
-        <form class="opinion-form">
-          <h3 class="section-title">Dodaj opinię</h3>
-          <input class="input mb-2 py-1" placeholder="Ocena*" name="rate" type="number" required/>
-          <textarea class="input mb-2 py-1" name="review" rows="5" placeholder="Treść*" required></textarea>
-          <button class="button button-primary">Dodaj opinie</button>
+        <form class="opinion-form" action="/saveReview" method="post">
+            <?= $message ? '<p class="'.($success ? 'f-green' : 'f-red').' f-semibold">'.$message.'</p>' : '' ?>
+            <h3 class="section-title">Dodaj opinię</h3>
+            <input class="input mb-2 py-1" min="1" max="5" step="1" placeholder="Ocena*" name="rate" value="<?= $lastRate ?>" type="number" required/>
+            <textarea class="input mb-2 py-1" name="review" rows="5" placeholder="Treść*" required><?= $lastReview ?></textarea>
+            <input type="hidden" name="restaurant_id" value="<?= $restaurant->getId() ?>">
+            <button class="button button-primary">Dodaj opinie</button>
         </form>
       </div>
     </section>

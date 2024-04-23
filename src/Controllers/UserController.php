@@ -33,7 +33,7 @@ class UserController extends AppController {
         }
 
         $this->session->set('userSession', [
-            'id' => $user->getName(),
+            'id' => $user->getId(),
             'email' => $user->getEmail(),
             'name' => $user->getName(),
             'roleId' => $user->getRoleId(),

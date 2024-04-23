@@ -10,9 +10,9 @@ class ReviewRepository extends Repository {
         $result = array();
         $sql = '
         SELECT 
-            review_id, restaurant_id, user_id, rate, review, name
+            review_id, restaurant_id, r.user_id, rate, review, r.create_at, name
         FROM public.is_review r INNER JOIN public.is_user u ON u.user_id = r.user_id
-        WHERE status = true AND publicate = true AND restaurant_id = :restaurant_id
+        WHERE r.status = true AND r.publicate = true AND restaurant_id = :restaurant_id
         ORDER BY create_at
     ';
 
@@ -27,9 +27,9 @@ class ReviewRepository extends Repository {
                 $review['restaurant_id'],
                 $review['rate'],
                 $review['review'],
+                $review['user_id'],
                 $review['create_at'],
                 $review['name'],
-                $review['user_id'],
             );
         }
         return $result;
@@ -47,6 +47,33 @@ class ReviewRepository extends Repository {
             $review->getRate(),
             $review->getReview()
         ]);
+    }
+
+    public function getUserRestaurantReview(int $restaurantId, int $userId) {
+        $stmt = $this->database->connect()->prepare
+        ('
+        SELECT review_id, restaurant_id, rate, review, r.create_at, r.user_id 
+        FROM public.is_review r
+        WHERE restaurant_id = :restaurant_id AND r.user_id = :user_id AND status = true
+        ');
+
+        $stmt->bindParam(':restaurant_id', $restaurantId, PDO::PARAM_INT);
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+        $review = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($review == false)
+            return null;
+
+        return new Review
+        (
+            $review['review_id'],
+            $review['restaurant_id'],
+            $review['rate'],
+            $review['review'],
+            $review['user_id'],
+            $review['create_at'],
+        );
     }
 
 

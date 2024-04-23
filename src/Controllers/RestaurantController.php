@@ -2,9 +2,12 @@
 
 namespace App\Controllers;
 
+use App\Config;
 use App\Models\Address;
 use App\Models\Restaurant;
+use App\Models\Review;
 use App\Repository\RestaurantRepository;
+use App\Repository\ReviewRepository;
 
 class RestaurantController extends AppController {
 
@@ -13,16 +16,32 @@ class RestaurantController extends AppController {
     const UPLOAD_DIRECTORY = '/../public/uploads/';
     private array $messages = [];
     private RestaurantRepository $restaurantRepository;
+    private ReviewRepository $reviewRepository;
 
     public function __construct() {
         parent::__construct();
         $this->restaurantRepository = new RestaurantRepository();
+        $this->reviewRepository = new ReviewRepository();
     }
 
     public function restaurant($restaurantId = null) {
         if($restaurantId) {
+            $messagesList = Config::get('messages');
+            $messageKey = $this->request->get('message');
+            $success = $this->request->get('success');
+            $reviewData = $this->session->get('reviewData');
+
             $restaurant = $this->restaurantRepository->getRestaurant($restaurantId);
-            $this->render('details', ['restaurant' => $restaurant]);
+            $reviewList = $this->reviewRepository->getReviews($restaurantId);
+
+            $this->render('details', [
+                'restaurant' => $restaurant,
+                'message' => $messagesList[$messageKey] ?? null,
+                'success' => $success,
+                'lastRate' => $reviewData['rate'] ?? null,
+                'lastReview' => $reviewData['review'] ?? null,
+                'reviewList' => $reviewList,
+            ]);
         }
         else {
             $loggedUser = $this->session->get('userSession');
@@ -75,6 +94,40 @@ class RestaurantController extends AppController {
         }
 
         $this->redirect('/addRestaurant', $this->messages);
+    }
+
+    public function saveReview() {
+        $loggedUser = $this->session->get('userSession');
+        $redirect = $this->getPreviousPage();
+
+        $rate = (int)$this->request->post('rate');
+        $review = $this->request->post('review');
+        $restaurant_id = (int)$this->request->post('restaurant_id');
+        $this->session->set('reviewData', ['rate' => $rate, 'review' => $review]);
+
+        if(!$loggedUser || !isset($loggedUser['id'])) {
+            $this->redirect($redirect, ['loginMessage' => 'mustLogin']);
+        }
+
+        if ($rate < 1 || $rate > 5)  {
+            $this->redirect($redirect, ['message' => 'opinionScope']);
+        }
+
+        if (empty($review) || strlen($review) > 255)  {
+            $this->redirect($redirect, ['message' => 'reviewIsEmpty']);
+        }
+
+        $userId = (int)$loggedUser['id'];
+        $userReview = $this->reviewRepository->getUserRestaurantReview($restaurant_id, $userId);
+        if($userReview) {
+            $this->redirect($redirect, ['message' => 'reviewExists']);
+        }
+
+        $review = new Review(null, $restaurant_id, $rate, $review, $userId);
+
+        $this->session->remove('reviewData');
+        $this->reviewRepository->addReview($review);
+        $this->redirect($redirect, ['message' => 'addedOpinion', 'success' => true]);
     }
 
     private function checkUserSessionAndRole() {

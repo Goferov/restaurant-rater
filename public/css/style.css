@@ -6,6 +6,7 @@
     --red: #9A0000;
     --yellow: #FCE409;
     --lgray: #D1D1D1;
+    --green: #467c42;
     --main-font: "Poppins", sans-serif;
     --default-radius: 15px;
 }
@@ -66,6 +67,10 @@ main {
 
 .f-red {
     color: var(--red)
+}
+
+.f-green {
+    color: var(--green);
 }
 
 .f-24 {
