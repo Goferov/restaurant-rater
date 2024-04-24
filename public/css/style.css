@@ -649,7 +649,7 @@ textarea.input {
 
 .filters-wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     padding: 4rem 5.4rem;
     border-radius: var(--default-radius);
 }

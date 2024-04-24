@@ -6,12 +6,8 @@
     </div>
     <div class="filters-wrapper bg-lgray mb-1">
       <div class="search-field position-relative">
-        <input type="search" class="input" placeholder="Szukaj..." name="search"/>
+        <input id="search-field" type="search" class="input" placeholder="Szukaj..." name="search"/>
         <i class="fa-solid fa-magnifying-glass f-20"></i>
-      </div>
-      <div class="d-flex align-items-center justify-content-center flex-tablet-column align-items-tablet-start">
-        <label class="me-1">Miasto:</label>
-        <input class="input" placeholder="Dowolne" name="city">
       </div>
       <div class="d-flex align-items-center justify-content-end flex-tablet-column align-items-tablet-start">
         <label class="me-1">Sortowanie:</label>
@@ -52,3 +48,32 @@
         <?php endforeach; ?>
     </div>
   </div>
+
+  <template id="restaurant-template">
+      <div>
+          <a href="" class="restaurant-box d-block">
+              <div class="image">
+                  <img src="" alt=""/>
+              </div>
+              <div class="restaurant-details">
+                  <h3></h3>
+                  <div class="tag-list">
+                      <div><i class="fa-solid fa-location-dot"></i> <span class="location"></span></div>
+                      <div><i class="fa-solid fa-globe"></i> <span class="website"></span></div>
+                  </div>
+                  <div class="rate d-flex ">
+                      <div class="stars">
+                          <i class="fa-solid fa-star f-yellow"></i>
+                          <i class="fa-solid fa-star f-yellow"></i>
+                          <i class="fa-solid fa-star f-yellow"></i>
+                          <i class="fa-solid fa-star f-yellow"></i>
+                          <i class="fa-solid fa-star f-yellow"></i>
+                      </div>
+                      <div class="f-semibold"><span></span>/5</div>
+                  </div>
+              </div>
+          </a>
+      </div>
+  </template>
+
+  <script src="/public/js/filters.js"></script>
