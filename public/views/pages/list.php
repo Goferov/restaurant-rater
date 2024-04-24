@@ -44,7 +44,7 @@
                                 <i class="fa-solid fa-star f-yellow"></i>
                                 <i class="fa-solid fa-star f-yellow"></i>
                             </div>
-                            <div class="f-semibold">4.9/5</div>
+                            <div class="f-semibold"><?= $resturant->getRate() ?>/5</div>
                         </div>
                     </div>
                 </a>

@@ -11,8 +11,9 @@ class Restaurant {
     private string $email;
     private string $phone;
     private Address $address;
+    private ?float $rate;
 
-    public function __construct(?int $id, string $name, string $description, string $image, string $website, string $email, string $phone, Address $address)
+    public function __construct(?int $id, string $name, string $description, string $image, string $website, string $email, string $phone, Address $address, float $rate = null)
     {
         $this->id = $id;
         $this->name = $name;
@@ -22,6 +23,7 @@ class Restaurant {
         $this->email = $email;
         $this->phone = $phone;
         $this->address = $address;
+        $this->rate = $rate;
     }
 
     public function getId(): int
@@ -103,4 +105,11 @@ class Restaurant {
     {
         $this->address = $address;
     }
+
+    public function getRate(): ?float
+    {
+        return $this->rate;
+    }
+
+
 }

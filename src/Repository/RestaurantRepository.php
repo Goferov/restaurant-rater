@@ -10,12 +10,13 @@ class RestaurantRepository extends Repository {
     public function getRestaurants($limit = null) {
         $result = array();
         $sql = '
-        SELECT 
-            restaurant_id, name, description, image, email, phone, website, a.address_id, street, city, postal_code, house_no, apartment_no 
-        FROM public.is_restaurant r 
-        INNER JOIN public.is_address a ON r.address_id = a.address_id 
-        ORDER BY restaurant_id
-    ';
+SELECT r.restaurant_id, r.name, r.description, r.image, r.email, r.phone, r.website, a.address_id, a.street, a.city, a.postal_code, a.house_no, a.apartment_no, AVG(re.rate) as rate
+FROM public.is_restaurant r 
+INNER JOIN public.is_address a ON r.address_id = a.address_id 
+LEFT JOIN public.is_review re ON r.restaurant_id = re.restaurant_id
+GROUP BY r.restaurant_id, r.name, r.description, r.image, r.email, r.phone, r.website, a.address_id, a.street, a.city, a.postal_code, a.house_no, a.apartment_no
+ORDER BY r.restaurant_id;
+';
 
         if (is_numeric($limit)) {
             $sql .= ' LIMIT :limit';
@@ -48,7 +49,8 @@ class RestaurantRepository extends Repository {
                 $restaurant['website'],
                 $restaurant['email'],
                 $restaurant['phone'],
-                $address
+                $address,
+                $restaurant['rate']
             );
         }
         return $result;
@@ -57,10 +59,26 @@ class RestaurantRepository extends Repository {
     public function getRestaurant($id) {
         $sql = '
         SELECT 
-            restaurant_id, name, description, image, email, phone, website, a.address_id, street, city, postal_code, house_no, apartment_no 
+            r.restaurant_id, name, description, image, email, phone, website, a.address_id, street, city, postal_code, house_no, apartment_no, AVG(re.rate) as rate
         FROM public.is_restaurant r 
         INNER JOIN public.is_address a ON r.address_id = a.address_id 
-        WHERE restaurant_id = :id
+        LEFT JOIN 
+        public.is_review re ON r.restaurant_id = re.restaurant_id
+        WHERE  r.restaurant_id = :id
+        GROUP BY 
+        r.restaurant_id, 
+        r.name, 
+        r.description, 
+        r.image, 
+        r.email, 
+        r.phone, 
+        r.website, 
+        a.address_id, 
+        a.street, 
+        a.city, 
+        a.postal_code, 
+        a.house_no, 
+        a.apartment_no
     ';
 
         $stmt = $this->database->connect()->prepare($sql);
@@ -89,7 +107,8 @@ class RestaurantRepository extends Repository {
             $restaurantData['website'],
             $restaurantData['email'],
             $restaurantData['phone'],
-            $address
+            $address,
+            $restaurantData['rate']
         );
 
         return $restaurant;

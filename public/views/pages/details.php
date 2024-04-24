@@ -13,7 +13,7 @@
             <i class="fa-solid fa-star f-yellow"></i>
             <i class="fa-solid fa-star f-yellow"></i>
           </div>
-          <div class="f-semibold">4.9/5</div>
+          <div class="f-semibold"><?= $restaurant->getRate() ?>/5</div>
         </div>
         <div class="hr mb-2"></div>
         <div class="main-image mb-2 d-none d-mobile-block">
