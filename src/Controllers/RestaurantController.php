@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Config;
+use App\Helpers\ReviewHelper;
 use App\Models\Address;
 use App\Models\Restaurant;
 use App\Models\Review;
@@ -25,6 +26,8 @@ class RestaurantController extends AppController {
     }
 
     public function restaurant($restaurantId = null) {
+        $reviewHelper = new ReviewHelper();
+
         if($restaurantId) {
             $messagesList = Config::get('messages');
             $messageKey = $this->request->get('message');
@@ -41,11 +44,16 @@ class RestaurantController extends AppController {
                 'lastRate' => $reviewData['rate'] ?? null,
                 'lastReview' => $reviewData['review'] ?? null,
                 'reviewList' => $reviewList,
+                'stars' => $reviewHelper->generateStars($restaurant->getRate())
             ]);
         }
         else {
             $loggedUser = $this->session->get('userSession');
-            $this->render('list', ['restaurants' => $this->restaurantRepository->getRestaurants(), 'roleId' => $loggedUser['roleId'] ?? null]);
+            $this->render('list', [
+                'restaurants' => $this->restaurantRepository->getRestaurants(),
+                'roleId' => $loggedUser['roleId'] ?? null,
+                'reviewHelper' => $reviewHelper,
+            ]);
         }
     }
 
@@ -140,7 +148,7 @@ class RestaurantController extends AppController {
 
             header('Content-type: application/json');
             http_response_code(200);
-            echo json_encode($this->restaurantRepository->getRestaurantByFilters($decoded['search']));
+            echo json_encode($this->restaurantRepository->getRestaurantByFilters($decoded['search'], $decoded['order']));
         }
     }
 

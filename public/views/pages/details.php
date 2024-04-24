@@ -7,13 +7,9 @@
         <h1 class="f-bold mb-1"><?= $restaurant->getName() ?></h1>
         <div class="rate d-flex mb-2">
           <div class="stars">
-            <i class="fa-solid fa-star f-yellow"></i>
-            <i class="fa-solid fa-star f-yellow"></i>
-            <i class="fa-solid fa-star f-yellow"></i>
-            <i class="fa-solid fa-star f-yellow"></i>
-            <i class="fa-solid fa-star f-yellow"></i>
+            <?= $stars ?>
           </div>
-          <div class="f-semibold"><?= $restaurant->getRate() ?>/5</div>
+          <div class="f-semibold"><?= number_format($restaurant->getRate(), 1) ?>/5</div>
         </div>
         <div class="hr mb-2"></div>
         <div class="main-image mb-2 d-none d-mobile-block">

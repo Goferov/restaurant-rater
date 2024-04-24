@@ -61,6 +61,10 @@ main {
     color: var(--black);
 }
 
+.f-lgray {
+    color: var(--lgray)
+}
+
 .f-yellow {
     color: var(--yellow);
 }
@@ -649,7 +653,7 @@ textarea.input {
 
 .filters-wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     padding: 4rem 5.4rem;
     border-radius: var(--default-radius);
 }
@@ -676,6 +680,10 @@ textarea.input {
     top: 50%;
     transform: translateY(-50%);
     right: 18px;
+}
+
+#filter-btn {
+    width: 50%;
 }
 
 
@@ -942,6 +950,10 @@ textarea.input {
 
     .user-panel {
         grid-template-columns: 1fr;
+    }
+
+    #filter-btn {
+        width: 100%;
     }
 
 }

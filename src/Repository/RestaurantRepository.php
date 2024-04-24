@@ -15,7 +15,7 @@ FROM public.is_restaurant r
 INNER JOIN public.is_address a ON r.address_id = a.address_id 
 LEFT JOIN public.is_review re ON r.restaurant_id = re.restaurant_id
 GROUP BY r.restaurant_id, r.name, r.description, r.image, r.email, r.phone, r.website, a.address_id, a.street, a.city, a.postal_code, a.house_no, a.apartment_no
-ORDER BY r.restaurant_id;
+ORDER BY r.restaurant_id DESC;
 ';
 
         if (is_numeric($limit)) {
@@ -50,7 +50,7 @@ ORDER BY r.restaurant_id;
                 $restaurant['email'],
                 $restaurant['phone'],
                 $address,
-                $restaurant['rate']
+                $restaurant['rate'] ?? 0
             );
         }
         return $result;
@@ -159,12 +159,31 @@ INNER JOIN public.is_address a ON r.address_id = a.address_id
 LEFT JOIN public.is_review re ON r.restaurant_id = re.restaurant_id
 WHERE LOWER(name) LIKE :search OR LOWER(description) LIKE :search OR LOWER(city) LIKE :search
 GROUP BY r.restaurant_id, r.name, r.description, r.image, r.email, r.phone, r.website, a.address_id, a.street, a.city, a.postal_code, a.house_no, a.apartment_no
-ORDER BY r.restaurant_id;
+ORDER BY ' . $this->getOrderByClause($orderBy) . ';
 ';
 
         $stmt = $this->database->connect()->prepare($sql);
         $stmt->bindParam(':search', $searchString, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    private function getOrderByClause($orderBy) {
+        switch ($orderBy) {
+            case '1': // Od najnowszych
+                return 'r.restaurant_id DESC';
+            case '2': // Od najstarszych
+                return 'r.restaurant_id ASC';
+            case '3': // Od A do Z
+                return 'r.name ASC';
+            case '4': // Od Z do A
+                return 'r.name DESC';
+            case '5': // Od najlepszych
+                return 'rate DESC';
+            case '6': // Od najgorszych
+                return 'rate ASC';
+            default:
+                return 'r.restaurant_id DESC';
+        }
     }
 }
