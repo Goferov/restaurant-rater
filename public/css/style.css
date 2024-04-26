@@ -649,6 +649,12 @@ textarea.input {
     resize: vertical;
 }
 
+.no-valid {
+    border: 3px solid var(--red);
+    box-shadow: 0 0 0.2em var(--red);
+    outline: none;
+}
+
 /*FILTERS*/
 
 .filters-wrapper {

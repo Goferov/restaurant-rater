@@ -1,6 +1,6 @@
 <section class="container">
     <h1 class="section-title">Dodaj restaurację</h1>
-    <form action="/saveRestaurant" method="post" enctype="multipart/form-data">
+    <form action="/saveRestaurant" method="post" class="validate-form" enctype="multipart/form-data">
         <input class="input py-1 mb-1" placeholder="Nazwa*" type="text" name="name" required>
         <input class="input py-1 mb-1" placeholder="Email" type="email" name="email">
         <input class="input py-1 mb-1" placeholder="Telefon" type="text" name="phone">
@@ -15,7 +15,7 @@
         <input class="input py-1 mb-1" placeholder="Numer budynku*" type="text" name="houseNo" required>
         <input class="input py-1 mb-1" placeholder="Numer mieszkania" type="text" name="apartmentNo">
 
-        <button class="button button-primary w-100 f-medium f-18">Dodaj</button>
+        <button type="submit" class="button button-primary w-100 f-medium f-18">Dodaj</button>
 
     </form>
 </section>

@@ -46,16 +46,16 @@
     <div class="modal-overlay"></div>
     <div class="modal-content">
         <h3 class="text-uppercase text-center f-semibold">Logowanie</h3>
-        <form method="post" action="/login">
-            <?= $loginMessage ? '<p class="f-18 mb-2 f-semibold text-center">'.$loginMessage.'</p>' : '' ?>
+        <form method="post" class="validate-form" action="/login">
+            <?= $loginMessage ? '<p class="f-18 mb-2 f-semibold text-center f-red">'.$loginMessage.'</p>' : '' ?>
             <div class="mb-1">
-                <input class="input" type="text" name="email" placeholder="Email" required/>
+                <input class="input" type="email" name="email" placeholder="Email" required/>
             </div>
             <div class="mb-1">
                 <input class="input" type="password" name="password" placeholder="Hasło" required/>
             </div>
             <div class="mb-1">
-                <button class="button button-primary f-24 w-100 f-medium text-uppercase">Zaloguj się</button>
+                <button type="submit" class="button button-primary f-24 w-100 f-medium text-uppercase">Zaloguj się</button>
             </div>
             <div>
                 <p>Nie masz konta? <a href="#" class="open-modal" data-modal="register-modal">Załóż konto</a></p>
@@ -64,12 +64,12 @@
     </div>
 </div>
 
-<div id="register-modal" class="modal">
+<div id="register-modal" class="modal <?= $registerMessage ? 'active' : '' ?>">
     <div class="modal-overlay"></div>
     <div class="modal-content">
-        <h3 class="text-uppercase text-center f-semibold <?= $registerMessage ? 'active' : '' ?>">Rejestracja</h3>
-        <form method="post" action="/register">
-            <?= $registerMessage ? '<p class="f-18 mb-2 f-semibold text-center">'.$registerMessage.'</p>' : '' ?>
+        <h3 class="text-uppercase text-center f-semibold ">Rejestracja</h3>
+        <form id="register-form" method="post" class="validate-form" action="/register">
+            <?= $registerMessage ? '<p class="f-18 mb-2 f-semibold text-center f-red">'.$registerMessage.'</p>' : '' ?>
             <div class="mb-1">
                 <input class="input" type="text" name="name" placeholder="Nazwa" required/>
             </div>
@@ -83,7 +83,7 @@
                 <input class="input" type="password" name="confirmedPassword" placeholder="Powtórz hasło" required/>
             </div>
             <div class="mb-1">
-                <button class="button button-primary f-24 w-100 f-medium text-uppercase">Zarejestruj się</button>
+                <button type="submit" class="button button-primary f-24 w-100 f-medium text-uppercase">Zarejestruj się</button>
             </div>
             <div>
                 <p>Masz już konto? <a href="#" class="open-modal" data-modal="login-modal">Zaloguj się</a></p>
@@ -94,4 +94,6 @@
 <?php endif; ?>
 </body>
 <script src="/public/js/scripts.js"></script>
+<script src="/public/js/validation.js"></script>
+
 </html>
