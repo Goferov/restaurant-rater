@@ -53,6 +53,7 @@ class UserController extends AppController {
         $confirmedPassword = $this->request->post('confirmedPassword');
         $redirect = $this->getPreviousPage();
         $role = 2; // TODO: IMPLEMENT ROLE MANAGEMENT
+        $userFromDb = $this->userRepository->getUser($email);
 
         if(!$this->isValidPassword($password)) {
             $this->redirect($redirect, ['registerMessage' => 'invalidPassword']);
@@ -65,6 +66,11 @@ class UserController extends AppController {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->redirect($redirect, ['registerMessage' => 'wrongEmail']);
         }
+
+        if($userFromDb) {
+            $this->redirect($redirect, ['registerMessage' => 'userExist']);
+        }
+
 
         $user = new User(null, $name, password_hash($password, PASSWORD_BCRYPT), $email, $role);
         $this->userRepository->addUser($user);
