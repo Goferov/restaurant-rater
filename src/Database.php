@@ -4,15 +4,16 @@ namespace App;
 use PDO;
 use PDOException;
 
-
 class Database {
+    private static ?Database $instance = null;
     private string $username;
     private string $password;
     private string $host;
     private string $database;
     private int $port;
+    private ?PDO $connection = null;
 
-    public function __construct() {
+    private function __construct() {
         $dbConfig = Config::get('db');
 
         $this->username = $dbConfig['username'];
@@ -22,23 +23,27 @@ class Database {
         $this->port = $dbConfig['port'];
     }
 
-    public function connect() {
-        try
-        {
-            $conn = new PDO
-            (
-                "pgsql:host=$this->host;port=$this->port;dbname=$this->database",
-                $this->username,
-                $this->password,
-                ["sslmode"  => "prefer"]
-            );
+    public static function getInstance(): Database {
+        if (self::$instance === null) {
+            self::$instance = new Database();
+        }
+        return self::$instance;
+    }
 
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $conn;
+    public function connect(): PDO {
+        if ($this->connection === null) {
+            try {
+                $this->connection = new PDO(
+                    "pgsql:host=$this->host;port=$this->port;dbname=$this->database",
+                    $this->username,
+                    $this->password,
+                    ["sslmode" => "prefer"]
+                );
+                $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                die("Connection failed: " . $e->getMessage());
+            }
         }
-        catch(PDOException $e)
-        {
-            die("Connection failed: " . $e->getMessage());
-        }
+        return $this->connection;
     }
 }
