@@ -93,7 +93,6 @@
 </div>
 <?php endif; ?>
 </body>
-<script src="/public/js/scripts.js"></script>
-<script src="/public/js/validation.js"></script>
+
 
 </html>

@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
     <link rel="icon" type="image/x-icon" href="/public/img/favicon.ico">
     <title>TOPKEBAB - Twoje zdanie liczy się tutaj!</title>
+    <script src="/public/js/scripts.js" defer></script>
+    <script src="/public/js/validation.js" defer></script>
 </head>
 <body>
 <header>
