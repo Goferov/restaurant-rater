@@ -57,20 +57,20 @@ class RestaurantController extends AppController {
         }
     }
 
-    public function addRestaurant() {
+    public function addRestaurant($id = null) {
         $this->checkUserSessionAndRole();
-        $this->render('addRestaurant');
+        $this->render('addRestaurant', ['restaurant' => $id ? $this->restaurantRepository->getRestaurant($id) : null]);
     }
 
-    public function saveRestaurant() {
+    public function saveRestaurant($id = null) {
         $this->checkUserSessionAndRole();
         $fileData = $this->request->file('file');
 
         if(
             $this->request->isPost()
             && $fileData
-            && is_uploaded_file($fileData['tmp_name'])
-            && $this->validateRestaurantData($_POST, $fileData)) {
+             // && is_uploaded_file($fileData['tmp_name'])
+            ) { // && $this->validateRestaurantData($_POST, $fileData)
 
             $newFileName = $this->generateUniqueFilename($fileData['name']);
             move_uploaded_file
@@ -79,7 +79,7 @@ class RestaurantController extends AppController {
                 dirname(__DIR__).self::UPLOAD_DIRECTORY.$newFileName
             );
             $address = new Address(
-                null,
+                $this->request->post('addressId'),
                 $this->request->post('street'),
                 $this->request->post('city'),
                 $this->request->post('postalCode'),
@@ -88,7 +88,7 @@ class RestaurantController extends AppController {
             );
 
             $restaurant = new Restaurant(
-                null,
+                $id,
                 $this->request->post('name'),
                 $this->request->post('description', ''),
                 $newFileName,
@@ -98,13 +98,19 @@ class RestaurantController extends AppController {
                 $address
             );
 
-            $this->restaurantRepository->addRestaurant($restaurant);
+            if($id) {
+
+                $this->restaurantRepository->updateRestaurant($restaurant);
+            }
+            else {
+                $id = $this->restaurantRepository->addRestaurant($restaurant);
+            }
         }
 
-        $this->redirect('/addRestaurant', $this->messages);
+        $this->redirect('/addRestaurant/' . $id, $this->messages);
     }
 
-    public function saveReview() {
+    public function saveReview($id = null) {
         $loggedUser = $this->session->get('userSession');
         $redirect = $this->getPreviousPage();
 
@@ -139,9 +145,7 @@ class RestaurantController extends AppController {
     }
 
     public function search() {
-        $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
-
-        if ($contentType === "application/json")
+        if ($this->isApplicationJson())
         {
             $content = trim(file_get_contents("php://input"));
             $decoded = json_decode($content, true);
@@ -150,6 +154,16 @@ class RestaurantController extends AppController {
             http_response_code(200);
             echo json_encode($this->restaurantRepository->getRestaurantByFilters($decoded['search'], $decoded['order']));
         }
+    }
+
+    public function deleteRestaurant(int $id): void {
+        $this->restaurantRepository->deleteRestaurant($id);
+        http_response_code(200);
+    }
+
+    public function publicateRestaurant(int $id): void {
+        $this->restaurantRepository->togglePublication($id, '');
+        http_response_code(200);
     }
 
     private function checkUserSessionAndRole() {
