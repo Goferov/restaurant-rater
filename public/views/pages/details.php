@@ -21,7 +21,7 @@
           <?= $restaurant->getAddress() ? '<p><i class="fa-solid fa-location-dot"></i> '.$restaurant->getAddress().'</p>' : "" ?>
           <?= $restaurant->getWebsite() ? '<p><i class="fa-solid fa-globe"></i> <a href="'.$restaurant->getWebsite().'" target="_blank">'.$restaurant->getWebsite().'</a></p>' : "" ?>
         </div>
-          <?= $restaurant->getDescription() ? ' <p class="description f-medium">'.$restaurant->getDescription() .'</p>'  : '' ?>
+          <?= $restaurant->getDescription() ? ' <p class="description f-medium">'.htmlentities($restaurant->getDescription()) .'</p>'  : '' ?>
       </div>
     </section>
     <section>

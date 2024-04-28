@@ -69,7 +69,7 @@ class RestaurantController extends AppController {
             'name' => $this->request->post('name'),
             'description' => $this->request->post('description', ''),
             'website' => $this->request->post('website', ''),
-            'email' => $this->request->post('email', ''),
+            'email' => filter_var($this->request->post('email', ''), FILTER_SANITIZE_EMAIL),
             'phone' => $this->request->post('phone', '')
         ];
 
@@ -173,7 +173,7 @@ class RestaurantController extends AppController {
     }
 
     public function publicateRestaurant(int $id): void {
-        $this->restaurantRepository->togglePublication($id, '');
+        $this->restaurantRepository->togglePublication($id);
         http_response_code(200);
     }
 

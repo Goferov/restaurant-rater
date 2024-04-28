@@ -21,9 +21,9 @@ class AppController {
     {
         $templatePath = 'public/views/pages/'. $page.'.php';
         $output = 'File not found';
-        $variables = array_merge($variables, $this->getGlobalVariables());
 
         if(file_exists($templatePath)) {
+            $variables = array_merge($variables, $this->getGlobalVariables());
             extract($variables);
             ob_start();
             include self::$main_template_path;
