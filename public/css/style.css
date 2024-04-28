@@ -655,6 +655,11 @@ textarea.input {
     outline: none;
 }
 
+.validation-message {
+    color: var(--red);
+    font-size: 13px;
+}
+
 /*FILTERS*/
 
 .filters-wrapper {

@@ -46,7 +46,7 @@
     <div class="modal-overlay"></div>
     <div class="modal-content">
         <h3 class="text-uppercase text-center f-semibold">Logowanie</h3>
-        <form method="post" class="validate-form" action="/login">
+        <form method="post" action="/login">
             <?= $loginMessage ? '<p class="f-18 mb-2 f-semibold text-center f-red">'.$loginMessage.'</p>' : '' ?>
             <div class="mb-1">
                 <input class="input" type="email" name="email" placeholder="Email" required/>
