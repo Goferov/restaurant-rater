@@ -45,8 +45,12 @@
         <form class="opinion-form validate-form" action="/saveReview" method="post">
             <?= $message ? '<p class="'.($success ? 'f-green' : 'f-red').' f-semibold">'.$message.'</p>' : '' ?>
             <h3 class="section-title">Dodaj opinię</h3>
-            <input class="input mb-2 py-1" min="1" max="5" step="1" placeholder="Ocena*" name="rate" value="<?= $lastRate ?>" type="number" required/>
-            <textarea class="input mb-2 py-1" name="review" rows="5" placeholder="Treść*" maxlength="250" required><?= $lastReview ?></textarea>
+            <div class="mb-2">
+                <input class="input py-1" min="1" max="5" step="1" placeholder="Ocena (od 1 do 5)*" name="rate" value="<?= $lastRate ?>" type="number" required/>
+            </div>
+            <div class="mb-2">
+                <textarea class="input py-1" name="review" rows="5" placeholder="Treść*" maxlength="250" required><?= $lastReview ?></textarea>
+            </div>
             <input type="hidden" name="restaurant_id" value="<?= $restaurant->getId() ?>">
             <button type="submit" class="button button-primary">Dodaj opinie</button>
         </form>
