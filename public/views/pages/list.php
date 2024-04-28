@@ -20,10 +20,6 @@
         <input id="search-field" type="search" class="input" placeholder="Szukaj..." name="search"/>
         <i class="fa-solid fa-magnifying-glass f-20"></i>
       </div>
-
-        <div class="d-flex align-items-center justify-content-end flex-tablet-column align-items-tablet-start">
-            <button id="filter-btn" class="button button-primary f-18">Filtruj</button>
-        </div>
     </div>
     <h2 class="section-title">Restauracje</h2>
     <div class="restaurant-list">
