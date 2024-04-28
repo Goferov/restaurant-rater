@@ -212,8 +212,8 @@ ORDER BY ' . $this->getOrderByClause($orderBy) . ';
         $stmt->bindParam(':street', $street, PDO::PARAM_STR);
         $stmt->bindParam(':city', $city, PDO::PARAM_STR);
         $stmt->bindParam(':postalCode', $postalCode, PDO::PARAM_STR);
-        $stmt->bindParam(':houseNo', $houseNo, PDO::PARAM_INT);
-        $stmt->bindParam(':apartmentNo', $apartmentNo, PDO::PARAM_INT);
+        $stmt->bindParam(':houseNo', $houseNo, PDO::PARAM_STR);
+        $stmt->bindParam(':apartmentNo', $apartmentNo, PDO::PARAM_STR);
         $stmt->bindParam(':addressId', $addressId, PDO::PARAM_INT);
         $stmt->execute();
 
