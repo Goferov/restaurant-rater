@@ -129,9 +129,9 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         }
 
-        // elements.forEach(element => {
-        //     element.addEventListener('keyup', () => validateInput(element));
-        //     element.addEventListener('change', () => validateInput(element));
-        // });
+        elements.forEach(element => {
+            element.addEventListener('keyup', () => validateInput(element));
+            element.addEventListener('change', () => validateInput(element));
+        });
     });
 });

@@ -664,7 +664,7 @@ textarea.input {
 
 .filters-wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     padding: 4rem 5.4rem;
     border-radius: var(--default-radius);
 }
@@ -821,6 +821,19 @@ textarea.input {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
+
+/*ADMIN*/
+
+/*.admin-option {*/
+/*    position: absolute;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    width: 20px;*/
+/*    height: 20px;*/
+/*    background-color: var(--white);*/
+/*    border-radius: 50%;*/
+/*}*/
 
 @media only screen and (max-width: 1199px) {
     .restaurant-list, .opinions-wrap, .restaurant {
