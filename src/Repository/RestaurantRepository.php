@@ -148,6 +148,8 @@ ORDER BY r.restaurant_id DESC;
             $restaurant->getPhone(),
             $restaurant->getWebsite(),
         ]);
+        return $dbh->lastInsertId();
+
     }
 
     public function getRestaurantByFilters($searchString, $orderBy = null) {
@@ -191,7 +193,6 @@ ORDER BY ' . $this->getOrderByClause($orderBy) . ';
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
     }
-
 
     public function updateRestaurant(Restaurant $restaurant) {
         $street = $restaurant->getAddress()->getStreet();
