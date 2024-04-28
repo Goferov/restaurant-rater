@@ -1,13 +1,12 @@
 const search = document.querySelector('#search-field');
 const restaurantList = document.querySelector('.restaurant-list');
-const filterBtn = document.querySelector('#filter-btn');
 const orderSelect = document.querySelector('#order');
 
-
-filterBtn.addEventListener("click", filter)
+search.addEventListener("input", filter);
+orderSelect.addEventListener("change", filter);
 
 function filter() {
-    const data = {search: search.value,  fun: 'search', order: orderSelect.value};
+    const data = {search: search.value, fun: 'search', order: orderSelect.value};
 
     fetch("/search", {
         method: "POST",
@@ -18,16 +17,14 @@ function filter() {
     }).then(function (response) {
         return response.json();
     }).then(function (restaurants) {
-        console.log(restaurants)
+        // console.log(restaurants);
         restaurantList.innerHTML = "";
-        loadRestaurants(restaurants)
+        loadRestaurants(restaurants);
     });
 }
 
-
-function loadRestaurants(restaurants)  {
-    restaurants.forEach(restaurant =>
-    {
+function loadRestaurants(restaurants) {
+    restaurants.forEach(restaurant => {
         createRestaurant(restaurant);
     });
 }
