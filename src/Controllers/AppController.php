@@ -47,6 +47,11 @@ class AppController {
         return $parsedUrl['path'] ?? null;
     }
 
+    protected function isApplicationJson(): bool {
+        $contentType = $this->request->server('CONTENT_TYPE') ? trim($this->request->server('CONTENT_TYPE')) : '';
+        return $contentType === "application/json";
+    }
+
     private function buildUrlParams($params) {
         if($params) {
             $queryParams = [];
