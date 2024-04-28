@@ -182,18 +182,22 @@ ORDER BY ' . $this->getOrderByClause($orderBy) . ';
         return $stmt->execute();
     }
 
-    public function togglePublication($id, $publicate) {
+    public function togglePublication($id) {
         $sql = '
         UPDATE public.is_restaurant
-        SET publicate = :publicate
+        SET publicate = NOT publicate
         WHERE restaurant_id = :id
     ';
 
         $stmt = $this->database->connect()->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->bindParam(':publicate', $publicate, PDO::PARAM_BOOL);
-        return $stmt->execute();
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
+
 
     public function updateRestaurant(Restaurant $restaurant) {
         $street = $restaurant->getAddress()->getStreet();
