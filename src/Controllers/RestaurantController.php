@@ -64,51 +64,62 @@ class RestaurantController extends AppController {
 
     public function saveRestaurant($id = null) {
         $this->checkUserSessionAndRole();
+
+        $restaurantData = [
+            'name' => $this->request->post('name'),
+            'description' => $this->request->post('description', ''),
+            'website' => $this->request->post('website', ''),
+            'email' => $this->request->post('email', ''),
+            'phone' => $this->request->post('phone', '')
+        ];
+
+        $address = new Address(
+            $this->request->post('addressId'),
+            $this->request->post('street'),
+            $this->request->post('city'),
+            $this->request->post('postalCode'),
+            $this->request->post('houseNo'),
+            $this->request->post('apartmentNo', '')
+        );
+
         $fileData = $this->request->file('file');
+        $newFileName = null;
 
-        if(
-            $this->request->isPost()
-            && $fileData
-             // && is_uploaded_file($fileData['tmp_name'])
-            ) { // && $this->validateRestaurantData($_POST, $fileData)
-
+        if ($fileData && is_uploaded_file($fileData['tmp_name'])) {
             $newFileName = $this->generateUniqueFilename($fileData['name']);
-            move_uploaded_file
-            (
+            move_uploaded_file(
                 $fileData['tmp_name'],
                 dirname(__DIR__).self::UPLOAD_DIRECTORY.$newFileName
             );
-            $address = new Address(
-                $this->request->post('addressId'),
-                $this->request->post('street'),
-                $this->request->post('city'),
-                $this->request->post('postalCode'),
-                $this->request->post('houseNo'),
-                $this->request->post('apartmentNo', '')
-            );
+        }
 
-            $restaurant = new Restaurant(
-                $id,
-                $this->request->post('name'),
-                $this->request->post('description', ''),
-                $newFileName,
-                $this->request->post('website', ''),
-                $this->request->post('email', ''),
-                $this->request->post('phone', ''),
-                $address
-            );
+        if ($id) {
+            $existingRestaurant = $this->restaurantRepository->getRestaurant($id);
+            $restaurantImage = $newFileName ?: $existingRestaurant->getImage();
+        } else {
+            $restaurantImage = $newFileName;
+        }
 
-            if($id) {
+        $restaurant = new Restaurant(
+            $id,
+            $restaurantData['name'],
+            $restaurantData['description'],
+            $restaurantImage,
+            $restaurantData['website'],
+            $restaurantData['email'],
+            $restaurantData['phone'],
+            $address
+        );
 
-                $this->restaurantRepository->updateRestaurant($restaurant);
-            }
-            else {
-                $id = $this->restaurantRepository->addRestaurant($restaurant);
-            }
+        if ($id) {
+            $this->restaurantRepository->updateRestaurant($restaurant);
+        } else {
+            $id = $this->restaurantRepository->addRestaurant($restaurant);
         }
 
         $this->redirect('/addRestaurant/' . $id, $this->messages);
     }
+
 
     public function saveReview($id = null) {
         $loggedUser = $this->session->get('userSession');
