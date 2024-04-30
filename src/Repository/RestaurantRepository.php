@@ -155,7 +155,7 @@ ORDER BY r.restaurant_id DESC;
     public function getRestaurantByFilters($searchString, $orderBy = null) {
         $searchString = '%' . strtolower($searchString) . '%';
         $sql = '
-SELECT r.restaurant_id, r.name, r.description, r.image, r.email, r.phone, r.website, a.address_id, a.street, a.city, a.postal_code, a.house_no, a.apartment_no, AVG(re.rate) as rate
+SELECT r.restaurant_id, r.name, r.description, r.image, r.email, r.phone, r.website, a.address_id, a.street, a.city, a.postal_code, a.house_no, a.apartment_no, avg(coalesce(re.rate, 0)) as rate
 FROM public.is_restaurant r 
 INNER JOIN public.is_address a ON r.address_id = a.address_id 
 LEFT JOIN public.is_review re ON r.restaurant_id = re.restaurant_id
