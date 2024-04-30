@@ -118,6 +118,7 @@ validateForms.forEach(form => {
     const submitButton = form.querySelector('button[type="submit"], input[type="submit"]');
 
     if (submitButton) {
+        console.log(submitButton);
         submitButton.addEventListener('click', function(event) {
             let isFormValid = true;
             elements.forEach(element => {

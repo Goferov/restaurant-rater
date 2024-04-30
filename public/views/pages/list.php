@@ -23,23 +23,23 @@
     </div>
     <h2 class="section-title">Restauracje</h2>
     <div class="restaurant-list">
-        <?php foreach ($restaurants as $resturant): ?>
+        <?php foreach ($restaurants as $restaurant): ?>
             <div>
-                <a href="/restaurant/<?= $resturant->getId() ?>" class="restaurant-box d-block">
+                <a href="/restaurant/<?= $restaurant->getId() ?>" class="restaurant-box d-block">
                     <div class="image">
-                        <img src="/public/uploads/<?= $resturant->getImage() ?>" alt=""/>
+                        <img src="<?= $restaurant->getImage() ? '/public/uploads/' . $restaurant->getImage() : '/public/img/placeholder.png' ?>" alt="<?= $restaurant->getName() ?>"/>
                     </div>
                     <div class="restaurant-details">
-                        <h3><?= $resturant->getName() ?></h3>
+                        <h3><?= $restaurant->getName() ?></h3>
                         <div class="tag-list">
-                            <div><i class="fa-solid fa-location-dot"></i> <?= $resturant->getAddress()->getCity() ?></div>
-                            <div><i class="fa-solid fa-globe"></i> <?= $resturant->getWebsite() ?></div>
+                            <div><i class="fa-solid fa-location-dot"></i> <?= $restaurant->getAddress()->getCity() ?></div>
+                            <div><i class="fa-solid fa-globe"></i> <?= $restaurant->getWebsite() ?></div>
                         </div>
                         <div class="rate d-flex ">
                             <div class="stars">
-                                <?= $reviewHelper->generateStars($resturant->getRate()) ?>
+                                <?= $reviewHelper->generateStars($restaurant->getRate()) ?>
                             </div>
-                            <div class="f-semibold"><?= number_format($resturant->getRate(), 1) ?>/5</div>
+                            <div class="f-semibold"><?= number_format($restaurant->getRate(), 1) ?>/5</div>
                         </div>
                     </div>
                 </a>

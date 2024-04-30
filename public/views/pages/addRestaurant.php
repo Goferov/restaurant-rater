@@ -1,5 +1,8 @@
 <section class="container">
     <h1 class="section-title">Dodaj restaurację</h1>
+    <?php foreach ($messages as $message): ?>
+    <p class="f-red f-semibold mb-3"><?= $message ?></p>
+    <?php endforeach; ?>
     <form action="/saveRestaurant/<?= isset($restaurant) ? ($restaurant->getId()) : ''; ?>" method="post" class="validate-form" enctype="multipart/form-data">
         <div class="mb-1">
             <input class="input py-1" placeholder="Nazwa*" type="text" name="name" required value="<?= isset($restaurant) ? ($restaurant->getName()) : ''; ?>">
@@ -18,6 +21,12 @@
         </div>
         <div class="mb-1">
             <input type="file" class=" py-1 f-18" name="file">
+            <?php if(isset($restaurant) && $restaurant->getImage()): ?>
+                <img src="/public/uploads/<?= $restaurant->getImage() ?>" class="d-block" width="120" height="120" alt="">
+                <label class="d-block">
+                    <input type="checkbox" name="delete_file" value="1"> Usuń plik
+                </label>
+            <?php endif; ?>
         </div>
 
         <h2 class="section-title">Lokalizacja</h2>

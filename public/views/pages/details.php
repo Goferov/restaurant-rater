@@ -1,7 +1,7 @@
   <div class="container">
     <section class="restaurant mb-2">
       <div class="main-image d-mobile-none">
-          <img src="/public/uploads/<?= $restaurant->getImage() ?>" alt=""/>
+          <img src="<?= $image ?>" alt="<?= $restaurant->getName() ?>"/>
       </div>
       <div class="details">
         <h1 class="f-bold mb-1"><?= $restaurant->getName() ?></h1>
@@ -9,11 +9,11 @@
           <div class="stars">
             <?= $stars ?>
           </div>
-          <div class="f-semibold"><?= number_format($restaurant->getRate(), 1) ?>/5</div>
+          <div class="f-semibold"><?= $restaurant->getRate() ? number_format($restaurant->getRate(), 1) : '0.0' ?>/5.0</div>
         </div>
         <div class="hr mb-2"></div>
         <div class="main-image mb-2 d-none d-mobile-block">
-          <img src="/public/uploads/<?= $restaurant->getImage() ?>" alt=""/>
+          <img src="<?= $image ?>" alt="<?= $restaurant->getName() ?>"/>
         </div>
         <div class="info mb-2">
           <?= $restaurant->getPhone() ? '<p><i class="fa-solid fa-phone-flip"></i> <a href="tel:'.$restaurant->getPhone().'">'.$restaurant->getPhone().'</a></p>' : '' ?>
@@ -46,7 +46,7 @@
             <?= $message ? '<p class="'.($success ? 'f-green' : 'f-red').' f-semibold">'.$message.'</p>' : '' ?>
             <h3 class="section-title">Dodaj opinię</h3>
             <div class="mb-2">
-                <input class="input py-1" min="1" max="5" step="1" placeholder="Ocena (od 1 do 5)*" name="rate" value="<?= $lastRate ?>" type="number" required/>
+                <input class="input py-1" min="1" max="5" step="1" placeholder="Ocena (od 1 do 5)*" name="rate" type="number" required/>
             </div>
             <div class="mb-2">
                 <textarea class="input py-1" name="review" rows="5" placeholder="Treść*" maxlength="250" required><?= $lastReview ?></textarea>
