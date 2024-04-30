@@ -18,18 +18,19 @@ class RestaurantController extends AppController {
     private array $messages = [];
     private RestaurantRepository $restaurantRepository;
     private ReviewRepository $reviewRepository;
+    private array $messagesList;
 
     public function __construct() {
         parent::__construct();
         $this->restaurantRepository = new RestaurantRepository();
         $this->reviewRepository = new ReviewRepository();
+        $this->messagesList = Config::get('messages');
     }
 
     public function restaurant($restaurantId = null) {
         $reviewHelper = new ReviewHelper();
 
         if($restaurantId) {
-            $messagesList = Config::get('messages');
             $messageKey = $this->request->get('message');
             $success = $this->request->get('success');
             $reviewData = $this->session->get('reviewData');
@@ -39,9 +40,9 @@ class RestaurantController extends AppController {
 
             $this->render('details', [
                 'restaurant' => $restaurant,
-                'message' => $messagesList[$messageKey] ?? null,
+                'image' => $restaurant->getImage() ? '/public/uploads/' . $restaurant->getImage() : '/public/img/placeholder.png',
+                'message' => $this->messagesList[$messageKey] ?? null,
                 'success' => $success,
-                'lastRate' => $reviewData['rate'] ?? null,
                 'lastReview' => $reviewData['review'] ?? null,
                 'reviewList' => $reviewList,
                 'stars' => $reviewHelper->generateStars($restaurant->getRate())
@@ -59,7 +60,11 @@ class RestaurantController extends AppController {
 
     public function addRestaurant($id = null) {
         $this->checkUserSessionAndRole();
-        $this->render('addRestaurant', ['restaurant' => $id ? $this->restaurantRepository->getRestaurant($id) : null]);
+
+        $this->render('addRestaurant', [
+            'restaurant' => $id ? $this->restaurantRepository->getRestaurant($id) : null,
+            'messages' => $this->loadMessages($this->request->get('messages')),
+        ]);
     }
 
     public function saveRestaurant($id = null) {
@@ -70,11 +75,16 @@ class RestaurantController extends AppController {
             'description' => $this->request->post('description', ''),
             'website' => $this->request->post('website', ''),
             'email' => filter_var($this->request->post('email', ''), FILTER_SANITIZE_EMAIL),
-            'phone' => $this->request->post('phone', '')
+            'phone' => $this->request->post('phone', ''),
+            'street' => $this->request->post('street'),
+            'city' => $this->request->post('city'),
+            'postalCode' => $this->request->post('postalCode'),
+            'houseNo' => $this->request->post('houseNo'),
         ];
+        $deleteFile = $this->request->post('delete_file');
 
         $address = new Address(
-            $this->request->post('addressId'),
+            (int)$this->request->post('addressId'),
             $this->request->post('street'),
             $this->request->post('city'),
             $this->request->post('postalCode'),
@@ -83,9 +93,14 @@ class RestaurantController extends AppController {
         );
 
         $fileData = $this->request->file('file');
+
+        if(!$this->validateRestaurantData($restaurantData) || !$this->validateRestaurantFile($fileData)) {
+            $this->redirect('/addRestaurant/' . $id, ['messages' => json_encode($this->messages)]);
+        }
+
         $newFileName = null;
 
-        if ($fileData && is_uploaded_file($fileData['tmp_name'])) {
+        if (!$deleteFile && $fileData && is_uploaded_file($fileData['tmp_name'])) {
             $newFileName = $this->generateUniqueFilename($fileData['name']);
             move_uploaded_file(
                 $fileData['tmp_name'],
@@ -93,15 +108,19 @@ class RestaurantController extends AppController {
             );
         }
 
-        if ($id) {
+        if ($id && !$deleteFile) {
             $existingRestaurant = $this->restaurantRepository->getRestaurant($id);
             $restaurantImage = $newFileName ?: $existingRestaurant->getImage();
         } else {
             $restaurantImage = $newFileName;
         }
 
+        if($deleteFile) {
+            $restaurantImage = '';
+        }
+
         $restaurant = new Restaurant(
-            $id,
+            (int)$id,
             $restaurantData['name'],
             $restaurantData['description'],
             $restaurantImage,
@@ -203,32 +222,89 @@ class RestaurantController extends AppController {
         return $baseName . "_$counter" . $extension;
     }
 
-    private function validateRestaurantData($data, $file) {
+    private function validateRestaurantData($data) {
+        $isValid = true;
 
-        $requiredFields = ['name', 'street', 'city', 'postalCode', 'houseNo'];
-        foreach ($requiredFields as $field) {
-            if (empty($data[$field])) {
-                $this->messages[] = 'Pole ' . $field . ' jest wymagane.';
-            }
-        }
+        $isValid &= $this->checkRequiredFields($data, ['name', 'street', 'city', 'postalCode', 'houseNo']);
+        $isValid &= $this->validateEmail($data['email']);
+        $isValid &= $this->validateURL($data['website']);
+        $isValid &= $this->validatePostalCode($data['postalCode']);
+        $isValid &= $this->validatePhoneNumber($data['phone']);
 
-        if (!empty($data['email']) && !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            $this->messages[] = 'Podany adres email jest nieprawidłowy.';
-        }
-
-        if (!empty($data['website']) && !filter_var($data['website'], FILTER_VALIDATE_URL)) {
-            $this->messages[] = 'Podany adres strony internetowej jest nieprawidłowy.';
-        }
-
-        if($file['size'] > self::MAX_FILE_SIZE)  {
-            $this->messages[] = 'Plik jest zbyt duży';
-        }
-
-        if(!isset($file['type']) || !in_array($file['type'], self::SUPPORTED_TYPES))  {
-            $this->messages[] = 'Nieodpowiedni typ pliku';
-        }
-
-        return !$this->messages;
+        return $isValid;
     }
 
+    private function checkRequiredFields($data, $requiredFields) {
+        foreach ($requiredFields as $field) {
+            if (empty($data[$field])) {
+                $this->addErrorMessage('requiredFields');
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private function validateEmail($email) {
+        if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->addErrorMessage('wrongEmail');
+            return false;
+        }
+        return true;
+    }
+
+    private function validateURL($url) {
+        if (!empty($url) && !filter_var($url, FILTER_VALIDATE_URL)) {
+            $this->addErrorMessage('wrongUrl');
+            return false;
+        }
+        return true;
+    }
+
+    private function validatePostalCode($postalCode) {
+        if (!preg_match('/^[0-9]{2}-?[0-9]{3}$/Du', $postalCode)) {
+            $this->addErrorMessage('invalidPostalCode');
+            return false;
+        }
+        return true;
+    }
+
+    private function validatePhoneNumber($phoneNumber) {
+        if (!empty($phoneNumber) && !preg_match('/^\d+$/', $phoneNumber)) {
+            $this->addErrorMessage('invalidPhoneNumber');
+            return false;
+        }
+        return true;
+    }
+
+    private function validateRestaurantFile($file) {
+        if($file['error']) {
+            return true;
+        }
+
+        if ($file['size'] > self::MAX_FILE_SIZE) {
+            $this->addErrorMessage('fileTooLarge');
+            return false;
+        }
+
+        if (!in_array($file['type'], self::SUPPORTED_TYPES)) {
+            $this->addErrorMessage('wrongFileExtension');
+            return false;
+        }
+
+        return true;
+    }
+
+    private function addErrorMessage($message) {
+        $this->messages[] = $message;
+    }
+
+    private function loadMessages($messages) {
+        $messagesToReturn = [];
+        if($messages && $messages = json_decode($messages)) {
+            foreach ($messages as $message) {
+                $messagesToReturn[] .= $this->messagesList[$message];
+            }
+        }
+        return $messagesToReturn;
+    }
 }

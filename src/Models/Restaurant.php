@@ -6,14 +6,14 @@ class Restaurant {
     private ?int $id;
     private string $name;
     private string $description;
-    private string $image;
+    private ?string $image;
     private string $website;
     private string $email;
     private string $phone;
     private Address $address;
     private ?float $rate;
 
-    public function __construct(?int $id, string $name, string $description, string $image, string $website, string $email, string $phone, Address $address, float $rate = null)
+    public function __construct(?int $id, string $name, string $description, ?string $image, string $website, string $email, string $phone, Address $address, float $rate = null)
     {
         $this->id = $id;
         $this->name = $name;
@@ -56,7 +56,7 @@ class Restaurant {
         $this->description = $description;
     }
 
-    public function getImage(): string
+    public function getImage(): ?string
     {
         return $this->image;
     }

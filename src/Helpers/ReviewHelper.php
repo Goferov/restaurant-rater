@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 class ReviewHelper {
     public function generateStars($rate) {
-        $roundedRate = round($rate);
+        $roundedRate = $rate ? round($rate) : 0;
         $stars = '';
         foreach (range(1, 5) as $i) {
             if ($i <= $roundedRate) {
