@@ -46,7 +46,12 @@ function createRestaurant(restaurant) {
     location.innerHTML = restaurant.city;
 
     const website = clone.querySelector(".tag-list .website");
-    website.innerHTML = restaurant.website;
+    if (restaurant.website) {
+        website.innerHTML = restaurant.website;
+    } else {
+        const websiteContainer = clone.querySelector(".tag-list .website").parentNode;
+        websiteContainer.style.display = 'none';
+    }
 
     const fixedRate = restaurant.rate ? parseFloat(restaurant.rate).toFixed(1) : 0;
     const rate = clone.querySelector(".rate > div:last-of-type span");
