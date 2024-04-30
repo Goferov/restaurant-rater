@@ -710,6 +710,7 @@ textarea.input {
     height: 100%;
     object-fit: cover;
     max-height: 600px;
+    border: 1px solid var(--lgray);
 }
 
 .restaurant .details h1 {
