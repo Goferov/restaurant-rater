@@ -32,8 +32,11 @@ class AppController {
         print $output;
     }
 
-    protected function redirect(string $to, array $params = []):void {
+    protected function redirect(string $to, array $params = [], ?int $code = null):void {
         $location = 'http://' . $this->request->server('HTTP_HOST') . $to . $this->buildUrlParams($params);
+        if($code) {
+            http_response_code($code);
+        }
         header('Location: '.$location);
         exit();
     }
@@ -50,6 +53,14 @@ class AppController {
     protected function isApplicationJson(): bool {
         $contentType = $this->request->server('CONTENT_TYPE') ? trim($this->request->server('CONTENT_TYPE')) : '';
         return $contentType === "application/json";
+    }
+
+    protected function isAdminUser(): bool {
+        $loggedUser = $this->session->get('userSession');
+        if(!$loggedUser || $loggedUser['roleId'] != 1) {
+            return false;
+        }
+        return true;
     }
 
     private function buildUrlParams($params) {
