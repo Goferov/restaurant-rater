@@ -7,16 +7,21 @@ use App\Models\Address;
 
 class RestaurantRepository extends Repository {
 
-    public function getRestaurants($limit = null) {
+    public function getRestaurants($publicate = true, $limit = null) {
         $result = array();
         $sql = '
-SELECT r.restaurant_id, r.name, r.description, r.image, r.email, r.phone, r.website, a.address_id, a.street, a.city, a.postal_code, a.house_no, a.apartment_no, AVG(re.rate) as rate
+SELECT r.restaurant_id, r.name, r.description, r.image, r.email, r.phone, r.website, a.address_id, a.street, a.city, a.postal_code, a.house_no, a.apartment_no, AVG(re.rate) as rate, r.publicate
 FROM public.is_restaurant r 
 INNER JOIN public.is_address a ON r.address_id = a.address_id 
 LEFT JOIN public.is_review re ON r.restaurant_id = re.restaurant_id
-GROUP BY r.restaurant_id, r.name, r.description, r.image, r.email, r.phone, r.website, a.address_id, a.street, a.city, a.postal_code, a.house_no, a.apartment_no
-ORDER BY r.restaurant_id DESC;
-';
+WHERE r.status = TRUE ';
+
+        if ($publicate) {
+            $sql .= 'AND r.publicate = :publicate ';
+        }
+
+        $sql .= 'GROUP BY r.restaurant_id, r.name, r.description, r.image, r.email, r.phone, r.website, a.address_id, a.street, a.city, a.postal_code, a.house_no, a.apartment_no
+ORDER BY r.restaurant_id DESC';
 
         if (is_numeric($limit)) {
             $sql .= ' LIMIT :limit';
@@ -24,6 +29,9 @@ ORDER BY r.restaurant_id DESC;
 
         $stmt = $this->database->connect()->prepare($sql);
 
+        if ($publicate) {
+            $stmt->bindParam(':publicate', $publicate, PDO::PARAM_BOOL);
+        }
         if (is_numeric($limit)) {
             $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
         }
@@ -50,11 +58,13 @@ ORDER BY r.restaurant_id DESC;
                 $restaurant['email'],
                 $restaurant['phone'],
                 $address,
-                $restaurant['rate'] ?? 0
+                $restaurant['rate'] ?? 0,
+                $restaurant['publicate'],
             );
         }
         return $result;
     }
+
 
     public function getRestaurant($id) {
         $sql = '
@@ -64,7 +74,7 @@ ORDER BY r.restaurant_id DESC;
         INNER JOIN public.is_address a ON r.address_id = a.address_id 
         LEFT JOIN 
         public.is_review re ON r.restaurant_id = re.restaurant_id
-        WHERE  r.restaurant_id = :id
+        WHERE  r.restaurant_id = :id AND r.status = TRUE AND r.publicate = TRUE
         GROUP BY 
         r.restaurant_id, 
         r.name, 
