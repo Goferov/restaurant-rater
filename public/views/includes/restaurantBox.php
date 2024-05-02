@@ -4,9 +4,9 @@
             <img src="<?= $restaurant->getImage() ? '/public/uploads/' . $restaurant->getImage() : '/public/img/placeholder.png' ?>" alt="<?= $restaurant->getName() ?>"/>
         </div>
         <div class="restaurant-details">
-            <h3><?= $restaurant->getName() ?></h3>
+            <h3><?= htmlentities($restaurant->getName()) ?></h3>
             <div class="tag-list">
-                <div><i class="fa-solid fa-location-dot"></i> <?= $restaurant->getAddress()->getCity() ?></div>
+                <div><i class="fa-solid fa-location-dot"></i> <?= htmlentities($restaurant->getAddress()->getCity()) ?></div>
                 <?= $restaurant->getWebsite() ? '<div><i class="fa-solid fa-globe"></i>'.$restaurant->getWebsite().'</div>' : '' ?>
             </div>
             <div class="rate d-flex ">

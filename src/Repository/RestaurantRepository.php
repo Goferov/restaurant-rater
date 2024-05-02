@@ -169,7 +169,7 @@ SELECT r.restaurant_id, r.name, r.description, r.image, r.email, r.phone, r.webs
 FROM public.is_restaurant r 
 INNER JOIN public.is_address a ON r.address_id = a.address_id 
 LEFT JOIN public.is_review re ON r.restaurant_id = re.restaurant_id
-WHERE LOWER(name) LIKE :search OR LOWER(description) LIKE :search OR LOWER(city) LIKE :search
+WHERE r.status = TRUE AND r.publicate = TRUE AND (LOWER(name) LIKE :search OR LOWER(description) LIKE :search OR LOWER(city) LIKE :search)
 GROUP BY r.restaurant_id, r.name, r.description, r.image, r.email, r.phone, r.website, a.address_id, a.street, a.city, a.postal_code, a.house_no, a.apartment_no
 ORDER BY ' . $this->getOrderByClause($orderBy) . ';
 ';

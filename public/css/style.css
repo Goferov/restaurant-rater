@@ -647,6 +647,7 @@ textarea.input {
     max-width: 100%;
     max-height: 130px;
     resize: vertical;
+    font-family: var(--main-font);
 }
 
 .no-valid {

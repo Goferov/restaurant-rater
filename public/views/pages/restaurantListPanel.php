@@ -17,8 +17,8 @@
                 <?php $count = 0; foreach ($restaurants as $restaurant):  ?>
                     <tr id="row_<?= $restaurant->getId() ?>">
                         <td><?= ++$count ?></td>
-                        <td><img src="/public/uploads/<?= $restaurant->getImage() ?>" alt="Dara kebab"></td>
-                        <td><?= $restaurant->getName() ?></td>
+                        <td><img src="<?= $restaurant->getImage() ? '/public/uploads/' . $restaurant->getImage() : '/public/img/placeholder.png' ?>" alt="Dara kebab"></td>
+                        <td><?= htmlentities($restaurant->getName()) ?></td>
                         <td>
                             <div class="d-flex justify-content-center align-items-center">
                                 <a href="/addRestaurant/<?= $restaurant->getId() ?>" class=""><i class="fa-solid fa-edit"></i></a>
