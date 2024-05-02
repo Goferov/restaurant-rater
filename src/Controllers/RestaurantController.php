@@ -38,6 +38,10 @@ class RestaurantController extends AppController {
             $restaurant = $this->restaurantRepository->getRestaurant($restaurantId);
             $reviewList = $this->reviewRepository->getReviews($restaurantId);
 
+            if(!$restaurant) {
+                $this->redirect('/error404', [], 404);
+            }
+
             $this->render('details', [
                 'restaurant' => $restaurant,
                 'image' => $restaurant->getImage() ? '/public/uploads/' . $restaurant->getImage() : '/public/img/placeholder.png',
@@ -175,8 +179,7 @@ class RestaurantController extends AppController {
     }
 
     public function search() {
-        if ($this->isApplicationJson())
-        {
+        if ($this->isApplicationJson()) {
             $content = trim(file_get_contents("php://input"));
             $decoded = json_decode($content, true);
 
@@ -187,18 +190,27 @@ class RestaurantController extends AppController {
     }
 
     public function deleteRestaurant(int $id): void {
-        $this->restaurantRepository->deleteRestaurant($id);
-        http_response_code(200);
+        if($this->isAdminUser()) {
+            $this->restaurantRepository->deleteRestaurant($id);
+            http_response_code(200);
+        }
+        else {
+            http_response_code(401);
+        }
     }
 
     public function publicateRestaurant(int $id): void {
-        $this->restaurantRepository->togglePublication($id);
-        http_response_code(200);
+        if($this->isAdminUser()) {
+            $this->restaurantRepository->togglePublication($id);
+            http_response_code(200);
+        }
+        else {
+            http_response_code(401);
+        }
     }
 
     private function checkUserSessionAndRole() {
-        $loggedUser = $this->session->get('userSession');
-        if(!$loggedUser || $loggedUser['roleId'] != 1) {
+        if(!$this->isAdminUser()) {
             $this->redirect('/');
         }
     }

@@ -2,7 +2,6 @@
   <div class="container">
     <div class="d-flex align-items-center justify-content-between mb-2">
         <h2 class="section-title mb-0">Filtry</h2>
-        <?= $roleId == 1 ? '<a href="/addRestaurant" title="Dodaj restaurację" class="button button-primary">Dodaj restaurację</a>' : '' ?>
     </div>
     <div class="filters-wrapper bg-lgray mb-1">
         <div class="d-flex align-items-center flex-tablet-column align-items-tablet-start">
@@ -62,13 +61,8 @@
                   </div>
                   <div class="rate d-flex ">
                       <div class="stars">
-                          <i class="fa-solid fa-star f-yellow"></i>
-                          <i class="fa-solid fa-star f-yellow"></i>
-                          <i class="fa-solid fa-star f-yellow"></i>
-                          <i class="fa-solid fa-star f-yellow"></i>
-                          <i class="fa-solid fa-star f-yellow"></i>
                       </div>
-                      <div class="f-semibold"><span></span>/5</div>
+                      <div class="f-semibold"><span></span>/5.0</div>
                   </div>
               </div>
           </a>

@@ -2,10 +2,7 @@
   <section class="admin-panel container">
     <h1 class="section-title">Twoje konto</h1>
     <div class="user-panel">
-      <ul class="user-menu">
-        <li><a href="#" class="active" title="Zmiana hasła"><i class="fa-solid fa-key"></i> Zmiana hasła</a></li>
-        <li><a href="/logout" class="f-red" title="Wyloguj się"><i class="fa-solid fa-right-from-bracket"></i> Wyloguj się</a></li>
-      </ul>
+        <?php require_once __DIR__ . '/../includes/panelNav.php'?>
       <div class="content">
         <?= $message ? '<p class="f-18 mb-2 f-semibold">'.$message.'</p>' : '' ?>
         <form class="user-form f-medium" action="/changePassword" method="post">

@@ -14,12 +14,16 @@ $path = trim($path, '/');
 
 Router::get('', 'HomepageController');
 Router::get('panel', 'PanelController');
+Router::get('restaurantList', 'PanelController');
 Router::get('restaurant', 'RestaurantController');
 Router::get('contact', 'ContactController');
 Router::post('addRestaurant', 'RestaurantController');
 Router::post('saveRestaurant', 'RestaurantController');
 Router::post('saveReview', 'RestaurantController');
 Router::post('search', 'RestaurantController');
+Router::post('deleteRestaurant', 'RestaurantController');
+Router::post('publicateRestaurant', 'RestaurantController');
+Router::post('error404', 'ErrorController');
 
 Router::post('login', 'UserController');
 Router::post('register', 'UserController');

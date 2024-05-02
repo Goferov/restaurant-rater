@@ -1,6 +1,6 @@
   <div class="container">
     <section class="restaurant mb-2">
-      <div class="main-image d-mobile-none">
+      <div class="main-image d-mobile-none position-relative">
           <img src="<?= $image ?>" alt="<?= $restaurant->getName() ?>"/>
       </div>
       <div class="details">
