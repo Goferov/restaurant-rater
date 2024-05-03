@@ -50,10 +50,15 @@ The application utilizes a PostgreSQL database with tables designed for users, r
 
 ## Design Patterns
 
-This project is implemented using the Model-View-Controller (MVC) architecture:
-- **Models** provide the methods and logic to interact directly with the database.
-- **Controllers** handle the business logic and respond to user input.
-- **Views** are responsible for rendering the user interface.
+This project leverages both the Model-View-Controller (MVC) architecture and the Repository pattern to optimize data handling:
+
+- **Models**: Define the data structure and its related business logic.
+- **Repositories**: Manage data operations, acting as an intermediary between the models and the database, ensuring that data interactions are handled cleanly and maintainably.
+- **Controllers**: Handle incoming requests, interacting with models or repositories to retrieve data and return responses.
+- **Views**: Present data to the user, rendering the final output on the screen.
+
+Additionally, the **Singleton** design pattern is utilized for managing the database connections:
+- **Singleton Pattern**: Ensures a single instance of the `Database` class exists, promoting a single shared connection to the database which optimizes resource usage and maintains consistent access.
 
 ## Installation
 
