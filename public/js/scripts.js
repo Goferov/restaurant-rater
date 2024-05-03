@@ -1,7 +1,7 @@
 document.querySelector('#menu-opener').addEventListener('click', function () {
     this.classList.toggle('active');
     document.querySelector('#main-menu').classList.toggle('active');
-    // document.querySelector('html').style.overflow = 'hidden';
+    document.querySelector('html').classList.toggle('overflow-hidden');
 });
 
 document.querySelectorAll('.open-modal').forEach(elem => {
