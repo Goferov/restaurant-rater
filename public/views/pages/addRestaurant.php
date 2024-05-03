@@ -3,6 +3,7 @@
     <?php foreach ($messages as $message): ?>
     <p class="f-red f-semibold mb-3"><?= $message ?></p>
     <?php endforeach; ?>
+    <p class="f-green f-semibold mb-3"><?= $success ?></p>
     <form action="/saveRestaurant/<?= isset($restaurant) ? ($restaurant->getId()) : ''; ?>" method="post" class="validate-form" enctype="multipart/form-data">
         <div class="mb-1">
             <input class="input py-1" placeholder="Nazwa*" type="text" name="name" required value="<?= isset($restaurant) ? htmlentities($restaurant->getName()) : ''; ?>">

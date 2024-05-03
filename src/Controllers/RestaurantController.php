@@ -68,6 +68,7 @@ class RestaurantController extends AppController {
         $this->render('addRestaurant', [
             'restaurant' => $id ? $this->restaurantRepository->getRestaurant($id) : null,
             'messages' => $this->loadMessages($this->request->get('messages')),
+            'success' => $this->messagesList[$this->request->get('success')] ?? null,
         ]);
     }
 
@@ -139,8 +140,7 @@ class RestaurantController extends AppController {
         } else {
             $id = $this->restaurantRepository->addRestaurant($restaurant);
         }
-
-        $this->redirect('/addRestaurant/' . $id, $this->messages);
+        $this->redirect('/addRestaurant/' . $id, ['success' => 'restaurantAdded']);
     }
 
 
