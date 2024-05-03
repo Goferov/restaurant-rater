@@ -3,7 +3,7 @@
         <div class="container flex-row-between-start row col-3 flex-mobile-column align-items-mobile-center">
             <div class="logo-white mb-mobile-4">
                 <a href="/" title="Home"><img src="/public/img/logo-white.svg" alt="TopKebab logo"/></a>
-                <p class="f-14">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus fermentum vitae dolor ut cursus. Phasellus tempor congue nunc. Nullam eget vestibulum nibh.</p>
+                <p class="f-14">TopKebab to nie tylko portal, to miejsce spotkań dla smakoszy kebaba. TopKebab to zespół pasjonatów, którzy dbają o to, aby każdy kebab, który znajduje się na naszej stronie, był godny uwagi.</p>
             </div>
             <div class="d-flex justify-content-center mb-mobile-4 align-self-mobile-start">
                 <div>
