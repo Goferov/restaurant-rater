@@ -380,6 +380,8 @@ INSERT INTO public.is_address (address_id, street, city, postal_code, house_no, 
 INSERT INTO public.is_address (address_id, street, city, postal_code, house_no, apartment_no) VALUES (5, 'Grunwaldzka', 'Rzeszów', '35-064', '24', '');
 INSERT INTO public.is_address (address_id, street, city, postal_code, house_no, apartment_no) VALUES (6, '<script>alert("test3")</script>', '<script>alert("test4")</script>', '30-060', '<script>alert("test5")</script>', '<script>alert("test6")</script>');
 INSERT INTO public.is_address (address_id, street, city, postal_code, house_no, apartment_no) VALUES (4, 'plac Wolnica', 'Kraków', '30-060', '13', '');
+INSERT INTO public.is_address (address_id, street, city, postal_code, house_no, apartment_no) VALUES (7, 'Dereniowa', 'Warszawa', '02-776', '10D', '');
+INSERT INTO public.is_address (address_id, street, city, postal_code, house_no, apartment_no) VALUES (8, 'test', 'test', '30-060', 'test', '');
 
 
 --
@@ -388,23 +390,39 @@ INSERT INTO public.is_address (address_id, street, city, postal_code, house_no, 
 
 INSERT INTO public.is_log (log_id, action_name, create_at, restaurant_id) VALUES (1, 'UPDATE', '2024-05-02 19:48:08.965893', 4);
 INSERT INTO public.is_log (log_id, action_name, create_at, restaurant_id) VALUES (2, 'UPDATE', '2024-05-02 19:48:14.993144', 4);
+INSERT INTO public.is_log (log_id, action_name, create_at, restaurant_id) VALUES (3, 'UPDATE', '2024-05-03 12:22:10.299716', 3);
+INSERT INTO public.is_log (log_id, action_name, create_at, restaurant_id) VALUES (4, 'UPDATE', '2024-05-03 12:22:10.783428', 2);
+INSERT INTO public.is_log (log_id, action_name, create_at, restaurant_id) VALUES (5, 'UPDATE', '2024-05-03 12:22:11.559615', 4);
+INSERT INTO public.is_log (log_id, action_name, create_at, restaurant_id) VALUES (6, 'UPDATE', '2024-05-03 12:22:15.02021', 2);
+INSERT INTO public.is_log (log_id, action_name, create_at, restaurant_id) VALUES (7, 'UPDATE', '2024-05-03 12:22:15.366206', 3);
+INSERT INTO public.is_log (log_id, action_name, create_at, restaurant_id) VALUES (8, 'UPDATE', '2024-05-03 12:22:15.872251', 4);
+INSERT INTO public.is_log (log_id, action_name, create_at, restaurant_id) VALUES (9, 'UPDATE', '2024-05-03 12:24:46.703761', 3);
+INSERT INTO public.is_log (log_id, action_name, create_at, restaurant_id) VALUES (10, 'UPDATE', '2024-05-03 12:24:47.718392', 3);
+INSERT INTO public.is_log (log_id, action_name, create_at, restaurant_id) VALUES (11, 'UPDATE', '2024-05-03 12:24:49.833463', 4);
+INSERT INTO public.is_log (log_id, action_name, create_at, restaurant_id) VALUES (12, 'UPDATE', '2024-05-03 12:24:51.451957', 4);
+INSERT INTO public.is_log (log_id, action_name, create_at, restaurant_id) VALUES (13, 'INSERT', '2024-05-03 12:36:12.243159', 6);
+INSERT INTO public.is_log (log_id, action_name, create_at, restaurant_id) VALUES (14, 'INSERT', '2024-05-03 12:42:20.333958', 7);
 
 
 --
 -- Data for Name: is_restaurant; Type: TABLE DATA; Schema: public; Owner: docker
 --
 
-INSERT INTO public.is_restaurant (restaurant_id, address_id, name, description, image, email, website, publicate, status, phone) VALUES (4, 5, 'Dara kebab', 'Opis testowy', 'logo_465x320.png', '', '', true, true, '');
-INSERT INTO public.is_restaurant (restaurant_id, address_id, name, description, image, email, website, publicate, status, phone) VALUES (2, 2, 'Doner king', 'Witaj w Doner King – miejscu, gdzie miłość do kulinariów spotyka się z doskonałością!
-Odwiedź nas w Jaśle, Gorlicach lub Nowym Sączu i doświadcz wyjątkowej atmosfery.
-Zapraszamy do miejsca – gdzie każdy kęs jest historią!', 'cropped-DONER-KING-ZIELONE-LOGO-500x500-1.png', '', 'https://donerking.pl/', true, true, '795520665');
 INSERT INTO public.is_restaurant (restaurant_id, address_id, name, description, image, email, website, publicate, status, phone) VALUES (1, 1, 'Efes kebab', 'Oferujemy potrawy kuchni tureckiej oraz polskiej w niepowtarzalnym klimacie.
 
 Nasza specjalność to kebab na cienkim cieście, frytki z posypką , sałatki, kanapki panini, burgery. Dzięki produktom wysokiej jakości wyróżniamy się smakiem, jakością serwowanych dań oraz estetyką podania.
 
 Codziennie nasza załoga przygotowuje dla Państwa świeże surówki, sałatki, sosy - wszystko z naturalnych składników. Dzięki jakości i dbałości o każdy szczegół cieszymy się licznym zaufaniem Naszych Gości.<script>alert(''HACKED'');</script>', '512x512bb.jpg', 'efes.krakow@gmail.com', 'https://kebabkrakow24.pl/', true, true, '123123123');
-INSERT INTO public.is_restaurant (restaurant_id, address_id, name, description, image, email, website, publicate, status, phone) VALUES (5, 6, '<script>alert("test1")</script>', '<script>alert("test2")</script>                   asdfadsf                            adfafdsafdas               asdfdsa', NULL, '', '', false, true, '');
+INSERT INTO public.is_restaurant (restaurant_id, address_id, name, description, image, email, website, publicate, status, phone) VALUES (2, 2, 'Doner king', 'Witaj w Doner King – miejscu, gdzie miłość do kulinariów spotyka się z doskonałością!
+Odwiedź nas w Jaśle, Gorlicach lub Nowym Sączu i doświadcz wyjątkowej atmosfery.
+Zapraszamy do miejsca – gdzie każdy kęs jest historią!', 'cropped-DONER-KING-ZIELONE-LOGO-500x500-1.png', '', 'https://donerking.pl/', true, true, '795520665');
 INSERT INTO public.is_restaurant (restaurant_id, address_id, name, description, image, email, website, publicate, status, phone) VALUES (3, 4, 'Kebab pod 13', 'Położona pośród zwartej zabudowy prosta knajpka z kebabem oraz ofertą mięs i dań wegetariańskich.', 'logotyp.jpg', '', 'https://kebabpod13.pl/', true, true, '');
+INSERT INTO public.is_restaurant (restaurant_id, address_id, name, description, image, email, website, publicate, status, phone) VALUES (4, 5, 'Dara kebab', 'Opis testowy', 'logo_465x320.png', '', '', true, true, '');
+INSERT INTO public.is_restaurant (restaurant_id, address_id, name, description, image, email, website, publicate, status, phone) VALUES (6, 7, 'Kebab Fenicja', 'Kebaby to nasza specjalność! Przekonaj się!
+Zawsze pysznie, zawsze dobrze, zawsze szybko!
+إلى اللِقَاءِ', 'images.jpg', 'restauracja@fenicja.com', 'https://www.fenicja.com/', true, true, '501694840');
+INSERT INTO public.is_restaurant (restaurant_id, address_id, name, description, image, email, website, publicate, status, phone) VALUES (7, 8, 'test', '', NULL, '', '', true, true, '');
+INSERT INTO public.is_restaurant (restaurant_id, address_id, name, description, image, email, website, publicate, status, phone) VALUES (5, 6, '<script>alert("test1")</script>', '<script>alert("test2")</script>                   asdfadsf                            adfafdsafdas               asdfdsa', NULL, '', '', false, true, '');
 
 
 --
@@ -443,21 +461,21 @@ INSERT INTO public.is_user (user_id, name, password, email, publicate, status, c
 -- Name: is_address_address_id_seq; Type: SEQUENCE SET; Schema: public; Owner: docker
 --
 
-SELECT pg_catalog.setval('public.is_address_address_id_seq', 6, true);
+SELECT pg_catalog.setval('public.is_address_address_id_seq', 8, true);
 
 
 --
 -- Name: is_log_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: docker
 --
 
-SELECT pg_catalog.setval('public.is_log_log_id_seq', 2, true);
+SELECT pg_catalog.setval('public.is_log_log_id_seq', 14, true);
 
 
 --
 -- Name: is_restaurant_restaurant_id_seq; Type: SEQUENCE SET; Schema: public; Owner: docker
 --
 
-SELECT pg_catalog.setval('public.is_restaurant_restaurant_id_seq', 5, true);
+SELECT pg_catalog.setval('public.is_restaurant_restaurant_id_seq', 7, true);
 
 
 --
@@ -560,7 +578,7 @@ CREATE OR REPLACE VIEW public.vw_restaurant_details AS
     r.status
    FROM ((public.is_restaurant r
      JOIN public.is_address a ON ((r.address_id = a.address_id)))
-     JOIN public.is_review re ON ((r.restaurant_id = re.restaurant_id)))
+     LEFT JOIN public.is_review re ON ((r.restaurant_id = re.restaurant_id)))
   WHERE ((r.status = true) AND (r.publicate = true))
   GROUP BY r.restaurant_id, a.address_id;
 
