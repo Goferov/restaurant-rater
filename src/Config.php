@@ -5,11 +5,11 @@ namespace App;
 class Config {
     private static $settings = [
         'db' => [
-            'host' => '',
-            'username' => '',
-            'password' => '',
-            'database' => '',
-            'port' => ''
+            'host' => 'db',
+            'username' => 'docker',
+            'password' => 'docker',
+            'database' => 'restaurant-rater',
+            'port' => '5432'
         ],
         'messages' => [
             'wrongPassword' => 'Hasło jest nieprawidłowe!',
