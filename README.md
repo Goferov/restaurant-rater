@@ -19,6 +19,10 @@ Restaurant Rater is an application that allows users to rate and review restaura
    - Administrators have all user capabilities plus they can add, edit, delete, and publish restaurant listings.
 3. Users can search for restaurants and sort the results based on various criteria.
 4. Users can change their passwords after registering.
+5. Comprehensive Authentication and Authorization:
+   - Authentication: Ensures that users are who they claim to be, typically through login credentials.
+   - Authorization: Determines what authenticated users are allowed to do within the application, such as accessing specific features based on their role (regular user or administrator).
+
 
 ## Technologies
 
