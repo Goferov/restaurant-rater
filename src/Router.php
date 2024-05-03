@@ -20,8 +20,11 @@ class Router
         $urlParts = explode("/", $path);
         $action = $urlParts[0];
 
-        if (!array_key_exists($action, self::$routes))
-            die("Wrong url!");
+        if (!array_key_exists($action, self::$routes)) {
+            http_response_code(401);
+            header('Location: /error404');
+            exit;
+        }
 
         $controller = 'App\Controllers\\' . self::$routes[$action];
         $object = new $controller;
