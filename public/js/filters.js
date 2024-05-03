@@ -40,22 +40,22 @@ function createRestaurant(restaurant) {
     link.href = `/restaurant/${restaurant.restaurant_id}`;
 
     const name = clone.querySelector("h3");
-    name.innerHTML = restaurant.name;
+    name.textContent = restaurant.name;
 
     const location = clone.querySelector(".tag-list .location");
-    location.innerHTML = restaurant.city;
+    location.textContent = restaurant.city;
 
     const website = clone.querySelector(".tag-list .website");
     if (restaurant.website) {
-        website.innerHTML = restaurant.website;
+        website.textContent = restaurant.website;
     } else {
-        const websiteContainer = clone.querySelector(".tag-list .website").parentNode;
+        const websiteContainer = website.parentNode;
         websiteContainer.style.display = 'none';
     }
 
     const fixedRate = restaurant.rate ? parseFloat(restaurant.rate).toFixed(1) : 0;
     const rate = clone.querySelector(".rate > div:last-of-type span");
-    rate.innerHTML = fixedRate;
+    rate.textContent = fixedRate;
 
     const stars = clone.querySelector('.rate .stars');
     stars.innerHTML = generateStars(fixedRate);
