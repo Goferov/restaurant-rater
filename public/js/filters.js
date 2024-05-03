@@ -34,7 +34,7 @@ function createRestaurant(restaurant) {
     const clone = template.content.cloneNode(true);
 
     const image = clone.querySelector("img");
-    image.src = `/public/uploads/${restaurant.image}`;
+    image.src = restaurant.image ? `/public/uploads/${restaurant.image}` : '/public/img/placeholder.png';
 
     const link = clone.querySelector("a");
     link.href = `/restaurant/${restaurant.restaurant_id}`;
