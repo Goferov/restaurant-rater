@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Config;
 use App\Helpers\ReviewHelper;
+use App\Helpers\ReviewHelperI;
 use App\Models\Address;
 use App\Models\Restaurant;
 use App\Models\Review;
@@ -24,20 +25,27 @@ class RestaurantController extends AppController {
     private ReviewRepositoryI $reviewRepository;
     private Session $session;
     private Request $request;
+    private ReviewHelperI $reviewHelper;
     private array $messagesList;
 
-    public function __construct(RestaurantRepositoryI $restaurantRepository, ReviewRepositoryI $reviewRepository, Session $session, Request $request) {
+    public function __construct(
+        RestaurantRepositoryI $restaurantRepository,
+        ReviewRepositoryI $reviewRepository,
+        Session $session,
+        Request $request,
+        ReviewHelperI $reviewHelper
+    ) {
         parent::__construct();
         $this->restaurantRepository = $restaurantRepository;
         $this->reviewRepository = $reviewRepository;
         $this->session = $session;
         $this->request = $request;
+        $this->reviewHelper = $reviewHelper;
+
         $this->messagesList = Config::get('messages');
     }
 
     public function restaurant($restaurantId = null) {
-        $reviewHelper = new ReviewHelper();
-
         if($restaurantId) {
             $messageKey = $this->request->get('message');
             $success = $this->request->get('success');
@@ -57,7 +65,7 @@ class RestaurantController extends AppController {
                 'success' => $success,
                 'lastReview' => $reviewData['review'] ?? null,
                 'reviewList' => $reviewList,
-                'stars' => $reviewHelper->generateStars($restaurant->getRate())
+                'stars' => $this->reviewHelper->generateStars($restaurant->getRate())
             ]);
         }
         else {
@@ -65,7 +73,7 @@ class RestaurantController extends AppController {
             $this->render('list', [
                 'restaurants' => $this->restaurantRepository->getRestaurants(),
                 'roleId' => $loggedUser['roleId'] ?? null,
-                'reviewHelper' => $reviewHelper,
+                'reviewHelper' => $this->reviewHelper,
             ]);
         }
     }
