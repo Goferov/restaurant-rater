@@ -4,13 +4,20 @@ namespace App\Controllers;
 use App\Repository\UserRepository;
 use App\Models\User;
 use App\Repository\UserRepositoryI;
+use App\Request;
+use App\Session;
 
 class UserController extends AppController {
 
     private UserRepositoryI $userRepository;
-    public function __construct(UserRepositoryI $userRepository) {
+    private Request $request;
+    private Session $session;
+
+    public function __construct(UserRepositoryI $userRepository, Request $request, Session $session) {
         parent::__construct();
         $this->userRepository = $userRepository;
+        $this->request = $request;
+        $this->session = $session;
     }
 
     public function login() {

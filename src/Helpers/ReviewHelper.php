@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-class ReviewHelper {
+class ReviewHelper implements ReviewHelperI{
     public function generateStars($rate) {
         $roundedRate = $rate ? round($rate) : 0;
         $stars = '';

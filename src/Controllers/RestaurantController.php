@@ -11,6 +11,8 @@ use App\Repository\RestaurantRepository;
 use App\Repository\RestaurantRepositoryI;
 use App\Repository\ReviewRepository;
 use App\Repository\ReviewRepositoryI;
+use App\Request;
+use App\Session;
 
 class RestaurantController extends AppController {
 
@@ -20,12 +22,16 @@ class RestaurantController extends AppController {
     private array $messages = [];
     private RestaurantRepositoryI $restaurantRepository;
     private ReviewRepositoryI $reviewRepository;
+    private Session $session;
+    private Request $request;
     private array $messagesList;
 
-    public function __construct(RestaurantRepositoryI $restaurantRepository, ReviewRepositoryI $reviewRepository) {
+    public function __construct(RestaurantRepositoryI $restaurantRepository, ReviewRepositoryI $reviewRepository, Session $session, Request $request) {
         parent::__construct();
         $this->restaurantRepository = $restaurantRepository;
         $this->reviewRepository = $reviewRepository;
+        $this->session = $session;
+        $this->request = $request;
         $this->messagesList = Config::get('messages');
     }
 

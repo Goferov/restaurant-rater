@@ -3,13 +3,23 @@ namespace App\Controllers;
 
 use App\Config;
 use App\Repository\RestaurantRepository;
+use App\Repository\RestaurantRepositoryI;
+use App\Request;
+use App\Session;
 
 class PanelController extends AppController {
 
     private ?array $userSession;
     private array $variables;
-    public function  __construct() {
+    private Session $session;
+    private Request $request;
+    private RestaurantRepositoryI $restaurantRepository;
+
+    public function  __construct(Session $session, Request $request, RestaurantRepositoryI $restaurantRepository) {
         parent::__construct();
+        $this->session = $session;
+        $this->request = $request;
+        $this->restaurantRepository = $restaurantRepository;
         $this->userSession = $this->session->get('userSession');
         $this->variables['isAdmin'] = $this->isAdminUser();
     }
@@ -30,8 +40,7 @@ class PanelController extends AppController {
         if(!$this->variables['isAdmin']) {
             $this->redirect('/');
         }
-        $restaurantRepository = new RestaurantRepository();
-        $this->variables['restaurants'] = $restaurantRepository->getRestaurants(false);
+        $this->variables['restaurants'] = $this->restaurantRepository->getRestaurants(false);
         $this->render('restaurantListPanel', $this->variables);
     }
 }

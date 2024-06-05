@@ -12,22 +12,25 @@ use App\Router;
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $path = trim($path, '/');
 
-Router::get('', 'HomepageController');
-Router::get('panel', 'PanelController');
-Router::get('restaurantList', 'PanelController');
-Router::get('restaurant', 'RestaurantController');
-Router::get('contact', 'ContactController');
-Router::post('addRestaurant', 'RestaurantController');
-Router::post('saveRestaurant', 'RestaurantController');
-Router::post('saveReview', 'RestaurantController');
-Router::post('search', 'RestaurantController');
-Router::post('deleteRestaurant', 'RestaurantController');
-Router::post('publicateRestaurant', 'RestaurantController');
-Router::post('error404', 'ErrorController');
+$container = require_once 'src/bootstrap.php';
+$router = new Router($container);
 
-Router::post('login', 'UserController');
-Router::post('register', 'UserController');
-Router::get('logout', 'UserController');
-Router::post('changePassword', 'UserController');
+$router->get('', 'HomepageController');
+$router->get('panel', 'PanelController');
+$router->get('restaurantList', 'PanelController');
+$router->get('restaurant', 'RestaurantController');
+$router->get('contact', 'ContactController');
+$router->post('addRestaurant', 'RestaurantController');
+$router->post('saveRestaurant', 'RestaurantController');
+$router->post('saveReview', 'RestaurantController');
+$router->post('search', 'RestaurantController');
+$router->post('deleteRestaurant', 'RestaurantController');
+$router->post('publicateRestaurant', 'RestaurantController');
+$router->post('error404', 'ErrorController');
 
-Router::run($path);
+$router->post('login', 'UserController');
+$router->post('register', 'UserController');
+$router->get('logout', 'UserController');
+$router->post('changePassword', 'UserController');
+
+$router->run($path);

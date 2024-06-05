@@ -6,7 +6,7 @@ use App\Models\Review;
 use PDO;
 
 class ReviewRepository extends Repository implements ReviewRepositoryI {
-    public function getReviews(int $restaurantId) {
+    public function getReviews(int $restaurantId): array {
         $result = array();
         $sql = '
         SELECT 
@@ -49,7 +49,7 @@ class ReviewRepository extends Repository implements ReviewRepositoryI {
         ]);
     }
 
-    public function getUserRestaurantReview(int $restaurantId, int $userId) {
+    public function getUserRestaurantReview(int $restaurantId, int $userId): ?Review {
         $stmt = $this->database->connect()->prepare
         ('
         SELECT review_id, restaurant_id, rate, review, r.create_at, r.user_id 
@@ -62,7 +62,7 @@ class ReviewRepository extends Repository implements ReviewRepositoryI {
         $stmt->execute();
         $review = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($review == false)
+        if (!$review)
             return null;
 
         return new Review

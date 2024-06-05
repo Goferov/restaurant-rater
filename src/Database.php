@@ -13,7 +13,7 @@ class Database {
     private int $port;
     private ?PDO $connection = null;
 
-    private function __construct() {
+    public function __construct() {
         $dbConfig = Config::get('db');
 
         $this->username = $dbConfig['username'];
@@ -21,13 +21,6 @@ class Database {
         $this->host = $dbConfig['host'];
         $this->database = $dbConfig['database'];
         $this->port = $dbConfig['port'];
-    }
-
-    public static function getInstance(): Database {
-        if (self::$instance === null) {
-            self::$instance = new Database();
-        }
-        return self::$instance;
     }
 
     public function connect(): PDO {

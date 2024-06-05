@@ -8,8 +8,8 @@ use App\Session;
 
 class AppController {
 
-    protected Request $request;
-    protected Session $session;
+    private Request $request;
+    private Session $session;
     private static string $main_template_path = 'public/views/template.php';
 
     public function __construct()

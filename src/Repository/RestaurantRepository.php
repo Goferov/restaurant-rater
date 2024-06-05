@@ -5,7 +5,7 @@ use PDO;
 use App\Models\Restaurant;
 use App\Models\Address;
 
-class RestaurantRepository extends Repository implements RestaurantRepositoryI{
+class RestaurantRepository extends Repository implements RestaurantRepositoryI {
 
     public function getRestaurants($publicate = true, $limit = null) {
         $result = array();

@@ -7,7 +7,7 @@ use App\Database;
 class Repository {
     protected Database $database;
 
-    public function __construct() {
-        $this->database = Database::getInstance();
+    public function __construct(Database $database) {
+        $this->database = $database;
     }
 }
