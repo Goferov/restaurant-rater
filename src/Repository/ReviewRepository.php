@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Models\Review;
 use PDO;
 
-class ReviewRepository extends Repository {
+class ReviewRepository extends Repository implements ReviewRepositoryI {
     public function getReviews(int $restaurantId) {
         $result = array();
         $sql = '

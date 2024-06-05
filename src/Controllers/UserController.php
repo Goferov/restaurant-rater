@@ -3,13 +3,14 @@
 namespace App\Controllers;
 use App\Repository\UserRepository;
 use App\Models\User;
+use App\Repository\UserRepositoryI;
 
 class UserController extends AppController {
 
-    private UserRepository $userRepository;
-    public function __construct() {
+    private UserRepositoryI $userRepository;
+    public function __construct(UserRepositoryI $userRepository) {
         parent::__construct();
-        $this->userRepository = new UserRepository();
+        $this->userRepository = $userRepository;
     }
 
     public function login() {

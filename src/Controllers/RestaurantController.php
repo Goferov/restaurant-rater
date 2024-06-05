@@ -8,7 +8,9 @@ use App\Models\Address;
 use App\Models\Restaurant;
 use App\Models\Review;
 use App\Repository\RestaurantRepository;
+use App\Repository\RestaurantRepositoryI;
 use App\Repository\ReviewRepository;
+use App\Repository\ReviewRepositoryI;
 
 class RestaurantController extends AppController {
 
@@ -16,14 +18,14 @@ class RestaurantController extends AppController {
     const SUPPORTED_TYPES = ['image/png', 'image/jpeg'];
     const UPLOAD_DIRECTORY = '/../public/uploads/';
     private array $messages = [];
-    private RestaurantRepository $restaurantRepository;
-    private ReviewRepository $reviewRepository;
+    private RestaurantRepositoryI $restaurantRepository;
+    private ReviewRepositoryI $reviewRepository;
     private array $messagesList;
 
-    public function __construct() {
+    public function __construct(RestaurantRepositoryI $restaurantRepository, ReviewRepositoryI $reviewRepository) {
         parent::__construct();
-        $this->restaurantRepository = new RestaurantRepository();
-        $this->reviewRepository = new ReviewRepository();
+        $this->restaurantRepository = $restaurantRepository;
+        $this->reviewRepository = $reviewRepository;
         $this->messagesList = Config::get('messages');
     }
 

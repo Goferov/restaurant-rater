@@ -4,7 +4,7 @@ namespace App\Repository;
 use PDO;
 use App\Models\User;
 
-class UserRepository extends Repository
+class UserRepository extends Repository implements UserRepositoryI
 {
     public function getUser(string $email): ?User {
         $stmt = $this->database->connect()->prepare
