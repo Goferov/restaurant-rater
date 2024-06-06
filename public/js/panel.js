@@ -2,7 +2,9 @@ function publicateElement() {
     const restaurantId = this.dataset.id;
     const btn = this;
 
-    fetch(`/publicateRestaurant/${restaurantId}`)
+    fetch(`/publicateRestaurant/${restaurantId}`, {
+        method: 'POST',
+    })
         .then(function (response) {
             if (response.ok) {
                 btn.classList.toggle('no');
@@ -20,7 +22,9 @@ function deleteElement() {
     const row = document.querySelector("#row_" + restaurantId);
 
     if (confirm("Czy na pewno chcesz usunąć tę restaurację?")) {
-        fetch(`/deleteRestaurant/${restaurantId}`)
+        fetch(`/deleteRestaurant/${restaurantId}`, {
+            method: 'POST',
+        })
             .then(function (response) {
                 if (response.ok) {
                     row.remove();

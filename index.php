@@ -6,7 +6,6 @@ spl_autoload_register(function(string  $classNamespace) {
     require_once $path;
 });
 
-
 use App\Router;
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -20,13 +19,13 @@ $router->get('panel', 'PanelController');
 $router->get('restaurantList', 'PanelController');
 $router->get('restaurant', 'RestaurantController');
 $router->get('contact', 'ContactController');
-$router->post('addRestaurant', 'RestaurantController');
+$router->get('addRestaurant', 'RestaurantController');
 $router->post('saveRestaurant', 'RestaurantController');
 $router->post('saveReview', 'RestaurantController');
 $router->post('search', 'RestaurantController');
 $router->post('deleteRestaurant', 'RestaurantController');
 $router->post('publicateRestaurant', 'RestaurantController');
-$router->post('error404', 'ErrorController');
+$router->get('error404', 'ErrorController');
 
 $router->post('login', 'UserController');
 $router->post('register', 'UserController');
