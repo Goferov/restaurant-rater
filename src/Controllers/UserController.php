@@ -6,18 +6,26 @@ use App\Models\User;
 use App\Repository\UserRepositoryI;
 use App\Request;
 use App\Session;
+use App\Validators\IValidator;
 
 class UserController extends AppController {
 
     private UserRepositoryI $userRepository;
     private Request $request;
     private Session $session;
+    private IValidator $passwordValidator;
 
-    public function __construct(UserRepositoryI $userRepository, Request $request, Session $session) {
+    public function __construct(
+        UserRepositoryI $userRepository,
+        Request         $request,
+        Session         $session,
+        IValidator      $passwordValidator,
+    ) {
         parent::__construct();
         $this->userRepository = $userRepository;
         $this->request = $request;
         $this->session = $session;
+        $this->passwordValidator = $passwordValidator;
     }
 
     public function login() {
@@ -62,7 +70,7 @@ class UserController extends AppController {
         $redirect = $this->getPreviousPage();
         $role = 2; // TODO: IMPLEMENT ROLE MANAGEMENT
 
-        if(!$this->isValidPassword($password)) {
+        if(!$this->passwordValidator->validate($password)) {
             $this->redirect($redirect, ['registerMessage' => 'invalidPassword']);
         }
 
@@ -103,7 +111,7 @@ class UserController extends AppController {
                 $this->redirect($redirect, ['message' => 'wrongPassword']);
             }
 
-            if(!$this->isValidPassword($newPassword)) {
+            if(!$this->passwordValidator->validate($newPassword)) {
                 $this->redirect($redirect, ['message' => 'invalidPassword']);
             }
 
@@ -122,10 +130,5 @@ class UserController extends AppController {
     public function logout(): void {
         $this->session->remove('userSession');
         $this->redirect('/');
-    }
-
-    private function isValidPassword(string $password): bool {
-        $minLength = 6;
-        return strlen($password) >= $minLength && preg_match('/\d/', $password);
     }
 }

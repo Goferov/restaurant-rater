@@ -17,9 +17,6 @@ class Container
         $this->bindings[$id] = $factory;
     }
 
-    /**
-     * @throws Exception
-     */
     public function get($id)
     {
         if (! isset($this->bindings[$id])) {
@@ -31,9 +28,6 @@ class Container
         return $factory($this);
     }
 
-    /**
-     * @throws Exception
-     */
     public function build(string $class)
     {
         try {
@@ -42,14 +36,12 @@ class Container
             throw new Exception("Target class [$class] does not exist.", 0, $e);
         }
 
-        // If the type is not instantiable, such as an Interface or Abstract Class
         if (! $reflector->isInstantiable()) {
             throw new Exception("Target [$class] is not instantiable.");
         }
 
         $constructor = $reflector->getConstructor();
 
-        // If there are no constructor, that means there are no dependencies
         if ($constructor === null) {
             return new $class;
         }
@@ -73,7 +65,6 @@ class Container
 
             $name = $type->getName();
 
-            // Resolve a class based dependency from the container.
             try {
                 $dependency = $this->get($name);
                 $dependencies[] = $dependency;

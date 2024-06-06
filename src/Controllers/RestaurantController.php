@@ -3,17 +3,15 @@
 namespace App\Controllers;
 
 use App\Config;
-use App\Helpers\ReviewHelper;
 use App\Helpers\ReviewHelperI;
 use App\Models\Address;
 use App\Models\Restaurant;
 use App\Models\Review;
-use App\Repository\RestaurantRepository;
 use App\Repository\RestaurantRepositoryI;
-use App\Repository\ReviewRepository;
 use App\Repository\ReviewRepositoryI;
 use App\Request;
 use App\Session;
+use App\Validators\IValidatorManager;
 
 class RestaurantController extends AppController {
 
@@ -26,6 +24,7 @@ class RestaurantController extends AppController {
     private Session $session;
     private Request $request;
     private ReviewHelperI $reviewHelper;
+    private IValidatorManager $validatorManager;
     private array $messagesList;
 
     public function __construct(
@@ -33,7 +32,8 @@ class RestaurantController extends AppController {
         ReviewRepositoryI $reviewRepository,
         Session $session,
         Request $request,
-        ReviewHelperI $reviewHelper
+        ReviewHelperI $reviewHelper,
+        IValidatorManager $validatorManager
     ) {
         parent::__construct();
         $this->restaurantRepository = $restaurantRepository;
@@ -41,6 +41,7 @@ class RestaurantController extends AppController {
         $this->session = $session;
         $this->request = $request;
         $this->reviewHelper = $reviewHelper;
+        $this->validatorManager = $validatorManager;
 
         $this->messagesList = Config::get('messages');
     }
@@ -79,6 +80,7 @@ class RestaurantController extends AppController {
     }
 
     public function addRestaurant($id = null) {
+
         $this->checkUserSessionAndRole();
 
         $this->render('addRestaurant', [
@@ -91,27 +93,10 @@ class RestaurantController extends AppController {
     public function saveRestaurant($id = null) {
         $this->checkUserSessionAndRole();
 
-        $restaurantData = [
-            'name' => $this->request->post('name'),
-            'description' => $this->request->post('description', ''),
-            'website' => $this->request->post('website', ''),
-            'email' => filter_var($this->request->post('email', ''), FILTER_SANITIZE_EMAIL),
-            'phone' => $this->request->post('phone', ''),
-            'street' => $this->request->post('street'),
-            'city' => $this->request->post('city'),
-            'postalCode' => $this->request->post('postalCode'),
-            'houseNo' => $this->request->post('houseNo'),
-        ];
+        $restaurantData = $this->getRestaurantDataFromRequest();
         $deleteFile = $this->request->post('delete_file');
 
-        $address = new Address(
-            (int)$this->request->post('addressId'),
-            $this->request->post('street'),
-            $this->request->post('city'),
-            $this->request->post('postalCode'),
-            $this->request->post('houseNo'),
-            $this->request->post('apartmentNo', '')
-        );
+        $address = $this->createAddressFromRequest();
 
         $fileData = $this->request->file('file');
 
@@ -140,16 +125,7 @@ class RestaurantController extends AppController {
             $restaurantImage = '';
         }
 
-        $restaurant = new Restaurant(
-            (int)$id,
-            $restaurantData['name'],
-            $restaurantData['description'],
-            $restaurantImage,
-            $restaurantData['website'],
-            $restaurantData['email'],
-            $restaurantData['phone'],
-            $address
-        );
+        $restaurant = $this->createRestaurant($id, $restaurantData, $restaurantImage, $address);
 
         if ($id) {
             $this->restaurantRepository->updateRestaurant($restaurant);
@@ -205,6 +181,21 @@ class RestaurantController extends AppController {
         }
     }
 
+    private function getRestaurantDataFromRequest(): array
+    {
+        return [
+            'name' => $this->request->post('name'),
+            'description' => $this->request->post('description', ''),
+            'website' => $this->request->post('website', ''),
+            'email' => filter_var($this->request->post('email', ''), FILTER_SANITIZE_EMAIL),
+            'phone' => $this->request->post('phone', ''),
+            'street' => $this->request->post('street'),
+            'city' => $this->request->post('city'),
+            'postalCode' => $this->request->post('postalCode'),
+            'houseNo' => $this->request->post('houseNo'),
+        ];
+    }
+
     public function deleteRestaurant(int $id): void {
         if($this->isAdminUser()) {
             $this->restaurantRepository->deleteRestaurant($id);
@@ -223,6 +214,32 @@ class RestaurantController extends AppController {
         else {
             http_response_code(401);
         }
+    }
+
+    private function createAddressFromRequest(): Address
+    {
+        return new Address(
+            (int)$this->request->post('addressId'),
+            $this->request->post('street'),
+            $this->request->post('city'),
+            $this->request->post('postalCode'),
+            $this->request->post('houseNo'),
+            $this->request->post('apartmentNo', '')
+        );
+    }
+
+    private function createRestaurant($id, array $restaurantData, ?string $restaurantImage, Address $address): Restaurant
+    {
+        return new Restaurant(
+            (int)$id,
+            $restaurantData['name'],
+            $restaurantData['description'],
+            $restaurantImage,
+            $restaurantData['website'],
+            $restaurantData['email'],
+            $restaurantData['phone'],
+            $address
+        );
     }
 
     private function checkUserSessionAndRole() {
@@ -254,10 +271,10 @@ class RestaurantController extends AppController {
         $isValid = true;
 
         $isValid &= $this->checkRequiredFields($data, ['name', 'street', 'city', 'postalCode', 'houseNo']);
-        $isValid &= $this->validateEmail($data['email']);
-        $isValid &= $this->validateURL($data['website']);
-        $isValid &= $this->validatePostalCode($data['postalCode']);
-        $isValid &= $this->validatePhoneNumber($data['phone']);
+        $isValid &= $this->validatorManager->validate('email', $data['email']);
+        $isValid &= $this->validatorManager->validate('url', $data['website']);
+        $isValid &= $this->validatorManager->validate('postalCode', $data['postalCode']);
+        $isValid &= $this->validatorManager->validate('phoneNumber', $data['phone']);
 
         return $isValid;
     }
@@ -268,38 +285,6 @@ class RestaurantController extends AppController {
                 $this->addErrorMessage('requiredFields');
                 return false;
             }
-        }
-        return true;
-    }
-
-    private function validateEmail($email) {
-        if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->addErrorMessage('wrongEmail');
-            return false;
-        }
-        return true;
-    }
-
-    private function validateURL($url) {
-        if (!empty($url) && !filter_var($url, FILTER_VALIDATE_URL)) {
-            $this->addErrorMessage('wrongUrl');
-            return false;
-        }
-        return true;
-    }
-
-    private function validatePostalCode($postalCode) {
-        if (!preg_match('/^[0-9]{2}-?[0-9]{3}$/Du', $postalCode)) {
-            $this->addErrorMessage('invalidPostalCode');
-            return false;
-        }
-        return true;
-    }
-
-    private function validatePhoneNumber($phoneNumber) {
-        if (!empty($phoneNumber) && !preg_match('/^\d+$/', $phoneNumber)) {
-            $this->addErrorMessage('invalidPhoneNumber');
-            return false;
         }
         return true;
     }
