@@ -2,12 +2,6 @@
 
 namespace App;
 
-use Closure;
-use Exception;
-use ReflectionClass;
-use ReflectionException;
-use ReflectionNamedType;
-
 class Container
 {
     private array $bindings = [];
@@ -19,8 +13,8 @@ class Container
 
     public function get($id)
     {
-        if (! isset($this->bindings[$id])) {
-            throw new Exception("Target binding [$id] does not exist.");
+        if (!isset($this->bindings[$id])) {
+            throw new \Exception("Target binding [$id] does not exist.");
         }
 
         $factory = $this->bindings[$id];
@@ -30,18 +24,12 @@ class Container
 
     public function build(string $class)
     {
-        try {
-            $reflector = new ReflectionClass($class);
-        } catch (ReflectionException $e) {
-            throw new Exception("Target class [$class] does not exist.", 0, $e);
-        }
-
-        if (! $reflector->isInstantiable()) {
-            throw new Exception("Target [$class] is not instantiable.");
+        $reflector = new \ReflectionClass($class);
+        if (!$reflector->isInstantiable()) {
+            throw new \Exception("Target [$class] is not instantiable.");
         }
 
         $constructor = $reflector->getConstructor();
-
         if ($constructor === null) {
             return new $class;
         }
@@ -51,35 +39,41 @@ class Container
 
         foreach ($parameters as $parameter) {
             $type = $parameter->getType();
-
-            if (! $type instanceof ReflectionNamedType || $type->isBuiltin()) {
-                // Resolve a non-class hinted primitive dependency.
+            if ($type === null || $type->isBuiltin()) {
                 if ($parameter->isDefaultValueAvailable()) {
                     $dependencies[] = $parameter->getDefaultValue();
-                } else if ($parameter->isVariadic()) {
-                    $dependencies[] = [];
                 } else {
-                    throw new Exception("Unresolvable dependency [$parameter] in class {$parameter->getDeclaringClass()->getName()}");
+                    throw new \Exception("Unresolvable dependency [{$parameter->getName()}] in class {$parameter->getDeclaringClass()->getName()}");
                 }
-            }
-
-            $name = $type->getName();
-
-            try {
-                $dependency = $this->get($name);
-                $dependencies[] = $dependency;
-            } catch (Exception $e) {
-                if ($parameter->isOptional()) {
-                    $dependencies[] = $parameter->getDefaultValue();
-                } else {
-                    $dependency = $this->build($parameter->getType()->getName());
-                    $this->set($name, $dependency);
-                    $dependencies[] = $dependency;
-                }
+            } else {
+                $dependencies[] = $this->get($type->getName());
             }
         }
 
         return $reflector->newInstanceArgs($dependencies);
     }
-}
 
+    public function callMethod($object, string $method, array $parameters = [])
+    {
+        $reflector = new \ReflectionMethod($object, $method);
+        $methodParameters = $reflector->getParameters();
+        $dependencies = [];
+
+        foreach ($methodParameters as $parameter) {
+            $type = $parameter->getType();
+            if ($type === null || $type->isBuiltin()) {
+                if (array_key_exists($parameter->getName(), $parameters)) {
+                    $dependencies[] = $parameters[$parameter->getName()];
+                } elseif ($parameter->isDefaultValueAvailable()) {
+                    $dependencies[] = $parameter->getDefaultValue();
+                } else {
+                    throw new \Exception("Unresolvable dependency [{$parameter->getName()}] in method [$method]");
+                }
+            } else {
+                $dependencies[] = $this->get($type->getName());
+            }
+        }
+
+        return $reflector->invokeArgs($object, $dependencies);
+    }
+}
