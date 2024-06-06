@@ -21,7 +21,7 @@ $router->get('restaurant', 'RestaurantController');
 $router->get('contact', 'ContactController');
 $router->get('addRestaurant', 'RestaurantController');
 $router->post('saveRestaurant', 'RestaurantController');
-$router->post('saveReview', 'RestaurantController');
+$router->post('saveReview', 'ReviewController');
 $router->post('search', 'RestaurantController');
 $router->post('deleteRestaurant', 'RestaurantController');
 $router->post('publicateRestaurant', 'RestaurantController');
