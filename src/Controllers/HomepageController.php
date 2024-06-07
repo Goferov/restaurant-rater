@@ -2,9 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Helpers\ReviewHelper;
 use App\Helpers\ReviewHelperI;
-use App\Repository\RestaurantRepository;
 use App\Repository\RestaurantRepositoryI;
 
 class HomepageController extends AppController {
@@ -14,7 +12,6 @@ class HomepageController extends AppController {
 
     public function __construct(RestaurantRepositoryI $restaurantRepository, ReviewHelperI $reviewHelper)
     {
-        parent::__construct();
         $this->restaurantRepository = $restaurantRepository;
         $this->reviewHelper = $reviewHelper;
     }

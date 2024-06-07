@@ -3,20 +3,11 @@
 namespace App\Controllers;
 
 use App\Config;
-use App\Request;
-use App\Session;
 
 class AppController {
 
-    private Request $request;
-    private Session $session;
     private static string $main_template_path = 'public/views/template.php';
 
-    public function __construct()
-    {
-        $this->request = new Request($_GET, $_POST, $_SERVER, $_FILES);
-        $this->session = new Session();
-    }
     public function render(string $page = null, array $variables = []): void
     {
         $templatePath = 'public/views/pages/'. $page.'.php';
@@ -32,55 +23,13 @@ class AppController {
         print $output;
     }
 
-    protected function redirect(string $to, array $params = [], ?int $code = null):void {
-        $location = 'http://' . $this->request->server('HTTP_HOST') . $to . $this->buildUrlParams($params);
-        if($code) {
-            http_response_code($code);
-        }
-        header('Location: '.$location);
-        exit();
-    }
-
-    protected function getPreviousPage() {
-        $referer = $this->request->server('HTTP_REFERER');
-        if (!isset($referer)) {
-            return null;
-        }
-        $parsedUrl = parse_url($referer);
-        return $parsedUrl['path'] ?? null;
-    }
-
-    protected function isApplicationJson(): bool {
-        $contentType = $this->request->server('CONTENT_TYPE') ? trim($this->request->server('CONTENT_TYPE')) : '';
-        return $contentType === "application/json";
-    }
-
-    protected function isAdminUser(): bool {
-        $loggedUser = $this->session->get('userSession');
-        if(!$loggedUser || $loggedUser['roleId'] != 1) {
-            return false;
-        }
-        return true;
-    }
-
-    private function buildUrlParams($params) {
-        if($params) {
-            $queryParams = [];
-            foreach ($params as $key=>$param) {
-                $queryParams[] = urlencode($key) . '=' . urlencode($param);
-            }
-            $queryParams = implode('&',$queryParams);
-            return '?' . $queryParams;
-        }
-    }
-
     private function getGlobalVariables(): array {
         $messageList = Config::get('messages');
-        $loginMessageKey = $this->request->get('loginMessage');
-        $registerMessageKey = $this->request->get('registerMessage');
+        $loginMessageKey = $_GET['loginMessage'] ?? null;
+        $registerMessageKey = $_GET['registerMessage'] ?? null;
 
         return [
-            'isLogin' => $this->session->get('userSession'),
+            'isLogin' => $_SESSION['userSession'] ?? null,
             'loginMessage' => $messageList[$loginMessageKey] ?? null,
             'registerMessage' => $messageList[$registerMessageKey] ?? null,
         ];

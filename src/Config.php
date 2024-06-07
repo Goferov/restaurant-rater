@@ -28,8 +28,7 @@ class Config {
             'restaurantAdded' => 'Restauracja została dodana!',
             'requiredFields' => 'Wymagane pola nie mogą być puste.',
             'wrongUrl' => 'Podany adres strony internetowej jest nieprawidłowy.',
-            'fileTooLarge' => 'Plik jest zbyt duży.',
-            'wrongFileExtension' => 'Nieodpowiedni typ pliku.',
+            'fileError' => 'Plik jest zbyt duży lub typ jest nieodpowiedni.',
             'invalidPostalCode' => 'Proszę wprowadzić prawidłowy kod pocztowy (format dd-ddd).',
             'invalidPhoneNumber' => 'Numer telefonu może zawierać tylko cyfry.',
         ]

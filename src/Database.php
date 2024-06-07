@@ -5,7 +5,6 @@ use PDO;
 use PDOException;
 
 class Database {
-    private static ?Database $instance = null;
     private string $username;
     private string $password;
     private string $host;
@@ -13,14 +12,12 @@ class Database {
     private int $port;
     private ?PDO $connection = null;
 
-    public function __construct() {
-        $dbConfig = Config::get('db');
-
-        $this->username = $dbConfig['username'];
-        $this->password = $dbConfig['password'];
-        $this->host = $dbConfig['host'];
-        $this->database = $dbConfig['database'];
-        $this->port = $dbConfig['port'];
+    public function __construct(string $username, string $password, string $host, string $database, string $port) {
+        $this->username = $username;
+        $this->password = $password;
+        $this->host = $host;
+        $this->database = $database;
+        $this->port = $port;
     }
 
     public function connect(): PDO {

@@ -2,6 +2,10 @@
 
 namespace App;
 
+use Exception;
+use ReflectionClass;
+use ReflectionMethod;
+
 class Container
 {
     private array $bindings = [];
@@ -24,7 +28,7 @@ class Container
 
     public function build(string $class)
     {
-        $reflector = new \ReflectionClass($class);
+        $reflector = new ReflectionClass($class);
         if (!$reflector->isInstantiable()) {
             throw new \Exception("Target [$class] is not instantiable.");
         }
@@ -43,7 +47,7 @@ class Container
                 if ($parameter->isDefaultValueAvailable()) {
                     $dependencies[] = $parameter->getDefaultValue();
                 } else {
-                    throw new \Exception("Unresolvable dependency [{$parameter->getName()}] in class {$parameter->getDeclaringClass()->getName()}");
+                    throw new Exception("Unresolvable dependency [{$parameter->getName()}] in class {$parameter->getDeclaringClass()->getName()}");
                 }
             } else {
                 $dependencies[] = $this->get($type->getName());
@@ -55,7 +59,7 @@ class Container
 
     public function callMethod($object, string $method, array $parameters = [])
     {
-        $reflector = new \ReflectionMethod($object, $method);
+        $reflector = new ReflectionMethod($object, $method);
         $methodParameters = $reflector->getParameters();
         $dependencies = [];
 
@@ -67,7 +71,7 @@ class Container
                 } elseif ($parameter->isDefaultValueAvailable()) {
                     $dependencies[] = $parameter->getDefaultValue();
                 } else {
-                    throw new \Exception("Unresolvable dependency [{$parameter->getName()}] in method [$method]");
+                    throw new Exception("Unresolvable dependency [{$parameter->getName()}] in method [$method]");
                 }
             } else {
                 $dependencies[] = $this->get($type->getName());

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Repository\UserRepositoryI;
 use App\Request;
 use App\Session;
+use App\Utils\Redirect;
 use App\Validators\IValidator;
 
 class UserController extends AppController {
@@ -14,38 +15,40 @@ class UserController extends AppController {
     private Request $request;
     private Session $session;
     private IValidator $passwordValidator;
+    private Redirect $redirect;
 
     public function __construct(
         UserRepositoryI $userRepository,
         Request         $request,
         Session         $session,
         IValidator      $passwordValidator,
+        Redirect      $redirect,
     ) {
-        parent::__construct();
         $this->userRepository = $userRepository;
         $this->request = $request;
         $this->session = $session;
         $this->passwordValidator = $passwordValidator;
+        $this->redirect = $redirect;
     }
 
     public function login() {
 
         if(!$this->request->isPost()) {
-            $this->redirect('/');
+            $this->redirect->to('/');
         }
 
         $email = $this->request->post('email');
         $password = $this->request->post('password');
-        $redirect = $this->getPreviousPage();
+        $redirect = $this->redirect->getPreviousPage();
         $user = $this->userRepository->getUser($email);
 
         if($user) {
             if (!password_verify($password, $user->getPassword())) {
-                $this->redirect($redirect, ['loginMessage' => 'wrongPassword']);
+                $this->redirect->to($redirect, ['loginMessage' => 'wrongPassword']);
             }
         }
         else {
-            $this->redirect($redirect, ['loginMessage' => 'userNotExist']);
+            $this->redirect->to($redirect, ['loginMessage' => 'userNotExist']);
         }
 
         $this->session->set('userSession', [
@@ -55,49 +58,49 @@ class UserController extends AppController {
             'roleId' => $user->getRoleId(),
             ]
         );
-        $this->redirect('/panel');
+        $this->redirect->to('/panel');
     }
 
     public function register(): void {
         if(!$this->request->isPost()) {
-            $this->redirect('/');
+            $this->redirect->to('/');
         }
 
         $email = filter_var($this->request->post('email'), FILTER_SANITIZE_EMAIL);
         $name = $this->request->post('name');
         $password = $this->request->post('password');
         $confirmedPassword = $this->request->post('confirmedPassword');
-        $redirect = $this->getPreviousPage();
+        $redirect = $this->redirect->getPreviousPage();
         $role = 2; // TODO: IMPLEMENT ROLE MANAGEMENT
 
         if(!$this->passwordValidator->validate($password)) {
-            $this->redirect($redirect, ['registerMessage' => 'invalidPassword']);
+            $this->redirect->to($redirect, ['registerMessage' => 'invalidPassword']);
         }
 
         if ($password !== $confirmedPassword)  {
-            $this->redirect($redirect, ['registerMessage' => 'passwordsNotMatch']);
+            $this->redirect->to($redirect, ['registerMessage' => 'passwordsNotMatch']);
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->redirect($redirect, ['registerMessage' => 'wrongEmail']);
+            $this->redirect->to($redirect, ['registerMessage' => 'wrongEmail']);
         }
 
         $userFromDb = $this->userRepository->getUser($email);
         if($userFromDb) {
-            $this->redirect($redirect, ['registerMessage' => 'userExist']);
+            $this->redirect->to($redirect, ['registerMessage' => 'userExist']);
         }
 
 
         $user = new User(null, $name, password_hash($password, PASSWORD_BCRYPT), $email, $role);
         $this->userRepository->addUser($user);
-        $this->redirect($redirect, ['registerMessage' => 'registerComplete']);
+        $this->redirect->to($redirect, ['registerMessage' => 'registerComplete']);
     }
 
     public function changePassword() {
         $loggedUser = $this->session->get('userSession');
 
         if(!$this->request->isPost() || !$loggedUser) {
-            $this->redirect('/');
+            $this->redirect->to('/');
         }
 
         $currentPassword = $this->request->post('currentPassword');
@@ -108,15 +111,15 @@ class UserController extends AppController {
 
         if($user) {
             if (!password_verify($currentPassword, $user->getPassword())) {
-                $this->redirect($redirect, ['message' => 'wrongPassword']);
+                $this->redirect->to($redirect, ['message' => 'wrongPassword']);
             }
 
             if(!$this->passwordValidator->validate($newPassword)) {
-                $this->redirect($redirect, ['message' => 'invalidPassword']);
+                $this->redirect->to($redirect, ['message' => 'invalidPassword']);
             }
 
             if ($newPassword !== $repeatNewPassword)  {
-                $this->redirect($redirect, ['message' => 'passwordsNotMatch']);
+                $this->redirect->to($redirect, ['message' => 'passwordsNotMatch']);
             }
         }
         else {
@@ -124,11 +127,11 @@ class UserController extends AppController {
         }
 
         $this->userRepository->updateUserPassword($user->getId(), password_hash($newPassword, PASSWORD_BCRYPT));
-        $this->redirect($redirect, ['message' => 'passwordChange']);
+        $this->redirect->to($redirect, ['message' => 'passwordChange']);
     }
 
     public function logout(): void {
         $this->session->remove('userSession');
-        $this->redirect('/');
+        $this->redirect->to('/');
     }
 }

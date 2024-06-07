@@ -44,7 +44,6 @@ class Router
             header('Location: /error404');
             exit;
         }
-
-        $controller->$actionMethod($id);
+        $this->container->callMethod($controller, $actionMethod, ['id' => $id]);
     }
 }

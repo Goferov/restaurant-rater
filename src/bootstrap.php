@@ -9,18 +9,30 @@ use App\Repository\ReviewRepository;
 use App\Repository\ReviewRepositoryI;
 use App\Repository\UserRepository;
 use App\Repository\UserRepositoryI;
+use App\Services\FileService;
+use App\Utils\Auth;
+use App\Utils\Redirect;
 use App\Validators\EmailValidator;
+use App\Validators\IValidator;
 use App\Validators\IValidatorManager;
 use App\Validators\PasswordValidator;
-use App\Validators\IValidator;
 use App\Validators\PhoneNumberValidator;
 use App\Validators\PostalCodeValidator;
+use App\Validators\RequiredFieldsValidator;
 use App\Validators\UrlValidator;
 use App\Validators\ValidatorManager;
 
 $container = new Container();
 $container->set(Database::class, function() {
-    return new Database(Config::get('db'));
+    $dbConfig = Config::get('db');
+
+    return new Database(
+        $dbConfig['username'],
+        $dbConfig['password'],
+        $dbConfig['host'],
+        $dbConfig['database'],
+        $dbConfig['port']
+    );
 });
 $container->set(RestaurantRepositoryI::class, function ($container) {
     return new RestaurantRepository($container->get(Database::class));
@@ -50,12 +62,25 @@ $container->set(IValidator::class, function() {
     return new PasswordValidator();
 });
 
-$container->set(IValidatorManager::class, function() {
+$container->set(FileService::class, function() {
+    return new FileService();
+});
+
+$container->set(Auth::class, function($container) {
+    return new Auth($container->get(Session::class));
+});
+
+$container->set(Redirect::class, function($container) {
+    return new Redirect($container->get(Request::class));
+});
+
+$container->set(IValidatorManager::class, function($container) {
     $validatorManager = new ValidatorManager();
     $validatorManager->addValidator('email', new EmailValidator());
     $validatorManager->addValidator('url', new UrlValidator());
     $validatorManager->addValidator('postalCode', new PostalCodeValidator());
     $validatorManager->addValidator('phoneNumber', new PhoneNumberValidator());
+    $validatorManager->addValidator('RequiredFields', new RequiredFieldsValidator());
     return $validatorManager;
 });
 
