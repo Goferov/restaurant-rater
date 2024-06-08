@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Models\User;
 
-interface UserRepositoryI
+interface IUserRepository
 {
     public function getUser(string $email): ?User;
     public function addUser(User $user): void;

@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-interface ReviewHelperI
+interface IReviewHelper
 {
     public function generateStars($rate);
 }

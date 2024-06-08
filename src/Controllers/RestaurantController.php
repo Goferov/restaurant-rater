@@ -3,40 +3,40 @@
 namespace App\Controllers;
 
 use App\Config;
-use App\Helpers\ReviewHelperI;
+use App\Helpers\IReviewHelper;
 use App\Models\Address;
 use App\Models\Restaurant;
-use App\Repository\RestaurantRepositoryI;
-use App\Repository\ReviewRepositoryI;
-use App\Request;
-use App\Services\FileService;
-use App\Session;
+use App\Repository\IRestaurantRepository;
+use App\Repository\IReviewRepository;
+use App\Services\ValidatorService;
 use App\Utils\Auth;
+use App\Utils\IFile;
 use App\Utils\Redirect;
-use App\Validators\IValidatorManager;
+use App\Utils\Request;
+use App\Utils\Session;
 
 class RestaurantController extends AppController {
 
     private array $messages = [];
-    private RestaurantRepositoryI $restaurantRepository;
-    private ReviewRepositoryI $reviewRepository;
+    private IRestaurantRepository $restaurantRepository;
+    private IReviewRepository $reviewRepository;
     private Session $session;
     private Request $request;
-    private ReviewHelperI $reviewHelper;
-    private IValidatorManager $validatorManager;
-    private FileService $fileService;
+    private IReviewHelper $reviewHelper;
+    private ValidatorService $validatorService;
+    private IFile $fileService;
     private Auth $authService;
     private Redirect $redirect;
     private array $messagesList;
 
     public function __construct(
-        RestaurantRepositoryI $restaurantRepository,
-        ReviewRepositoryI     $reviewRepository,
+        IRestaurantRepository $restaurantRepository,
+        IReviewRepository     $reviewRepository,
         Session               $session,
         Request               $request,
-        ReviewHelperI         $reviewHelper,
-        IValidatorManager     $validatorManager,
-        FileService           $fileService,
+        IReviewHelper         $reviewHelper,
+        ValidatorService      $validatorService,
+        IFile                 $fileService,
         Auth                  $authService,
         Redirect              $redirect,
     ) {
@@ -45,7 +45,7 @@ class RestaurantController extends AppController {
         $this->session = $session;
         $this->request = $request;
         $this->reviewHelper = $reviewHelper;
-        $this->validatorManager = $validatorManager;
+        $this->validatorService = $validatorService;
         $this->fileService = $fileService;
         $this->authService = $authService;
         $this->redirect = $redirect;
@@ -94,7 +94,7 @@ class RestaurantController extends AppController {
 
         $this->render('addRestaurant', [
             'restaurant' => $id ? $this->restaurantRepository->getRestaurant($id) : null,
-            'messages' => $this->loadMessages($this->request->get('messages')),
+            'messages' => $this->validatorService->getMessageStorage()->loadMessagesFromConfig($this->request->get('messages')),
             'success' => $this->messagesList[$this->request->get('success')] ?? null,
         ]);
     }
@@ -112,15 +112,14 @@ class RestaurantController extends AppController {
         $fileData = $this->request->file('file');
 
         if(!$this->validateRestaurantData($restaurantData)) {
-            $this->redirect->to('/addRestaurant/' . $id, ['messages' => json_encode($this->messages)]);
+            $this->redirect->to('/addRestaurant/' . $id, ['messages' => json_encode($this->validatorService->getMessages())]);
         }
 
         $newFileName = null;
 
         if (!$deleteFile && $fileData && is_uploaded_file($fileData['tmp_name'])) {
             if(!$newFileName = $this->fileService->uploadFile($fileData)) {
-                $this->addErrorMessage('fileError');
-                $this->redirect->to('/addRestaurant/' . $id, ['messages' => json_encode($this->messages)]);
+                $this->redirect->to('/addRestaurant/' . $id, ['messages' => json_encode(['fileError'])]);
             }
         }
 
@@ -222,38 +221,12 @@ class RestaurantController extends AppController {
 
     private function validateRestaurantData($data) {
         $isValid = true;
-
-        $isValid &= $this->checkRequiredFields($data, ['name', 'street', 'city', 'postalCode', 'houseNo']);
-        $isValid &= $this->validatorManager->validate('email', $data['email']);
-        $isValid &= $this->validatorManager->validate('url', $data['website']);
-        $isValid &= $this->validatorManager->validate('postalCode', $data['postalCode']);
-        $isValid &= $this->validatorManager->validate('phoneNumber', $data['phone']);
+        $isValid &= $this->validatorService->validate('requiredFields', ['requiredFields' => ['name', 'street', 'city', 'postalCode', 'houseNo'], 'data' => $data]);
+        $isValid &= $this->validatorService->validate('email', $data['email']);
+        $isValid &= $this->validatorService->validate('url', $data['website']);
+        $isValid &= $this->validatorService->validate('postalCode', $data['postalCode']);
+        $isValid &= $this->validatorService->validate('phoneNumber', $data['phone']);
 
         return $isValid;
-    }
-
-    private function checkRequiredFields($data, $requiredFields) {
-        foreach ($requiredFields as $field) {
-            if (empty($data[$field])) {
-                $this->addErrorMessage('requiredFields');
-                return false;
-            }
-        }
-        return true;
-    }
-
-
-    private function addErrorMessage($message) {
-        $this->messages[] = $message;
-    }
-
-    private function loadMessages($messages) {
-        $messagesToReturn = [];
-        if($messages && $messages = json_decode($messages)) {
-            foreach ($messages as $message) {
-                $messagesToReturn[] .= $this->messagesList[$message];
-            }
-        }
-        return $messagesToReturn;
     }
 }

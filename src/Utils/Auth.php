@@ -2,8 +2,6 @@
 
 namespace App\Utils;
 
-use App\Session;
-
 class Auth
 {
     private Session $session;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Validators;
+namespace App\Utils\Validators;
 
 use Exception;
 
@@ -13,11 +13,11 @@ class ValidatorManager implements IValidatorManager
         $this->validators[$name] = $validator;
     }
 
-    public function validate(string $name, $value): bool
+    public function getValidator(string $name): ?IValidator
     {
         if (!isset($this->validators[$name])) {
             throw new Exception("Validator [$name] not found.");
         }
-        return $this->validators[$name]->validate($value);
+        return $this->validators[$name] ?? null;
     }
 }

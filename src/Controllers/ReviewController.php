@@ -3,19 +3,19 @@
 namespace App\Controllers;
 
 use App\Models\Review;
-use App\Repository\ReviewRepositoryI;
-use App\Request;
-use App\Session;
+use App\Repository\IReviewRepository;
 use App\Utils\Redirect;
+use App\Utils\Request;
+use App\Utils\Session;
 
 class ReviewController extends AppController
 {
-    private ReviewRepositoryI $reviewRepository;
+    private IReviewRepository $reviewRepository;
     private Session $session;
     private Request $request;
     private Redirect $redirect;
 
-    public function __construct(ReviewRepositoryI $reviewRepository, Session $session, Request $request, Redirect $redirect) {
+    public function __construct(IReviewRepository $reviewRepository, Session $session, Request $request, Redirect $redirect) {
         $this->reviewRepository = $reviewRepository;
         $this->session = $session;
         $this->request = $request;

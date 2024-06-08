@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Models\Review;
 
-interface ReviewRepositoryI
+interface IReviewRepository
 {
     public function getReviews(int $restaurantId): array;
     public function addReview(Review $review);

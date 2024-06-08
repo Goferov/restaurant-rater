@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Validators;
+namespace App\Utils\Validators;
 
 class RequiredFieldsValidator implements IValidator
 {
@@ -14,5 +14,10 @@ class RequiredFieldsValidator implements IValidator
             }
         }
         return true;
+    }
+
+    public function getErrorMessage(): string
+    {
+        return 'requiredFields';
     }
 }

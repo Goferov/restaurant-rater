@@ -1,28 +1,27 @@
 <?php
 
 namespace App\Controllers;
-use App\Repository\UserRepository;
 use App\Models\User;
-use App\Repository\UserRepositoryI;
-use App\Request;
-use App\Session;
+use App\Repository\IUserRepository;
 use App\Utils\Redirect;
-use App\Validators\IValidator;
+use App\Utils\Request;
+use App\Utils\Session;
+use App\Utils\Validators\IValidator;
 
 class UserController extends AppController {
 
-    private UserRepositoryI $userRepository;
+    private IUserRepository $userRepository;
     private Request $request;
     private Session $session;
     private IValidator $passwordValidator;
     private Redirect $redirect;
 
     public function __construct(
-        UserRepositoryI $userRepository,
+        IUserRepository $userRepository,
         Request         $request,
         Session         $session,
         IValidator      $passwordValidator,
-        Redirect      $redirect,
+        Redirect        $redirect,
     ) {
         $this->userRepository = $userRepository;
         $this->request = $request;

@@ -2,8 +2,6 @@
 
 namespace App\Utils;
 
-use App\Request;
-
 class Redirect {
 
     private Request $request;
@@ -35,10 +33,12 @@ class Redirect {
         if($params) {
             $queryParams = [];
             foreach ($params as $key=>$param) {
-                $queryParams[] = urlencode($key) . '=' . urlencode($param);
+                if($param)
+                    $queryParams[] = urlencode($key) . '=' . urlencode($param);
             }
             $queryParams = implode('&',$queryParams);
             return '?' . $queryParams;
         }
+        return '';
     }
 }

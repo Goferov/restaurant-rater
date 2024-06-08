@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Validators;
+namespace App\Utils\Validators;
 
 class PasswordValidator implements IValidator
 {
@@ -8,5 +8,10 @@ class PasswordValidator implements IValidator
     {
         $minLength = 6;
         return strlen($value) >= $minLength && preg_match('/\d/', $value);
+    }
+
+    public function getErrorMessage(): string
+    {
+        return 'invalidPassword';
     }
 }

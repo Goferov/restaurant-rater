@@ -2,15 +2,15 @@
 
 namespace App\Controllers;
 
-use App\Helpers\ReviewHelperI;
-use App\Repository\RestaurantRepositoryI;
+use App\Helpers\IReviewHelper;
+use App\Repository\IRestaurantRepository;
 
 class HomepageController extends AppController {
 
-    private RestaurantRepositoryI $restaurantRepository;
-    private ReviewHelperI $reviewHelper;
+    private IRestaurantRepository $restaurantRepository;
+    private IReviewHelper $reviewHelper;
 
-    public function __construct(RestaurantRepositoryI $restaurantRepository, ReviewHelperI $reviewHelper)
+    public function __construct(IRestaurantRepository $restaurantRepository, IReviewHelper $reviewHelper)
     {
         $this->restaurantRepository = $restaurantRepository;
         $this->reviewHelper = $reviewHelper;

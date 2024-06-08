@@ -1,9 +1,7 @@
 <?php
-namespace App\Services;
+namespace App\Utils;
 
-namespace App\Services;
-
-class FileService {
+class File implements IFile {
     const MAX_FILE_SIZE = 1024 * 1024;
     const SUPPORTED_TYPES = ['image/png', 'image/jpeg'];
     const UPLOAD_DIRECTORY = '/../public/uploads/';

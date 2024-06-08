@@ -1,26 +1,31 @@
 <?php
 namespace App;
 
+use App\Helpers\IReviewHelper;
 use App\Helpers\ReviewHelper;
-use App\Helpers\ReviewHelperI;
+use App\Repository\IRestaurantRepository;
+use App\Repository\IReviewRepository;
+use App\Repository\IUserRepository;
 use App\Repository\RestaurantRepository;
-use App\Repository\RestaurantRepositoryI;
 use App\Repository\ReviewRepository;
-use App\Repository\ReviewRepositoryI;
 use App\Repository\UserRepository;
-use App\Repository\UserRepositoryI;
-use App\Services\FileService;
+use App\Services\ValidatorService;
 use App\Utils\Auth;
+use App\Utils\File;
+use App\Utils\IFile;
+use App\Utils\MessageStorage;
 use App\Utils\Redirect;
-use App\Validators\EmailValidator;
-use App\Validators\IValidator;
-use App\Validators\IValidatorManager;
-use App\Validators\PasswordValidator;
-use App\Validators\PhoneNumberValidator;
-use App\Validators\PostalCodeValidator;
-use App\Validators\RequiredFieldsValidator;
-use App\Validators\UrlValidator;
-use App\Validators\ValidatorManager;
+use App\Utils\Request;
+use App\Utils\Session;
+use App\Utils\Validators\EmailValidator;
+use App\Utils\Validators\IValidator;
+use App\Utils\Validators\IValidatorManager;
+use App\Utils\Validators\PasswordValidator;
+use App\Utils\Validators\PhoneNumberValidator;
+use App\Utils\Validators\PostalCodeValidator;
+use App\Utils\Validators\RequiredFieldsValidator;
+use App\Utils\Validators\UrlValidator;
+use App\Utils\Validators\ValidatorManager;
 
 $container = new Container();
 $container->set(Database::class, function() {
@@ -34,15 +39,15 @@ $container->set(Database::class, function() {
         $dbConfig['port']
     );
 });
-$container->set(RestaurantRepositoryI::class, function ($container) {
+$container->set(IRestaurantRepository::class, function ($container) {
     return new RestaurantRepository($container->get(Database::class));
 });
 
-$container->set(ReviewRepositoryI::class, function ($container) {
+$container->set(IReviewRepository::class, function ($container) {
     return new ReviewRepository($container->get(Database::class));
 });
 
-$container->set(UserRepositoryI::class, function ($container) {
+$container->set(IUserRepository::class, function ($container) {
     return new UserRepository($container->get(Database::class));
 });
 
@@ -54,7 +59,7 @@ $container->set(Session::class, function() {
     return new Session();
 });
 
-$container->set(ReviewHelperI::class, function() {
+$container->set(IReviewHelper::class, function() {
     return new ReviewHelper();
 });
 
@@ -62,8 +67,8 @@ $container->set(IValidator::class, function() {
     return new PasswordValidator();
 });
 
-$container->set(FileService::class, function() {
-    return new FileService();
+$container->set(IFile::class, function() {
+    return new File();
 });
 
 $container->set(Auth::class, function($container) {
@@ -74,15 +79,22 @@ $container->set(Redirect::class, function($container) {
     return new Redirect($container->get(Request::class));
 });
 
-$container->set(IValidatorManager::class, function($container) {
+$container->set(IValidatorManager::class, function() {
     $validatorManager = new ValidatorManager();
     $validatorManager->addValidator('email', new EmailValidator());
     $validatorManager->addValidator('url', new UrlValidator());
     $validatorManager->addValidator('postalCode', new PostalCodeValidator());
     $validatorManager->addValidator('phoneNumber', new PhoneNumberValidator());
-    $validatorManager->addValidator('RequiredFields', new RequiredFieldsValidator());
+    $validatorManager->addValidator('requiredFields', new RequiredFieldsValidator());
     return $validatorManager;
 });
 
+$container->set(MessageStorage::class, function() {
+    return new MessageStorage();
+});
+
+$container->set(ValidatorService::class, function($container) {
+    return new ValidatorService($container->get(IValidatorManager::class), $container->get(MessageStorage::class));
+});
 
 return $container;

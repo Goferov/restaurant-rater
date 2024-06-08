@@ -2,11 +2,11 @@
 namespace App\Controllers;
 
 use App\Config;
-use App\Repository\RestaurantRepositoryI;
-use App\Request;
-use App\Session;
+use App\Repository\IRestaurantRepository;
 use App\Utils\Auth;
 use App\Utils\Redirect;
+use App\Utils\Request;
+use App\Utils\Session;
 
 class PanelController extends AppController {
 
@@ -14,11 +14,11 @@ class PanelController extends AppController {
     private array $variables;
     private Session $session;
     private Request $request;
-    private RestaurantRepositoryI $restaurantRepository;
+    private IRestaurantRepository $restaurantRepository;
     private Auth $auth;
     private Redirect $redirect;
 
-    public function  __construct(Session $session, Request $request, RestaurantRepositoryI $restaurantRepository, Auth $auth, Redirect $redirect) {
+    public function  __construct(Session $session, Request $request, IRestaurantRepository $restaurantRepository, Auth $auth, Redirect $redirect) {
         $this->session = $session;
         $this->request = $request;
         $this->restaurantRepository = $restaurantRepository;
@@ -33,7 +33,7 @@ class PanelController extends AppController {
             $messagesList = Config::get('messages');
             $messageKey = $this->request->get('message');
             $this->variables['message'] = $messagesList[$messageKey] ?? null;
-            $this->redirect->to('panel', $this->variables);
+            $this->render('panel', $this->variables);
         }
         else {
             $this->redirect->to('/');
