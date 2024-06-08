@@ -16,17 +16,27 @@ class MessageStorage
         return $this->messages;
     }
 
-    public function loadMessagesFromConfig(string $messageKeys)
+    public function loadMessagesFromConfig($messageKeys)
     {
         $messagesToReturn = [];
         $messagesList = Config::get('messages');
-
-        if($messageKeys && $messages = json_decode($messageKeys)) {
+        $messages = $this->selectMessages($messageKeys);
+        if($messages) {
             foreach ($messages as $message) {
                 $messagesToReturn[] .= $messagesList[$message];
             }
         }
         return $messagesToReturn;
 
+    }
+
+    private function selectMessages($messageKeys)
+    {
+        if($messageKeys){
+            return json_decode($messageKeys);
+        }
+        else {
+            return $this->messages;
+        }
     }
 }

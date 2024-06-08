@@ -18,7 +18,7 @@ class Container
     public function get($id)
     {
         if (!isset($this->bindings[$id])) {
-            throw new \Exception("Target binding [$id] does not exist.");
+            throw new Exception("Target binding [$id] does not exist.");
         }
 
         $factory = $this->bindings[$id];
@@ -30,7 +30,7 @@ class Container
     {
         $reflector = new ReflectionClass($class);
         if (!$reflector->isInstantiable()) {
-            throw new \Exception("Target [$class] is not instantiable.");
+            throw new Exception("Target [$class] is not instantiable.");
         }
 
         $constructor = $reflector->getConstructor();

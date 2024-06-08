@@ -6,6 +6,8 @@ spl_autoload_register(function(string  $classNamespace) {
     require_once $path;
 });
 
+session_start();
+
 use App\Router;
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

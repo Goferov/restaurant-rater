@@ -66,14 +66,18 @@ ORDER BY r.restaurant_id DESC';
     }
 
 
-    public function getRestaurant($id) {
+    public function getRestaurant($id, $show_only_publicate = true) {
         $sql = '
-    SELECT 
-        restaurant_id, name, description, image, email, phone, website,
-        address_id, street, city, postal_code, house_no, apartment_no, rate
-    FROM public.vw_restaurant_details
-    WHERE restaurant_id = :id
-    ';
+SELECT 
+    restaurant_id, name, description, image, email, phone, website,
+    address_id, street, city, postal_code, house_no, apartment_no, rate
+FROM public.vw_restaurant_details
+WHERE restaurant_id = :id';
+
+        // Append condition based on $show_only_publicate
+        if ($show_only_publicate) {
+            $sql .= ' AND publicate = TRUE';
+        }
 
         $stmt = $this->database->connect()->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -107,6 +111,7 @@ ORDER BY r.restaurant_id DESC';
 
         return $restaurant;
     }
+
 
 
     public function addRestaurant(Restaurant $restaurant)

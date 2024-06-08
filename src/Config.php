@@ -26,6 +26,7 @@ class Config {
             'reviewIsEmpty' => 'Opinia nie może być pusta i musi mieć mniej niż 255 znaków!',
             'reviewExists' => 'Juz dodałeś opinię do tej restauracji!',
             'restaurantAdded' => 'Restauracja została dodana!',
+            'restaurantEdited' => 'Restauracja została zaktualizowana!',
             'requiredFields' => 'Wymagane pola nie mogą być puste.',
             'wrongUrl' => 'Podany adres strony internetowej jest nieprawidłowy.',
             'fileError' => 'Plik jest zbyt duży lub typ jest nieodpowiedni.',

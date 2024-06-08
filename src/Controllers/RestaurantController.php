@@ -93,7 +93,7 @@ class RestaurantController extends AppController {
         }
 
         $this->render('addRestaurant', [
-            'restaurant' => $id ? $this->restaurantRepository->getRestaurant($id) : null,
+            'restaurant' => $id ? $this->restaurantRepository->getRestaurant($id, false) : null,
             'messages' => $this->validatorService->getMessageStorage()->loadMessagesFromConfig($this->request->get('messages')),
             'success' => $this->messagesList[$this->request->get('success')] ?? null,
         ]);
@@ -124,7 +124,7 @@ class RestaurantController extends AppController {
         }
 
         if ($id && !$deleteFile) {
-            $existingRestaurant = $this->restaurantRepository->getRestaurant($id);
+            $existingRestaurant = $this->restaurantRepository->getRestaurant($id, false);
             $restaurantImage = $newFileName ?: $existingRestaurant->getImage();
         } else {
             $restaurantImage = $newFileName;
@@ -137,11 +137,13 @@ class RestaurantController extends AppController {
         $restaurant = $this->createRestaurant($id, $restaurantData, $restaurantImage, $address);
 
         if ($id) {
+            $redirectMessage = 'restaurantEdited';
             $this->restaurantRepository->updateRestaurant($restaurant);
         } else {
+            $redirectMessage = 'restaurantAdded';
             $id = $this->restaurantRepository->addRestaurant($restaurant);
         }
-        $this->redirect->to('/addRestaurant/' . $id, ['success' => 'restaurantAdded']);
+        $this->redirect->to('/addRestaurant/' . $id, ['success' => $redirectMessage]);
     }
 
 
@@ -222,10 +224,16 @@ class RestaurantController extends AppController {
     private function validateRestaurantData($data) {
         $isValid = true;
         $isValid &= $this->validatorService->validate('requiredFields', ['requiredFields' => ['name', 'street', 'city', 'postalCode', 'houseNo'], 'data' => $data]);
-        $isValid &= $this->validatorService->validate('email', $data['email']);
-        $isValid &= $this->validatorService->validate('url', $data['website']);
+        if($data['email']) {
+            $isValid &= $this->validatorService->validate('email', $data['email']);
+        }
+        if($data['website']){
+            $isValid &= $this->validatorService->validate('url', $data['website']);
+        }
+        if($data['phone']) {
+            $isValid &= $this->validatorService->validate('phoneNumber', $data['phone']);
+        }
         $isValid &= $this->validatorService->validate('postalCode', $data['postalCode']);
-        $isValid &= $this->validatorService->validate('phoneNumber', $data['phone']);
 
         return $isValid;
     }

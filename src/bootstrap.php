@@ -67,6 +67,10 @@ $container->set(IValidator::class, function() {
     return new PasswordValidator();
 });
 
+$container->set(IValidator::class, function() {
+    return new PasswordValidator();
+});
+
 $container->set(IFile::class, function() {
     return new File();
 });
