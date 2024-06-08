@@ -10,7 +10,6 @@ use App\Utils\Session;
 
 class PanelController extends AppController {
 
-    private ?array $userSession;
     private array $variables;
     private Session $session;
     private Request $request;
@@ -24,12 +23,11 @@ class PanelController extends AppController {
         $this->restaurantRepository = $restaurantRepository;
         $this->auth = $auth;
         $this->redirect = $redirect;
-        $this->userSession = $this->session->get('userSession');
         $this->variables['isAdmin'] = $this->auth->isAdminUser();
     }
 
     public function panel() {
-        if($this->userSession) {
+        if($this->auth->isLoggedUser()) {
             $messagesList = Config::get('messages');
             $messageKey = $this->request->get('message');
             $this->variables['message'] = $messagesList[$messageKey] ?? null;

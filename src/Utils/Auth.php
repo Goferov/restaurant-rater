@@ -18,4 +18,8 @@ class Auth
         }
         return true;
     }
+
+    public function isLoggedUser(): bool {
+        return (bool) $this->session->get('userSession');
+    }
 }
