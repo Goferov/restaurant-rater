@@ -1,9 +1,8 @@
 <?php
 
-namespace Unit\Utils;
-
 use App\Container;
 use App\Router;
+use App\Controllers\HomepageController;
 use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase
