@@ -26,7 +26,9 @@ class Session {
     }
 
     public function destroy(): void {
-        session_unset();
-        session_destroy();
+        if (session_status() == PHP_SESSION_ACTIVE) {
+            session_unset();
+            session_destroy();
+        }
     }
 }

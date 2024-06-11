@@ -8,9 +8,10 @@ use App\Models\Address;
 use App\Models\Restaurant;
 use App\Repository\IRestaurantRepository;
 use App\Repository\IReviewRepository;
+use App\Services\IFileService;
+use App\Services\IValidatorService;
 use App\Services\ValidatorService;
 use App\Utils\Auth;
-use App\Utils\IFile;
 use App\Utils\Redirect;
 use App\Utils\Request;
 use App\Utils\Session;
@@ -24,7 +25,7 @@ class RestaurantController extends AppController {
     private Request $request;
     private IReviewHelper $reviewHelper;
     private ValidatorService $validatorService;
-    private IFile $fileService;
+    private IFileService $fileService;
     private Auth $authService;
     private Redirect $redirect;
     private array $messagesList;
@@ -35,8 +36,8 @@ class RestaurantController extends AppController {
         Session               $session,
         Request               $request,
         IReviewHelper         $reviewHelper,
-        ValidatorService      $validatorService,
-        IFile                 $fileService,
+        IValidatorService     $validatorService,
+        IFileService          $fileService,
         Auth                  $authService,
         Redirect              $redirect,
     ) {
@@ -65,6 +66,7 @@ class RestaurantController extends AppController {
 
             if(!$restaurant) {
                 $this->redirect->to('/error404', [], 404);
+                return;
             }
 
             $this->render('details', [

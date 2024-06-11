@@ -29,9 +29,7 @@ class Router
         $action = $urlParts[0] ?? '';
 
         if (!isset($this->routes[$method][$action])) {
-            http_response_code(404);
-            header('Location: /error404');
-            exit;
+            $this->redirectWhenNotFound();
         }
 
         $controllerClass = 'App\Controllers\\' . $this->routes[$method][$action];
@@ -40,11 +38,16 @@ class Router
         $id = $urlParts[1] ?? '';
 
         if (!method_exists($controller, $actionMethod)) {
-            http_response_code(404);
-            header('Location: /error404');
-            exit;
+            $this->redirectWhenNotFound();
         }
 //        $controller->$actionMethod($id);
         $this->container->callMethod($controller, $actionMethod, ['id' => $id]);
+    }
+
+    private function redirectWhenNotFound()
+    {
+        http_response_code(404);
+        header('Location: /error404');
+        exit;
     }
 }

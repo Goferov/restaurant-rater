@@ -2,15 +2,14 @@
 
 namespace App\Services;
 
-use App\Utils\MessageStorage;
 use App\Utils\Validators\IValidatorManager;
 use Exception;
 
-class ValidatorService  {
+class ValidatorService implements IValidatorService {
     private IValidatorManager $validatorManager;
-    private MessageStorage $messageStorage;
+    private IMessageService $messageStorage;
 
-    public function __construct(IValidatorManager $validatorManager, MessageStorage $messageStorage) {
+    public function __construct(IValidatorManager $validatorManager, IMessageService $messageStorage) {
         $this->validatorManager = $validatorManager;
         $this->messageStorage = $messageStorage;
     }
@@ -32,7 +31,7 @@ class ValidatorService  {
         return $this->messageStorage->getAllMessagesKey();
     }
 
-    public function getMessageStorage():MessageStorage
+    public function getMessageStorage():MessageService
     {
         return $this->messageStorage;
     }

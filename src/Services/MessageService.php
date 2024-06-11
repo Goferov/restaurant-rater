@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Utils;
+namespace App\Services;
 
 use App\Config;
 
-class MessageStorage
+class MessageService implements IMessageService
 {
     private array $messages = [];
 

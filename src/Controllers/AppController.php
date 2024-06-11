@@ -11,7 +11,7 @@ class AppController {
     public function render(string $page = null, array $variables = []): void
     {
         $templatePath = 'public/views/pages/'. $page.'.php';
-        $output = 'File not found';
+        $output = 'FileService not found';
 
         if(file_exists($templatePath)) {
             $variables = array_merge($variables, $this->getGlobalVariables());

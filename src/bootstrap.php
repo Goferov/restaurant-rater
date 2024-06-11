@@ -9,11 +9,13 @@ use App\Repository\IUserRepository;
 use App\Repository\RestaurantRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
+use App\Services\FileService;
+use App\Services\IFileService;
+use App\Services\IMessageService;
+use App\Services\IValidatorService;
+use App\Services\MessageService;
 use App\Services\ValidatorService;
 use App\Utils\Auth;
-use App\Utils\File;
-use App\Utils\IFile;
-use App\Utils\MessageStorage;
 use App\Utils\Redirect;
 use App\Utils\Request;
 use App\Utils\Session;
@@ -71,8 +73,8 @@ $container->set(IValidator::class, function() {
     return new PasswordValidator();
 });
 
-$container->set(IFile::class, function() {
-    return new File();
+$container->set(IFileService::class, function() {
+    return new FileService();
 });
 
 $container->set(Auth::class, function($container) {
@@ -93,12 +95,12 @@ $container->set(IValidatorManager::class, function() {
     return $validatorManager;
 });
 
-$container->set(MessageStorage::class, function() {
-    return new MessageStorage();
+$container->set(IMessageService::class, function() {
+    return new MessageService();
 });
 
-$container->set(ValidatorService::class, function($container) {
-    return new ValidatorService($container->get(IValidatorManager::class), $container->get(MessageStorage::class));
+$container->set(IValidatorService::class, function($container) {
+    return new ValidatorService($container->get(IValidatorManager::class), $container->get(IMessageService::class));
 });
 
 return $container;

@@ -34,6 +34,7 @@ class UserController extends AppController {
 
         if(!$this->request->isPost()) {
             $this->redirect->to('/');
+            return;
         }
 
         $email = $this->request->post('email');
@@ -44,10 +45,12 @@ class UserController extends AppController {
         if($user) {
             if (!password_verify($password, $user->getPassword())) {
                 $this->redirect->to($redirect, ['loginMessage' => 'wrongPassword']);
+                return;
             }
         }
         else {
             $this->redirect->to($redirect, ['loginMessage' => 'userNotExist']);
+            return;
         }
 
         $this->session->set('userSession', [

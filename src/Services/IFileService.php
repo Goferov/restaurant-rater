@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Utils;
+namespace App\Services;
 
-interface IFile
+interface IFileService
 {
     public function uploadFile(array $fileData): ?string;
 }

@@ -34,20 +34,24 @@ class ReviewController extends AppController
 
         if(!$loggedUser || !isset($loggedUser['id'])) {
             $this->redirect->to($redirect, ['loginMessage' => 'mustLogin']);
+            return;
         }
 
         if ($rate < 1 || $rate > 5)  {
             $this->redirect->to($redirect, ['message' => 'opinionScope']);
+            return;
         }
 
         if (empty($review) || strlen($review) > 255)  {
             $this->redirect->to($redirect, ['message' => 'reviewIsEmpty']);
+            return;
         }
 
         $userId = (int)$loggedUser['id'];
         $userReview = $this->reviewRepository->getUserRestaurantReview($restaurant_id, $userId);
         if($userReview) {
             $this->redirect->to($redirect, ['message' => 'reviewExists']);
+            return;
         }
 
         $review = new Review(null, $restaurant_id, $rate, $review, $userId);
