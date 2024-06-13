@@ -4,7 +4,7 @@ namespace App;
 use PDO;
 use PDOException;
 
-class Database {
+class Database implements IDatabase {
     private string $username;
     private string $password;
     private string $host;
@@ -20,7 +20,7 @@ class Database {
         $this->port = $port;
     }
 
-    public function connect(): PDO {
+    public function connect() {
         if ($this->connection === null) {
             try {
                 $this->connection = new PDO(

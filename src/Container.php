@@ -6,7 +6,7 @@ use Exception;
 use ReflectionClass;
 use ReflectionMethod;
 
-class Container
+class Container implements IContainer
 {
     private array $bindings = [];
 

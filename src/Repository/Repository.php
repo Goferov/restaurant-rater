@@ -2,12 +2,12 @@
 
 namespace App\Repository;
 
-use App\Database;
+use App\IDatabase;
 
 class Repository {
-    protected Database $database;
+    protected IDatabase $database;
 
-    public function __construct(Database $database) {
+    public function __construct(IDatabase $database) {
         $this->database = $database;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App;
 
-class Config {
+class Config implements IConfig {
     private static $settings = [
         'db' => [
             'host' => 'db',

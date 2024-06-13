@@ -30,7 +30,7 @@ use App\Utils\Validators\UrlValidator;
 use App\Utils\Validators\ValidatorManager;
 
 $container = new Container();
-$container->set(Database::class, function() {
+$container->set(IDatabase::class, function() {
     $dbConfig = Config::get('db');
 
     return new Database(
@@ -42,15 +42,15 @@ $container->set(Database::class, function() {
     );
 });
 $container->set(IRestaurantRepository::class, function ($container) {
-    return new RestaurantRepository($container->get(Database::class));
+    return new RestaurantRepository($container->get(IDatabase::class));
 });
 
 $container->set(IReviewRepository::class, function ($container) {
-    return new ReviewRepository($container->get(Database::class));
+    return new ReviewRepository($container->get(IDatabase::class));
 });
 
 $container->set(IUserRepository::class, function ($container) {
-    return new UserRepository($container->get(Database::class));
+    return new UserRepository($container->get(IDatabase::class));
 });
 
 $container->set(Request::class, function() {

@@ -2,7 +2,7 @@
 
 namespace App;
 
-class Router
+class Router implements IRouter
 {
     private Container $container;
     private array $routes = [];
