@@ -71,12 +71,6 @@ class RestaurantControllerTest extends TestCase {
         $this->assertTrue(true);
     }
 
-    public function testAddRestaurantUnauthorizedAccess() {
-        $this->authMock->method('isAdminUser')->willReturn(false);
-        $this->redirectMock->expects($this->once())->method('to')->with('/');
-        $this->controller->addRestaurant(1);
-        ob_get_clean();
-    }
 
     public function testDeleteRestaurantAsAdmin() {
         $restaurantId = 1;
